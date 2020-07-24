@@ -17,7 +17,7 @@ votekickID=0
 votekickN=2
 votekickpercent=0
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
-M = {'red':207227130, 'orange':125928980, 'yellow':62501050, 'green':150078285, 'sasha':218917421, 'blue':206312673,'god':236709769}
+M = {'red':207227130, 'orange':125928980, 'yellow':62501050, 'green':150078285, 'sasha':218917421, 'blue':206312673,'god':236709769,'shluha':240702553}
 
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -111,7 +111,7 @@ for event in longpoll.listen():
                         send('F1 или F2? Голосование начато, извини,  '+str(message_text.split()[1]),event.object['message']['peer_id'] )
             if message_text=='/roll':
                 send(str(random.randint(10000000,99999999)),event.object['message']['peer_id'])
-            if message_text='/help':
+            if message_text=='/help':
                 send('Я имею: \n '
                      '/roll -- выбросить сулчайное восьмизначное число\n'
                      '/rollmode -- после каждого сообщения выплевывать сулчайное восьмизначное  число\n'
