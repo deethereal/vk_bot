@@ -6,7 +6,7 @@ from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType, VkBotMessageEvent, VkBotEvent
 import datetime
 import time
-
+#from constants import counter, flag
 
 groupID = 178950051
 token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4' # Здесь ввести token сообщества (не удаляя апострофы)
@@ -19,11 +19,27 @@ votekickN=2
 votekickpercent=0
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
 M = {'red':207227130, 'orange':125928980, 'yellow':62501050, 'green':150078285, 'sasha':218917421, 'blue':206312673,'god':236709769, 'shluha':240702553}
-
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
-
+def counter_plus():
+    with open('text.txt', "r") as file:
+        lines = file.readlines()
+        counter = int(lines[0])
+        daily_c = int(lines[1])
+        for i in range(3):
+            del lines[2 - i]
+        counter += 1
+        daily_c += 1
+        days=0
+        lines.insert(0, str(counter))
+        lines.insert(1, '\n')
+        lines.insert(2, str(daily_c))
+        lines.insert(3, '\n')
+        lines.insert(4, str(days))
+        lines.insert(5, '\n')
+    with open("text.txt", "w") as file:
+        file.writelines(lines)
 def sendphoto(msg, peerID, attach): # msg — сообщение
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
 def send(msg, peerID):
@@ -60,8 +76,14 @@ def findIII(msg):
 ##result = re.search(r'\bуеба,?\b', 'ля, уеба')
 ##print( result.group(0))
 for event in longpoll.listen():
+    flag=False
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
+       # print(event.object['message']['action'])
+        #if event.object['message']['from_id'] == 207227130 and event.object['message']['action']:
+           # if event.object['message']['action']['type'] == 'chat_kick_user' and  event.object['message']['action']['type']['member_id']== 207227130:
+               # counter_plus()
+               # send('+1 обсёр в копилку',event.object['message']['peer_id'])
         message_text = event.object['message']['text'].lower()
         if votekick:
             if message_text=='f1':
@@ -121,7 +143,7 @@ for event in longpoll.listen():
             if message_text=='/roll':
                 send(str(random.randint(10000000,99999999)),event.object['message']['peer_id'])
             if message_text=='/help':
-                send('Я имею: \n '
+                send('Я умею: \n '
                      '/roll -- выбросить сулчайное восьмизначное число\n'
                      '/rollmode — после каждого сообщения выплевывать сулчайное восьмизначное число. Чтобы завершить rollmode - "хватит пожалуйста"\n'
                      '/votekick <color> — кикнуть члена или Ырку\n'
@@ -129,10 +151,23 @@ for event in longpoll.listen():
 	                 '      все цвета совпадают, кроме\n'
 	                 '      Ира - "shluha"\n'
                 	 '      Саша - "sasha"',event.object['message']['peer_id'])
+            if message_text == '/fuck_ups':
+                file = open('text.txt','r')
+                lines = file.readlines()
+                counter = int(lines[0])
+                daily_c = int(lines[1])
+                days = int(lines[2])
+                send(f'Всего мотя обосрался {counter} раз(а)\nЗа этот день {daily_c} раз(а)'
+                     f'\nДней без обсеров: {days}', event.object['message']['peer_id'])
+                file.close()
+
             if findIII(message_text):
                  send(findIII(message_text),event.object['message']['peer_id'] )
             if findWord(message_text, 'хуй'):
                 send('Сам ты хуй, пидор',event.object['message']['peer_id'])
+            if findWord(message_text, 'матвей обосрался') or findWord(message_text, 'мотя обосрался') or findWord(message_text, 'oбосрался матвей') or findWord(message_text, 'oбосрался мотя'):
+                counter_plus()
+                send('Я записал!', event.object['message']['peer_id'])
             if (message_text=='кого') or (message_text=='кого?'):
                 sendphoto('',event.object['message']['peer_id'],'photo236709769_457247072')
             if (message_text=='да') or (message_text=='da') or (message_text=='lf'):
@@ -167,6 +202,8 @@ for event in longpoll.listen():
                 send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
                 #add(event.object['message']['from_id'],event.object['message']['peer_id']%1000, 30)
                 #answer('Возвращать я пока не умею, так шо давайте сами, парни',event.object['message']['peer_id'],event.object['message'])#['conversation_message_id'] )
+            if findWord(message_text,'фки') and event.object['message']['from_id']!=M['blue']:
+                sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239123')
 
 
 
