@@ -72,6 +72,7 @@ def findIII(msg):
             return I
     else:
         return False
+send('@zhur__zhur', 2000000001)
 ##print (findWord('Ты уеба, блять', 'уеба'))
 ##result = re.search(r'\bуеба,?\b', 'ля, уеба')
 ##print( result.group(0))
@@ -164,14 +165,16 @@ for event in longpoll.listen():
             if findIII(message_text):
                  send(findIII(message_text),event.object['message']['peer_id'] )
             if findWord(message_text, 'хуй'):
-                send('Сам ты хуй, пидор',event.object['message']['peer_id'])
+                send('Сам иди на хуй, пидор',event.object['message']['peer_id'])
+            if findWord(message_text, 'держу в курсе'):
+                sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239152')
             if findWord(message_text, 'матвей обосрался') or findWord(message_text, 'мотя обосрался') or findWord(message_text, 'oбосрался матвей') or findWord(message_text, 'oбосрался мотя'):
                 counter_plus()
                 send('Я записал!', event.object['message']['peer_id'])
             if (message_text=='кого') or (message_text=='кого?'):
-                sendphoto('',event.object['message']['peer_id'],'photo236709769_457247072')
+                sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239153')
             if (message_text=='да') or (message_text=='da') or (message_text=='lf'):
-                sendphoto('',event.object['message']['peer_id'],'photo236709769_457247076')
+                sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239154')
             if (findWord(message_text, 'мама') or findWord(message_text, 'мамка') or findWord(message_text, 'мамку') or findWord(message_text, 'маму') or findWord(message_text, 'маман') or findWord(message_text, 'маме') or findWord(message_text, 'мамке')):
                 n = random.randint(0, 9)
                 if (n==0):
@@ -191,19 +194,27 @@ for event in longpoll.listen():
                 elif (n==6):
                     send('Люблю твою маму',event.object['message']['peer_id'] )
                 elif (n==7):
-                    sendphoto('',event.object['message']['peer_id'],'photo236709769_457247078')
+                    sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239156')
                 elif (n==8):
-                    sendphoto('А ну адавай мать',event.object['message']['peer_id'],'photo236709769_457247077')
+                    sendphoto('А ну адавай мать',event.object['message']['peer_id'],'photo-178950051_457239158')
                 elif (n==9):
-                    sendphoto('Твоя мама - наша мама',event.object['message']['peer_id'],'photo236709769_457247080')
+                    sendphoto('Твоя мама - наша мама',event.object['message']['peer_id'],'photo-178950051_457239157')
             if (findWord(message_text, 'уеба') or findWord(message_text, 'уёба')) and event.object['message']['from_id']!=236709769:
-                sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo236709769_457246788')#['conversation_message_id'] )
+                sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
                 kick(event.object['message']['peer_id'], event.object['message']['from_id'])
                 send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
                 #add(event.object['message']['from_id'],event.object['message']['peer_id']%1000, 30)
                 #answer('Возвращать я пока не умею, так шо давайте сами, парни',event.object['message']['peer_id'],event.object['message'])#['conversation_message_id'] )
-            if findWord(message_text,'фки') and event.object['message']['from_id']!=M['blue']:
+            if (findWord(message_text,'фки') or findWord(message_text,'фкишник') ) and event.object['message']['from_id']!=M['blue']:
                 sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239123')
+            if (findWord(message_text,'вмк') or findWord(message_text,'вмкшник')) and event.object['message']['from_id']!=M['yellow']:
+                sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239139')
+            if (findWord(message_text,'мирэа') or findWord(message_text,'мирэашник')) and event.object['message']['from_id']!=M['god']:
+                sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239140')
+            if (findWord(message_text,'мехмат') or findWord(message_text,'мехматянин') or findWord(message_text,'мехматовец')) and event.object['message']['from_id']!=M['sasha']:
+                sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239148')
+            if (findWord(message_text,'мое') or findWord(message_text,'моё')):
+                sendphoto('НАШЕ', event.object['message']['peer_id'], 'photo-178950051_457239157')
 
 
 
