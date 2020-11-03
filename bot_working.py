@@ -9,7 +9,7 @@ import time
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4'
 roll=False
 
 votekick = False
@@ -72,7 +72,7 @@ def findIII(msg):
             return I
     else:
         return False
-send('@zhur__zhur', 2000000001)
+send('я просто проверяю', 2000000001)
 ##print (findWord('Ты уеба, блять', 'уеба'))
 ##result = re.search(r'\bуеба,?\b', 'ля, уеба')
 ##print( result.group(0))
