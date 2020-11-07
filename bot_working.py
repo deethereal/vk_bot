@@ -9,7 +9,7 @@ import time
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4'
+token = ''
 roll=False
 
 votekick = False
