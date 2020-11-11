@@ -5,13 +5,11 @@ import time
 import datetime
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType, VkBotMessageEvent, VkBotEvent
-import datetime
-import time
 import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token 
+token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -19,7 +17,7 @@ votekickTime=0
 votekickID=0
 votekickN=2
 votekickpercent=0
-y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa']
+y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
 M = {'red':207227130, 'orange':125928980, 'yellow':62501050, 'green':150078285, 'sasha':218917421, 'blue':206312673,'god':236709769, 'shluha':240702553}
 vk_session: VkApi = vk_api.VkApi(token=token)
@@ -194,7 +192,6 @@ for event in longpoll.listen():
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239153')
                 if (message_text=='да') or (message_text=='da') or (message_text=='lf'):
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239162')
-                    sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239153')
                 if (message_text=='бот позови влада'):
                     send('@freebadman(влат)!', event.object['message']['peer_id'])
                 if (message_text=='бот позови семена') or (message_text=='бот позови семёна'):
@@ -238,9 +235,12 @@ for event in longpoll.listen():
                     elif (n==9):
                         sendphoto('Твоя мама - наша мама',event.object['message']['peer_id'],'photo-178950051_457239157')
                 if findWordInList(message_text,y_words):
-                    sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
-                    kick(event.object['message']['peer_id'], event.object['message']['from_id'])
-                    send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
+                    if event.object['message']['from_id']!=M['god']:
+                        sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
+                        kick(event.object['message']['peer_id'], event.object['message']['from_id'])
+                        send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
+                    else:
+                        send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
                     #add(event.object['message']['from_id'],event.object['message']['peer_id']%1000, 30)
                     #answer('Возвращать я пока не умею, так шо давайте сами, парни',event.object['message']['peer_id'],event.object['message'])#['conversation_message_id'] )
                 if (findWord(message_text,'фки') or findWord(message_text,'фкишник') ) and event.object['message']['from_id']!=M['blue']:
