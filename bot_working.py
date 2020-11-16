@@ -4,12 +4,12 @@ import vk_api
 import time
 import datetime
 from vk_api import VkApi
-from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType, VkBotMessageEvent, VkBotEvent
+from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = '' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'аааааааааааа' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -17,14 +17,13 @@ votekickTime=0
 votekickID=0
 votekickN=2
 votekickpercent=0
-M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита']], 'yellow':[62501050,['Коля']], 'green':[150078285,['Cемён','Семен']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,'Влад'], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
+M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
 
 
 imposter=['imposter','impostor','импостер',"импостор", "предатель"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba']
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
-M = {'red':[207227130,'Мотя'], 'orange':[125928980,'Никита'], 'yellow':[62501050,'Коля'], 'green':[150078285,'Cемён'], 'sasha':[218917421,'Саша'], 'blue':[206312673,'Диня'],'god':[236709769,'Влад'], 'shluha':[240702553,'Ирка']}
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
@@ -116,13 +115,13 @@ for event in longpoll.listen():
                         votekickdone[event.object['message']['from_id']]=True
                         send('Голос принят',event.object['message']['peer_id'] )
                 elif message_text=='f1мыздесьзакон':
-                    if (M['god'][0]==event.object['message']['from_id'] or M['blue'][0]==event.object['message']['from_id']) :
+                    if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
                         votekickpercent+=1000
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 elif message_text=='f2мыздесьзакон':
-                    if (M['god'][0]==event.object['message']['from_id'] or M['blue'][0]==event.object['message']['from_id']) :
+                    if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
                         votekickpercent-=1000
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
@@ -149,10 +148,10 @@ for event in longpoll.listen():
                 if message_text!='' and message_text!='/votekick' and message_text.split()[0]=='/votekick':
                     if message_text.split()[1]=='purple' or message_text.split()[1]=='god':
                             sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
-                    elif message_text.split()[1] in M:
+                    elif message_text.split()[1] in M1:
                             dt = datetime.datetime.now() # datetime, из которой переводим в timestamp
                             votekickTime=time.mktime(dt.timetuple())
-                            votekickID=M[message_text.split()[1]][0]
+                            votekickID=M1[message_text.split()[1]][0]
                             votekick=True
                             votekickpercent=0
                             votekickdone[event.object['message']['from_id']]=True
@@ -182,7 +181,7 @@ for event in longpoll.listen():
                     send(f'Всего мотя обосрался {counter} раз(а)\nЗа этот день {daily_c} раз(а)'
                          f'\nДней без обсеров: {days}', event.object['message']['peer_id'])
                     file.close()
-                if message_text == 'execute_time' and event.object['message']['from_id']==M['blue'][0]:
+                if message_text == 'execute_time' and event.object['message']['from_id']==M1['blue'][0]:
                     send('Блять, смерть',event.object['message']['peer_id'])
                     sys.exit()
                 if message_text=='/mute':
@@ -250,7 +249,7 @@ for event in longpoll.listen():
                 if findWordInList(message_text,imposter):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239164')
                 if findWordInList(message_text,y_words):
-                    if event.object['message']['from_id']!=M['god'][0]:
+                    if event.object['message']['from_id']!=M1['god'][0]:
                         sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
                         kick(event.object['message']['peer_id'], event.object['message']['from_id'])
                         send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
@@ -258,16 +257,18 @@ for event in longpoll.listen():
                         send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
                     #add(event.object['message']['from_id'],event.object['message']['peer_id']%1000, 30)
                     #answer('Возвращать я пока не умею, так шо давайте сами, парни',event.object['message']['peer_id'],event.object['message'])#['conversation_message_id'] )
-                if (findWord(message_text,'фки') or findWord(message_text,'фкишник') ) and event.object['message']['from_id']!=M['blue'][0]:
+                if (findWord(message_text,'фки') or findWord(message_text,'фкишник') ) and event.object['message']['from_id']!=M1['blue'][0]:
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239123')
-                if (findWord(message_text,'вмк') or findWord(message_text,'вмкшник')) and event.object['message']['from_id']!=M['yellow'][0]:
+                if (findWord(message_text,'вмк') or findWord(message_text,'вмкшник')) and event.object['message']['from_id']!=M1['yellow'][0]:
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239139')
-                if (findWord(message_text,'мирэа') or findWord(message_text,'мирэашник')) and event.object['message']['from_id']!=M['god'][0]:
+                if (findWord(message_text,'мирэа') or findWord(message_text,'мирэашник')) and event.object['message']['from_id']!=M1['god'][0]:
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239140')
-                if (findWord(message_text,'мехмат') or findWord(message_text,'мехматянин') or findWord(message_text,'мехматовец')) and event.object['message']['from_id']!=M['sasha'][0]:
+                if (findWord(message_text,'мехмат') or findWord(message_text,'мехматянин') or findWord(message_text,'мехматовец')) and event.object['message']['from_id']!=M1['sasha'][0]:
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239148')
                 if (findWord(message_text,'мое') or findWord(message_text,'моё')):
                     sendphoto('НАШЕ', event.object['message']['peer_id'], 'photo-178950051_457239157')
+                if ((findWord(message_text,'маи') or findWord(message_text,'маёвец') or findWord(message_text,'маёвцы') or findWord(message_text,'маевец') or findWord(message_text,'маевцы')) and (event.object['message']['from_id']!=M1['red'][0] or event.object['message']['from_id']!=M1['green'][0])):
+                    sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239166')
         else:
             if message_text=='/unmute':
                 send('Я снова с вами',event.object['message']['peer_id'])
