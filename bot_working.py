@@ -238,6 +238,8 @@ for event in longpoll.listen():
                         sendphoto('Твоя мама - наша мама',event.object['message']['peer_id'],'photo-178950051_457239157')
                 if findWordInList(message_text,booba):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239163')
+                if (findWord(message_text,'simp') or findWord(message_text,'симп')):
+                    sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239165')
                 if findWordInList(message_text,imposter):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239164')
                 if findWordInList(message_text,y_words):
