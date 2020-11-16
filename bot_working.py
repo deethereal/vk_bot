@@ -20,7 +20,7 @@ votekickpercent=0
 imposter=['imposter','impostor','импостер',"импостор", "предатель"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba']
-votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 M = {'red':207227130, 'orange':125928980, 'yellow':62501050, 'green':150078285, 'sasha':218917421, 'blue':206312673,'god':236709769, 'shluha':240702553}
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -165,7 +165,9 @@ for event in longpoll.listen():
     	                 '      все цвета совпадают, кроме\n'
     	                 '      Ира - "shluha"\n'
                     	 '      Саша - "sasha"\n'
-                    	 '/mute -- выключить меня',event.object['message']['peer_id'])
+                    	 '/mute -- выключить меня\n'
+                    	 'execute_time -- убить меня\n'
+                    	 'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
                 if message_text == '/fuck_ups':
                     file = open('text.txt','r')
                     lines = file.readlines()
