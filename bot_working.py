@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'ъ' # Здесь ввести token сообщества (не удаляя апострофы)
+token = '' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -17,11 +17,14 @@ votekickTime=0
 votekickID=0
 votekickN=2
 votekickpercent=0
+M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита']], 'yellow':[62501050,['Коля']], 'green':[150078285,['Cемён','Семен']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,'Влад'], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
+
+
 imposter=['imposter','impostor','импостер',"импостор", "предатель"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba']
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
-M = {'red':[207227130,'Мотя'], 'orange':[125928980,'Никита'], 'yellow':[62501050,'Коля'], 'green':[150078285,'Cемён'], 'sasha':[218917421,'Саша'], 'blue':[206312673,'Диня'],'god':[236709769,'Влад'], 'shluha':[240702553,'Ыра']}
+M = {'red':[207227130,'Мотя'], 'orange':[125928980,'Никита'], 'yellow':[62501050,'Коля'], 'green':[150078285,'Cемён'], 'sasha':[218917421,'Саша'], 'blue':[206312673,'Диня'],'god':[236709769,'Влад'], 'shluha':[240702553,'Ирка']}
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
@@ -151,9 +154,11 @@ for event in longpoll.listen():
                             votekickTime=time.mktime(dt.timetuple())
                             votekickID=M[message_text.split()[1]][0]
                             votekick=True
+                            votekickpercent=0
                             votekickdone[event.object['message']['from_id']]=True
                             votekickdone[votekickID]=True
-                            send('F1 или F2? Голосование начато, извини,  '+str(M[message_text.split()[1]][1]),event.object['message']['peer_id'] )
+                            key=message_text.split()[1]
+                            send('F1 или F2? Голосование начато, извини,  '+str(M1[key][1][random.randint(0, len(M1[key][1])-1)]), event.object['message']['peer_id'] )
                 if message_text=='/roll':
                     send(str(random.randint(10000000,99999999)),event.object['message']['peer_id'])
                 if message_text=='/help':
