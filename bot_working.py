@@ -112,14 +112,14 @@ for event in longpoll.listen():
                         votekickpercent-=1
                         votekickdone[event.object['message']['from_id']]=True
                         send('Голос принят',event.object['message']['peer_id'] )
-                elif message_text=='f1яздесьзакон':
-                    if M['god']==event.object['message']['from_id']:
+                elif message_text=='f1мыздесьзакон':
+                    if (M['god']==event.object['message']['from_id'] or M['blue']==event.object['message']['from_id']) :
                         votekickpercent+=1000
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
-                elif message_text=='f2яздесьзакон':
-                    if M['god']==event.object['message']['from_id']:
+                elif message_text=='f2мыздесьзакон':
+                    if (M['god']==event.object['message']['from_id'] or M['blue']==event.object['message']['from_id']) :
                         votekickpercent-=1000
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
