@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'аааааааааааа' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'АААААААААААААААААААААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -201,21 +201,21 @@ for event in longpoll.listen():
                 if (message_text=='да') or (message_text=='da') or (message_text=='lf'):
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239162')
                 if (message_text=='бот позови влада'):
-                    send('@freebadman(влат)!', event.object['message']['peer_id'])
+                    send('@freebadman({})'.format(M1['god'][1][random.randint(0, len(M1['god'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови семена') or (message_text=='бот позови семёна'):
-                    send('@voidrad(симон)!', event.object['message']['peer_id'])
+                    send('@voidrad({})'.format(M1['green'][1][random.randint(0, len(M1['green'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови сашу'):
-                    send('@id_alejandr0(саша)!', event.object['message']['peer_id'])
+                    send('@id_alejandr0({})'.format(M1['sasha'][1][random.randint(0, len(M1['sasha'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови никиту'):
-                    send('@08kuy(никита)!', event.object['message']['peer_id'])
+                    send('@08kuy({})'.format(M1['orange'][1][random.randint(0, len(M1['orange'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови колю'):
-                    send('@k_o_l_y_a_24(коля)!', event.object['message']['peer_id'])
+                    send('@k_o_l_y_a_24({})'.format(M1['yellow'][1][random.randint(0, len(M1['yellow'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови мотю') or (message_text=='бот позови матвея'):
-                    send('@whitewolf185(мотя)!', event.object['message']['peer_id'])
+                    send('@whitewolf185({})'.format(M1['red'][1][random.randint(0, len(M1['red'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови ирку') or (message_text=='бот позови шлюху'):
-                    send('@zhur__zhur(ырка)!', event.object['message']['peer_id'])
+                    send('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='бот позови диню') or (message_text=='бот позови дениса'):
-                    send('@deeenizka(диня)!', event.object['message']['peer_id'])
+                    send('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]), event.object['message']['peer_id'])
                 if (message_text=='торч') or (message_text=='torch'):
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239160')
                 if (findWord(message_text, 'мама') or findWord(message_text, 'мамка') or findWord(message_text, 'мамку') or findWord(message_text, 'маму') or findWord(message_text, 'маман') or findWord(message_text, 'маме') or findWord(message_text, 'мамке')):
