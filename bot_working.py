@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'АААААААААААААААААААААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -20,7 +20,7 @@ votekickpercent=0
 M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
 
 
-imposter=['imposter','impostor','импостер',"импостор", "предатель"]
+imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba']
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
@@ -247,7 +247,7 @@ for event in longpoll.listen():
                 if (findWord(message_text,'simp') or findWord(message_text,'симп')):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239165')
                 if findWordInList(message_text,imposter):
-                    sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239164')
+                    sendphoto('', event.object['message']['peer_id'], 'photo-178950051_4572391'+str(67+random.randint(0, 7)))
                 if findWordInList(message_text,y_words):
                     if event.object['message']['from_id']!=M1['god'][0]:
                         sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
