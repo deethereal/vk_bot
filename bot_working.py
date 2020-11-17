@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'AAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'ААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -19,7 +19,7 @@ votekickN=2
 votekickpercent=0
 M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
 
-
+torch=['torch',"торч","калик","кальян","дядя коля","табак"]
 imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba']
@@ -145,6 +145,7 @@ for event in longpoll.listen():
             else:
                 if findIII(message_text):
                      send(findIII(message_text),event.object['message']['peer_id'] )
+
                 if findWord(message_text, 'хуй'):
                     send('Сам иди на хуй, пидор',event.object['message']['peer_id'])
                 if findWord(message_text, 'держу в курсе'):
@@ -170,6 +171,8 @@ for event in longpoll.listen():
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239165')
                 if findWordInList(message_text,imposter):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_4572391'+str(67+random.randint(0, 7)))
+                if findWordInList(message_text,torch):
+                    sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239160')
                 if findWordInList(message_text,y_words):
                     if event.object['message']['from_id']!=M1['god'][0]:
                         sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
@@ -242,8 +245,6 @@ for event in longpoll.listen():
                     send('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]), event.object['message']['peer_id'])
                 elif (message_text=='бот позови диню') or (message_text=='бот позови дениса'):
                     send('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]), event.object['message']['peer_id'])
-                elif (message_text=='торч') or (message_text=='torch'):
-                    sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239160')
                 elif (findWord(message_text, 'мама') or findWord(message_text, 'мамка') or findWord(message_text, 'мамку') or findWord(message_text, 'маму') or findWord(message_text, 'маман') or findWord(message_text, 'маме') or findWord(message_text, 'мамке')):
                     n = random.randint(0, 9)
                     if (n==0):
