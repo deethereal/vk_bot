@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'ААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'АААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -62,6 +62,16 @@ def findWordInList(msg, words):
         if result!=None:
             return True
     return False
+def ha4u(msg):
+    words=msg.split()
+    if len(words)>1:
+        f=words.index("хачу")
+        sendphoto(words[f-1].upper()+' ХАЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
+def ho4u(msg):
+    words=msg.split()
+    if len(words)>1:
+        f=words.index("хочу")
+        sendphoto(words[f-1].upper()+' ХОЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
 def findWord(msg,word):
     raw='\\b'+word+',?\\b'
     result = re.search(r''+raw, msg)
@@ -97,6 +107,7 @@ for event in longpoll.listen():
            # if event.object['message']['action']['type'] == 'chat_kick_user' and  event.object['message']['action']['type']['member_id']== 207227130:
                # counter_plus()
                # send('+1 обсёр в копилку',event.object['message']['peer_id'])
+        get=int(round(time.time() * 1000))
         message_text = event.object['message']['text'].lower()
         if message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
@@ -143,6 +154,7 @@ for event in longpoll.listen():
                     timestamp=timestamp%10000000
                     send(str(timestamp),event.object['message']['peer_id'])
             else:
+
                 if findIII(message_text):
                      send(findIII(message_text),event.object['message']['peer_id'] )
 
@@ -180,7 +192,14 @@ for event in longpoll.listen():
                         send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
                     else:
                         send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
-                if message_text=='/rollmode':
+                if findWord(message_text,'хачу'):
+                    ha4u(message_text)
+                if findWord(message_text,'хочу'):
+                    ho4u(message_text)
+                if message_text=='!отладка':
+                    now=int(round(time.time() * 1000))
+                    send(now-get,event.object['message']['peer_id'])
+                elif message_text=='/rollmode':
                     roll = True
                 elif message_text!='' and message_text!='/votekick' and message_text.split()[0]=='/votekick':
                     if message_text.split()[1]=='purple' or message_text.split()[1]=='god':
