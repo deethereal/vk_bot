@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'АААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'ААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -193,9 +193,15 @@ for event in longpoll.listen():
                     else:
                         send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
                 if findWord(message_text,'хачу'):
-                    ha4u(message_text)
+                    try:
+                        ha4u(message_text)
+                    except ValueError:
+                        continue
                 if findWord(message_text,'хочу'):
-                    ho4u(message_text)
+                    try:
+                        ho4u(message_text)
+                    except ValueError:
+                        continue
                 if message_text=='!отладка':
                     now=int(round(time.time() * 1000))
                     send(now-get,event.object['message']['peer_id'])
