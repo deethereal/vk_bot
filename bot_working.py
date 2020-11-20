@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'ААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'ВВФФФВФВВФВФВФФВВФВФВФФВФВ' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -55,6 +55,17 @@ def kick(chatID, userID):
 def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
+
+def malina():
+    now=datetime.datetime.now()
+    if (now.minute%10==0):
+        with open ('semen.txt','r') as f:
+            line=f.read()
+            if line!=str(now.day):
+                send('@voidrad(как) там малинка?',event.object['message']['peer_id'] )
+                newline=now.day
+                with open ('semen.txt','w') as f:
+                    f.write(str(newline))
 def findWordInList(msg, words):
     for word in words:
         raw='\\b'+word+',?\\b'
@@ -94,20 +105,20 @@ def findIII(msg):
     else:
         return False
 send('Дарова, я живой нахуууууй', 2000000001)
-month=datetime.date.today().month
+month=datetime.datetime.now().month
 if month == 11:
     send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
 for event in longpoll.listen():
     flag=False
+    malina()
     print (event)
-
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
        # print(event.object['message']['action'])
         #if event.object['message']['from_id'] == 207227130 and event.object['message']['action']:
            # if event.object['message']['action']['type'] == 'chat_kick_user' and  event.object['message']['action']['type']['member_id']== 207227130:
                # counter_plus()
                # send('+1 обсёр в копилку',event.object['message']['peer_id'])
-        get=int(round(time.time() * 1000))
+        #get=int(round(time.time() * 1000))
         message_text = event.object['message']['text'].lower()
         if message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
