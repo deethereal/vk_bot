@@ -9,7 +9,7 @@ import sys
 #from constants import counter, flag
 
 groupID = 178950051
-token = 'ВВФФФВФВВФВФВФФВВФВФВФФВФВ' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 roll=False
 mute_mode=False
 votekick = False
@@ -55,7 +55,6 @@ def kick(chatID, userID):
 def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
-
 def malina():
     now=datetime.datetime.now()
     if (now.minute%10==0):
@@ -75,12 +74,12 @@ def findWordInList(msg, words):
     return False
 def ha4u(msg):
     words=msg.split()
-    if len(words)>1:
+    if len(words) in [1,2,3]:
         f=words.index("хачу")
         sendphoto(words[f-1].upper()+' ХАЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
 def ho4u(msg):
     words=msg.split()
-    if len(words)>1:
+    if len(words) in [1,2,3]:
         f=words.index("хочу")
         sendphoto(words[f-1].upper()+' ХОЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
 def findWord(msg,word):
@@ -190,6 +189,8 @@ for event in longpoll.listen():
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239166')
                 if findWordInList(message_text,booba):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239163')
+                if findWord(message_text,'доска'):
+                    sendphoto('no booba?', event.object['message']['peer_id'], 'photo-178950051_457239176')
                 if (findWord(message_text,'simp') or findWord(message_text,'симп')):
                     sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239165')
                 if findWordInList(message_text,imposter):
@@ -260,7 +261,6 @@ for event in longpoll.listen():
                 elif message_text=='/mute':
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239161')
                     mute_mode=True
-
                 elif (message_text=='кого') or (message_text=='кого?'):
                     sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239153')
                 elif (message_text=='да') or (message_text=='da') or (message_text=='lf'):
