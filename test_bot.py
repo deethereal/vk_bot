@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'ААААААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -50,8 +50,9 @@ month=datetime.datetime.now().month
     #send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
 for event in longpoll.listen():
     flag=False
-    if f.malina():
-        send(f.malina(),event.object['message']['peer_id'])
+    foo=f.malina()
+    if foo:
+        send(foo,event.object['message']['peer_id'])
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
        # print(event.object['message']['action'])
