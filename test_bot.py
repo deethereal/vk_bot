@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'ААААААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'АААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -28,7 +28,6 @@ def add(userID,chatID, timeout):
 
 
 
-COMAND=False
 roll=False
 mute_mode=False
 votekick = False
@@ -55,6 +54,8 @@ for event in longpoll.listen():
         send(foo,event.object['message']['peer_id'])
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
+        COMAND=False
+
        # print(event.object['message']['action'])
         #if event.object['message']['from_id'] == 207227130 and event.object['message']['action']:
            # if event.object['message']['action']['type'] == 'chat_kick_user' and  event.object['message']['action']['type']['member_id']== 207227130:
@@ -125,13 +126,21 @@ for event in longpoll.listen():
                 if len(message_text.split())==2:
                     msg=message_text.split()
                     if msg[0]=='/mute':
-                        COMAND=True
-                        comands[msg[1]]=True
-                        send('Выключена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+
+                        if msg[1] in comands.keys():
+                            COMAND=True
+                            comands[msg[1]]=True
+                            send('Выключена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                        else:
+                            send("Такой команды нет",event.object['message']['peer_id'])
                     elif msg[0]=='/unmute':
-                        COMAND=True
                         comands[msg[1]]=False
-                        send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                        if msg[1] in comands.keys():
+                            COMAND=True
+                            comands[msg[1]]=False
+                            send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                        else:
+                            send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
                     if f.findIII(message_text) and not comands["ы"]:
                          send(f.findIII(message_text),event.object['message']['peer_id'] )
@@ -233,7 +242,7 @@ for event in longpoll.listen():
                         send(f'Всего мотя обосрался {counter} раз(а)\nЗа этот день {daily_c} раз(а)'
                              f'\nДней без обсеров: {days}', event.object['message']['peer_id'])
                         file.close()
-                    elif message_text == 'execute_time' and event.object['message']['from_id']==M1['blue'][0]:
+                    elif message_text == 'execute_time':
                         send('Блять, смерть',event.object['message']['peer_id'])
                         sys.exit()
                     elif message_text=='/mute':
