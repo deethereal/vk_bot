@@ -1,26 +1,10 @@
+
 import random
 import re
-import time
 import datetime
-import vk_api
-from vk_api import VkApi
-from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
-groupID = 178950051
-vk_session: VkApi = vk_api.VkApi(token=token)
-longpoll = VkBotLongPoll(vk_session, groupID)
-vk = vk_session.get_api()
-vk = vk_session.get_api()
-def sendphoto(msg, peerID, attach): # msg — сообщение
-    vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
-def send(msg, peerID):
-    vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID)
-def kick(chatID, userID):
-    vk.messages.removeChatUser(chat_id=chatID%1000, user_id=userID)
 
-def add(userID,chatID, timeout):
-    time.sleep(timeout)
-    vk.messages.addChatUser(user_id=userID, chat_id=chatID)
+
+
 def counter_plus():
     with open('text.txt', "r") as file:
         lines = file.readlines()
@@ -51,10 +35,12 @@ def malina():
         with open ('semen.txt','r') as f:
             line=f.read()
             if line!=str(now.day):
-                send('@voidrad(как) там малинка?',event.object['message']['peer_id'] )
+                s='@voidrad(как) там малинка?'
                 newline=now.day
                 with open ('semen.txt','w') as f:
                     f.write(str(newline))
+                return s
+    return False
 def findWordInList(msg, words):
     for word in words:
         raw='\\b'+word+',?\\b'
@@ -66,12 +52,14 @@ def ha4u(msg):
     words=msg.split()
     if len(words) in [1,2,3]:
         f=words.index("хачу")
-        sendphoto(words[f-1].upper()+' ХАЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
+        return words[f-1].upper()+' ХAЧУ'
+    return False
 def ho4u(msg):
     words=msg.split()
     if len(words) in [1,2,3]:
         f=words.index("хочу")
-        sendphoto(words[f-1].upper()+' ХОЧУ',event.object['message']['peer_id'],'photo-178950051_457239175')
+        return words[f-1].upper()+' ХОЧУ'
+    return False
 def findWord(msg,word):
     raw='\\b'+word+',?\\b'
     result = re.search(r''+raw, msg)
@@ -84,8 +72,7 @@ def findIII(msg):
     result = re.search(r'\bы+\b', msg)
     randi=random.randint(0,7)
     I='Ы'
-    for i in range(randi):
-        I+='ы'
+    I*=randi
     if result!= None:
         if result.group(0)=='ы':
             return 'Ы'
