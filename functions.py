@@ -29,16 +29,27 @@ def printdic(dic):
     for key in dk:
         s+=key+' -- ' +str(not dic.get(key))+' \n'
     return s
+
 def malina():
     now=datetime.datetime.now()
+    hn=24
+    if now.hour<13:
+        hn=12
     if (now.minute%10==0):
         with open ('semen.txt','r') as f:
-            line=f.read()
-            if line!=str(now.day):
+            line=f.readlines()
+            if line[0]!=str(now.day):
                 s='@voidrad(как) там малинка?'
-                newline=now.day
+                h=24
+                if now.hour<13:
+                    h=12
                 with open ('semen.txt','w') as f:
-                    f.write(str(newline))
+                    f.write(str(now.day)+"\n"+str(h))
+                return s
+            elif hn!=line[1]:
+                s='@voidrad(как) там малинка?'
+                with open ('semen.txt','w') as f:
+                    f.write(str(now.day)+"\n"+str(hn))
                 return s
     return False
 def findWordInList(msg, words):
@@ -52,13 +63,13 @@ def ha4u(msg):
     words=msg.split()
     if len(words) in [1,2,3]:
         f=words.index("хачу")
-        return words[f-1].upper()+' ХAЧУ'
+        return words[f-1].upper()+' ХAЧУ' if words[f-1].upper()!='ХАЧУ' else False
     return False
 def ho4u(msg):
     words=msg.split()
     if len(words) in [1,2,3]:
         f=words.index("хочу")
-        return words[f-1].upper()+' ХОЧУ'
+        return words[f-1].upper()+' ХОЧУ' if words[f-1].upper()!='ХОЧУ' else False
     return False
 def findWord(msg,word):
     raw='\\b'+word+',?\\b'
@@ -72,7 +83,7 @@ def findIII(msg):
     result = re.search(r'\bы+\b', msg)
     randi=random.randint(0,7)
     I='Ы'
-    I*=randi
+    I+="ы"*(randi-1)
     if result!= None:
         if result.group(0)=='ы':
             return 'Ы'
