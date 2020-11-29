@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -36,22 +36,22 @@ votekickID=0
 votekickN=2
 votekickpercent=0
 M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
-comands={'да':False, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
+comands={'да':True, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
 torch=['torch',"торч","калик","кальян","дядя коля","табак"]
 imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 
-#send('Дарова, я живой нахуууууй', 2000000001)
+#send('Матвей пидор', 2000000001)
 month=datetime.datetime.now().month
 #if month == 11:
     #send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
 for event in longpoll.listen():
     flag=False
-    foo=f.malina()
-    if foo:
-        send(foo,event.object['message']['peer_id'])
+    #foo=f.malina()
+    #if foo:
+       # send(foo,event.object['message']['peer_id'])
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
         COMAND=False
