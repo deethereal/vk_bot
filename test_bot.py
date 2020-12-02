@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -36,24 +36,22 @@ votekickID=0
 votekickN=2
 votekickpercent=0
 M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
-comands={'да':True, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
+comands={'да':False, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
 torch=['torch',"торч","калик","кальян","дядя коля","табак"]
 imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 
-#send('Матвей пидор', 2000000001)
+#send('Дарова, я живой нахуууууй', 2000000001)
 month=datetime.datetime.now().month
 #if month == 11:
     #send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
 for event in longpoll.listen():
     flag=False
-    MSG=[]
-    PHOTOS=[]
-    #foo=f.malina()
-    #if foo:
-       # send(foo,event.object['message']['peer_id'])
+    foo=f.malina()
+    if foo:
+        send(foo,event.object['message']['peer_id'])
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
         COMAND=False
@@ -144,54 +142,56 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
-                    if ( f.findWord(message_text, 'на хуй') or  f.findWord(message_text, 'нахуй')) and not comands["хуй"]:
-                        MSG.append('Сам иди на хуй, пидор')
+                    if f.findIII(message_text) and not comands["ы"]:
+                         send(f.findIII(message_text),event.object['message']['peer_id'] )
+                    if f.findWord(message_text, 'хуй') and not comands["хуй"]:
+                        send('Сам иди на хуй, пидор',event.object['message']['peer_id'])
                     if f.findWord(message_text,"бот"):
                         words=message_text.split()
                         if len(words)==3 and words[1]=='позови':
                             if (words[2]=='влада'):
-                                MSG.append('@freebadman({})'.format(M1['god'][1][random.randint(0, len(M1['god'][1])-1)]))
+                                send('@freebadman({})'.format(M1['god'][1][random.randint(0, len(M1['god'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='семена') or (words[2]=='семёна') or (words[2]=='cёму') or (words[2]=='cему'):
-                                MSG.append('@voidrad({})'.format(M1['green'][1][random.randint(0, len(M1['green'][1])-1)]))
+                                send('@voidrad({})'.format(M1['green'][1][random.randint(0, len(M1['green'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='сашу'):
-                                MSG.append('@id_alejandr0({})'.format(M1['sasha'][1][random.randint(0, len(M1['sasha'][1])-1)]))
+                                send('@id_alejandr0({})'.format(M1['sasha'][1][random.randint(0, len(M1['sasha'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='никиту'):
-                                MSG.append('@08kuy({})'.format(M1['orange'][1][random.randint(0, len(M1['orange'][1])-1)]))
+                                send('@08kuy({})'.format(M1['orange'][1][random.randint(0, len(M1['orange'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='колю'):
-                                MSG.append('@k_o_l_y_a_24({})'.format(M1['yellow'][1][random.randint(0, len(M1['yellow'][1])-1)]))
+                                send('@k_o_l_y_a_24({})'.format(M1['yellow'][1][random.randint(0, len(M1['yellow'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='мотю') or (words[2]=='матвея'):
-                                MSG.append('@whitewolf185({})'.format(M1['red'][1][random.randint(0, len(M1['red'][1])-1)]))
+                                send('@whitewolf185({})'.format(M1['red'][1][random.randint(0, len(M1['red'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='ирку') or (words[2]=='шлюху'):
-                                MSG.append('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]))
+                                send('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]), event.object['message']['peer_id'])
                             elif (words[2]=='диню') or (words[2]=='дениса'):
-                                MSG.append('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]))
+                                send('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]), event.object['message']['peer_id'])
                     if f.findWord(message_text, 'держу в курсе'):
-                        PHOTOS.append(['','photo-178950051_457239152'])
+                        sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239152')
                     if f.findWord(message_text, 'матвей обосрался') or f.findWord(message_text, 'мотя обосрался') or f.findWord(message_text, 'oбосрался матвей') or f.findWord(message_text, 'oбосрался мотя'):
                         f.counter_plus()
-                        MSG.append('Я записал!')
+                        send('Я записал!', event.object['message']['peer_id'])
                     if (f.findWord(message_text,'фки') or f.findWord(message_text,'фкишник') ) and event.object['message']['from_id']!=M1['blue'][0]:
-                        PHOTOS.append(['', 'photo-178950051_457239123'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239123')
                     if (f.findWord(message_text,'вмк') or f.findWord(message_text,'вмкшник')) and event.object['message']['from_id']!=M1['yellow'][0]:
-                        PHOTOS.append(['', 'photo-178950051_457239139'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239139')
                     if (f.findWord(message_text,'мирэа') or f.findWord(message_text,'мирэашник')) and event.object['message']['from_id']!=M1['god'][0]:
-                        PHOTOS.append(['','photo-178950051_457239140'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239140')
                     if (f.findWord(message_text,'мехмат') or f.findWord(message_text,'мехматянин') or f.findWord(message_text,'мехматовец')) and event.object['message']['from_id']!=M1['sasha'][0]:
-                        PHOTOS.append(['','photo-178950051_457239148'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239148')
                     if (f.findWord(message_text,'мое') or f.findWord(message_text,'моё')):
-                        PHOTOS.append(['НАШЕ',  'photo-178950051_457239157'])
+                        sendphoto('НАШЕ', event.object['message']['peer_id'], 'photo-178950051_457239157')
                     if ((f.findWord(message_text,'маи') or f.findWord(message_text,'маёвец') or f.findWord(message_text,'маёвцы') or f.findWord(message_text,'маевец') or f.findWord(message_text,'маевцы')) and (event.object['message']['from_id']!=M1['red'][0] or event.object['message']['from_id']!=M1['green'][0])):
-                        PHOTOS.append(['','photo-178950051_457239166'])
+                        sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239166')
                     if f.findWordInList(message_text,booba):
-                        PHOTOS.append(['', 'photo-178950051_457239163'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239163')
                     if f.findWord(message_text,'доска') or f.findWord(message_text,'ирка'):
-                        PHOTOS.append(['no booba?','photo-178950051_457239176'])
+                        sendphoto('no booba?', event.object['message']['peer_id'], 'photo-178950051_457239176')
                     if (f.findWord(message_text,'simp') or f.findWord(message_text,'симп')):
-                        PHOTOS.append(['' 'photo-178950051_457239165'])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_457239165')
                     if f.findWordInList(message_text,imposter) and not comands["пидор"]:
-                        PHOTOS.append(['', 'photo-178950051_4572391'+str(67+random.randint(0, 7))])
+                        sendphoto('', event.object['message']['peer_id'], 'photo-178950051_4572391'+str(67+random.randint(0, 7)))
                     if f.findWordInList(message_text,torch) and not comands["кальян"]:
-                        PHOTOS.append(['','photo-178950051_457239160'])
+                        sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239160')
                     if f.findWordInList(message_text,y_words):
                         if event.object['message']['from_id']!=M1['god'][0]:
                             sendphoto('Сам ты у е б а, пашел нахуй',event.object['message']['peer_id'],'photo-178950051_457239159')#['conversation_message_id'] )
@@ -199,23 +199,21 @@ for event in longpoll.listen():
                             send('Возвращайте этого пидора сами',event.object['message']['peer_id'] )
                         else:
                             send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
-                    elif f.findWord(message_text,'хачу') and not comands["хочу"]:
+                    if f.findWord(message_text,'хачу') and not comands["хочу"]:
                         try:
                             if (f.ha4u(message_text)):
-                                PHOTOS.append([f.ha4u(message_text),'photo-178950051_457239175' ])
+                                sendphoto(f.ha4u(message_text),event.object['message']['peer_id'],'photo-178950051_457239175' )
 
                         except ValueError:
                             continue
                     if f.findWord(message_text,'хочу') and not comands["хочу"]:
                         try:
                             if (f.ho4u(message_text)):
-                                PHOTOS.append([f.ho4u(message_text),'photo-178950051_457239175' ])
+                                sendphoto(f.ho4u(message_text),event.object['message']['peer_id'],'photo-178950051_457239175' )
 
                         except ValueError:
                             continue
-                    if f.findIII(message_text) and not comands["ы"]:
-                        MSG.append(f.findIII(message_text))
-                    elif message_text=='!отладка':
+                    if message_text=='!отладка':
                         #now=int(round(time.time() * 1000))
                         send("надо пофиксить",event.object['message']['peer_id'])
                     elif message_text=='/rollmode':
@@ -262,36 +260,27 @@ for event in longpoll.listen():
                     elif (f.findWord(message_text, 'мама') or f.findWord(message_text, 'мамка') or f.findWord(message_text, 'мамку') or f.findWord(message_text, 'маму') or f.findWord(message_text, 'маман') or f.findWord(message_text, 'маме') or f.findWord(message_text, 'мамке')) and not comands["мама"]:
                         n = random.randint(0, 9)
                         if (n==0):
-                            MSG.append('А у Семёна ТАКАЯ МАМА' )
+                            send('А у Семёна ТАКАЯ МАМА',event.object['message']['peer_id'] )
                         elif (n==1):
-                            MSG.append('Я к твоей маме кстате завтра первый в очереди')
+                            send('Я к твоей маме кстате завтра первый в очереди',event.object['message']['peer_id'] )
                         elif (n==2):
-                            MSG.append('Маму твою' )
-                            MSG.append('В кино водил' )
+                            send('Маму твою',event.object['message']['peer_id'] )
+                            send('В кино водил',event.object['message']['peer_id'] )
                         elif (n==3):
-                            MSG.append('Маму твою\nТвою маму\nМаму \nЯ б твою маму даа')
+                            send('Маму твою',event.object['message']['peer_id'] )
+                            send('Твою маму',event.object['message']['peer_id'] )
+                            send('Маму твою',event.object['message']['peer_id'] )
+                            send('Я б твою маму даа',event.object['message']['peer_id'] )
                         elif (n==4):
-                            MSG.append('Кстати передай своей маме шо вечером все в силе' )
+                            send('Кстати передай своей маме шо вечером все в силе',event.object['message']['peer_id'] )
                         elif (n==6):
-                            MSG.append('Люблю твою маму' )
+                            send('Люблю твою маму',event.object['message']['peer_id'] )
                         elif (n==7):
-                            PHOTOS.append(['','photo-178950051_457239156'])
+                            sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239156')
                         elif (n==8):
-                            PHOTOS.append(['А ну адавай мать','photo-178950051_457239158'])
+                            sendphoto('А ну адавай мать',event.object['message']['peer_id'],'photo-178950051_457239158')
                         elif (n==9):
-                            PHOTOS.append(['Твоя мама - наша мама','photo-178950051_457239157'])
-                    if len(MSG)!=0 and len(PHOTOS)!=0:
-                        if random.randint(0,1)==1:
-                            send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'])
-                        else:
-                            r_id=random.randint(0,len(PHOTOS)-1)
-                            sendphoto(PHOTOS[r_id][0],event.object['message']['peer_id'],PHOTOS[r_id][1])
-                    elif len(MSG)!=0:
-                        send(MSG[random.randint(0, len(MSG) - 1)], event.object['message']['peer_id'])
-                    elif len(PHOTOS)!=0:
-                        r_id = random.randint(0, len(PHOTOS) - 1)
-                        sendphoto(PHOTOS[r_id][0], event.object['message']['peer_id'], PHOTOS[r_id][1])
-
+                            sendphoto('Твоя мама - наша мама',event.object['message']['peer_id'],'photo-178950051_457239157')
         else:
             if message_text=='/unmute':
                 send('Я снова с вами',event.object['message']['peer_id'])
