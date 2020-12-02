@@ -61,15 +61,23 @@ def findWordInList(msg, words):
     return False
 def ha4u(msg):
     words=msg.split()
-    if len(words) in [1,2,3]:
+    if len(words) in [2,3]:
         f=words.index("хачу")
-        return words[f-1].upper()+' ХAЧУ' if words[f-1].upper()!='ХАЧУ' else False
+        if len(words)==2:
+            if (words[f-1]=='хачу' or words[f-1]=='хочу'):
+                return False
+            return words[f-1].upper()+' ХAЧУ'
+        return words[f-2].upper()+' '+words[f-1].upper()+' ХAЧУ'
     return False
 def ho4u(msg):
     words=msg.split()
-    if len(words) in [1,2,3]:
+    if len(words) in [2,3]:
         f=words.index("хочу")
-        return words[f-1].upper()+' ХОЧУ' if words[f-1].upper()!='ХОЧУ' else False
+        if len(words)==2:
+            if (words[f-1]=='хачу' or words[f-1]=='хочу'):
+                return False
+            return words[f-1].upper()+' ХOЧУ'
+        return words[f-2].upper()+' '+words[f-1].upper()+' ХOЧУ'
     return False
 def findWord(msg,word):
     raw='\\b'+word+',?\\b'
