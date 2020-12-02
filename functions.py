@@ -23,12 +23,23 @@ def counter_plus():
         lines.insert(5, '\n')
     with open("text.txt", "w") as file:
         file.writelines(lines)
+
+
+
+
+
 def printdic(dic):
     s=''
     dk=dic.keys()
     for key in dk:
         s+=key+' -- ' +str(not dic.get(key))+' \n'
     return s
+
+
+
+
+
+
 
 def malina():
     now=datetime.datetime.now()
@@ -52,6 +63,10 @@ def malina():
                     f.write(str(now.day)+"\n"+str(hn))
                 return s
     return False
+
+
+
+
 def findWordInList(msg, words):
     for word in words:
         raw='\\b'+word+',?\\b'
@@ -59,6 +74,12 @@ def findWordInList(msg, words):
         if result!=None:
             return True
     return False
+
+
+
+
+
+
 def ha4u(msg):
     words=msg.split()
     if len(words) in [2,3]:
@@ -69,6 +90,10 @@ def ha4u(msg):
             return words[f-1].upper()+' ХAЧУ'
         return words[f-2].upper()+' '+words[f-1].upper()+' ХAЧУ'
     return False
+
+
+
+
 def ho4u(msg):
     words=msg.split()
     if len(words) in [2,3]:
@@ -79,6 +104,10 @@ def ho4u(msg):
             return words[f-1].upper()+' ХOЧУ'
         return words[f-2].upper()+' '+words[f-1].upper()+' ХOЧУ'
     return False
+
+
+
+
 def findWord(msg,word):
     raw='\\b'+word+',?\\b'
     result = re.search(r''+raw, msg)
@@ -87,6 +116,8 @@ def findWord(msg,word):
         return True
     else:
         return False
+
+
 def findIII(msg):
     result = re.search(r'\bы+\b', msg)
     randi=random.randint(0,7)
