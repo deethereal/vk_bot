@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'АААААААААААААААААААААААААААААААААААААААААААААААААААА' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -102,11 +102,18 @@ for event in longpoll.listen():
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 if time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150 or abs(votekickpercent)>=3 or votekickN==8:
                     if (votekickpercent>0 and votekickN>=4) or (votekickpercent>500):
-                         kick(event.object['message']['peer_id'], votekickID)
-                    send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
-                    votekick=False
-                    votekickN=2
-                    votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                        try:
+                            kick(event.object['message']['peer_id'], votekickID)
+                            send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
+                            votekick=False
+                            votekickN=2
+                            votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                        except vk_api.exceptions.ApiError:
+                            send('Эта хуйня слишком тяжелая, не могу(((',event.object['message']['peer_id'] )
+                            votekick=False
+                            votekickN=2
+                            votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+        
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
                     roll=False
@@ -281,7 +288,6 @@ for event in longpoll.listen():
                     elif len(PHOTOS)!=0:
                         r_id = random.randint(0, len(PHOTOS) - 1)
                         sendphoto(PHOTOS[r_id][0], event.object['message']['peer_id'], PHOTOS[r_id][1])
-
         else:
             if message_text=='/unmute':
                 send('Я снова с вами',event.object['message']['peer_id'])
