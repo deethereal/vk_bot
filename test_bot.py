@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'd37313d3e07248a7a2a458f40a6db51db06283c2924b268e2a2affd827408f66553faa4925efac8c479b4' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -68,7 +68,7 @@ for event in longpoll.listen():
                 '/mute -- выключить меня\n'
                 '/unmute -- включить меня\n'
                 'execute_time -- убить меня(может только денис)\n'
-                '/comands -- состояние команд\n'
+                '/commands -- состояние команд\n'
                 '/mute команда_нейм -- выключить команду\n'
                 '/unmute команда_нейм -- включить команду\n'
                 'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
@@ -244,7 +244,7 @@ for event in longpoll.listen():
                     elif message_text=='/mute':
                         sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239161')
                         mute_mode=True
-                    elif message_text=='/comands':
+                    elif message_text=='/commands':
                         send(f.printdic(comands),event.object['message']['peer_id'])
                     elif (message_text=='кого') or (message_text=='кого?'):
                         sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239153')
@@ -257,8 +257,7 @@ for event in longpoll.listen():
                         elif (n==1):
                             MSG.append('Я к твоей маме кстате завтра первый в очереди')
                         elif (n==2):
-                            MSG.append('Маму твою' )
-                            MSG.append('В кино водил' )
+                            MSG.append('Маму твою\nВ кино водил' )
                         elif (n==3):
                             MSG.append('Маму твою\nТвою маму\nМаму \nЯ б твою маму даа')
                         elif (n==4):
