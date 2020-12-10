@@ -7,7 +7,7 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
@@ -43,7 +43,7 @@ y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa',
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 
-#send('Матвей пидор', 2000000001)
+send("Сам иди нахуй", 2000000001)
 month=datetime.datetime.now().month
 #if month == 11:
     #send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
@@ -133,11 +133,15 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                     elif msg[0]=='/unmute':
-                        comands[msg[1]]=False
                         if msg[1] in comands.keys():
                             COMAND=True
                             comands[msg[1]]=False
                             send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                        elif msg[1]=='all':
+                            COMAND=True
+                            for i in comands.keys():
+                                comands[i]=False
+                            send('Включены все команды ',event.object['message']['peer_id'])
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
@@ -158,7 +162,7 @@ for event in longpoll.listen():
                                 MSG.append('@k_o_l_y_a_24({})'.format(M1['yellow'][1][random.randint(0, len(M1['yellow'][1])-1)]))
                             elif (words[2]=='мотю') or (words[2]=='матвея'):
                                 MSG.append('@whitewolf185({})'.format(M1['red'][1][random.randint(0, len(M1['red'][1])-1)]))
-                            elif (words[2]=='ирку') or (words[2]=='шлюху'):
+                            elif (words[2]=='ирку') or (words[2]=='шлюху' or (words[2]=='иру') :
                                 MSG.append('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]))
                             elif (words[2]=='диню') or (words[2]=='дениса'):
                                 MSG.append('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]))
@@ -184,7 +188,7 @@ for event in longpoll.listen():
                     if f.findWord(message_text,'доска') or f.findWord(message_text,'ирка'):
                         PHOTOS.append(['no booba?','photo-178950051_457239176'])
                     if (f.findWord(message_text,'simp') or f.findWord(message_text,'симп')):
-                        PHOTOS.append(['' 'photo-178950051_457239165'])
+                        PHOTOS.append(['','photo-178950051_457239165'])
                     if f.findWordInList(message_text,imposter) and not comands["пидор"]:
                         PHOTOS.append(['', 'photo-178950051_4572391'+str(67+random.randint(0, 7))])
                     if f.findWordInList(message_text,torch) and not comands["кальян"]:
