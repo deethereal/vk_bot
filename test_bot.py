@@ -7,12 +7,12 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
-
+joke=False
 
 
 
@@ -26,7 +26,7 @@ def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
 
-
+motya_num=73
 rid=12
 roll=False
 mute_mode=False
@@ -43,11 +43,9 @@ y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa',
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 
-send("Сам иди нахуй", 2000000001)
-month=datetime.datetime.now().month
-#if month == 11:
-    #send("Сегодня небритябрь/недрочабрь, так что не дрочите и/или не брейтесь, пацаны", 2000000001)
+#send("Сам иди нахуй", 2000000001)
 for event in longpoll.listen():
+    joke=False
     flag=False
     MSG=[]
     PHOTOS=[]
@@ -57,21 +55,24 @@ for event in longpoll.listen():
         message_text = event.object['message']['text'].lower()
         if message_text=='/help':
                 COMAND=True
-                send('Я умею: \n '
-                '/roll -- выбросить сулчайное восьмизначное число\n'
-                '/rollmode — после каждого сообщения выплевывать сулчайное восьмизначное число. \nЧтобы завершить rollmode -- "хватит пожалуйста " или !stop\n'
-                '/votekick <color> — кикнуть члена или Ырку\n'
-    	        '      <color>:\n'
-    	        '      все цвета совпадают, кроме\n'
-    	        '      Ира - "shluha"\n'
-                '      Саша - "sasha"\n'
-                '/mute -- выключить меня\n'
-                '/unmute -- включить меня\n'
-                'execute_time -- убить меня(может только денис)\n'
-                '/commands -- состояние команд\n'
-                '/mute команда_нейм -- выключить команду\n'
-                '/unmute команда_нейм -- включить команду\n'
-                'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
+                if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,99)==motya_num):
+                    sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                else:
+                    send('Я умею: \n '
+                    '/roll -- выбросить сулчайное восьмизначное число\n'
+                    '/rollmode — после каждого сообщения выплевывать сулчайное восьмизначное число. \nЧтобы завершить rollmode -- "хватит пожалуйста " или !stop\n'
+                    '/votekick <color> — кикнуть члена или Ырку\n'
+        	        '      <color>:\n'
+        	        '      все цвета совпадают, кроме\n'
+        	        '      Ира - "shluha"\n'
+                    '      Саша - "sasha"\n'
+                    '/mute -- выключить меня\n'
+                    '/unmute -- включить меня\n'
+                    'execute_time -- убить меня(может только денис)\n'
+                    '/commands -- состояние команд\n'
+                    '/mute команда_нейм -- выключить команду\n'
+                    '/unmute команда_нейм -- включить команду\n'
+                    'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
         elif message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
@@ -115,8 +116,11 @@ for event in longpoll.listen():
                             votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
-                    roll=False
-                    send('Останавливаю барабан', event.object['message']['peer_id'])
+                    if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,99)==motya_num):
+                        sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                    else:
+                        roll=False
+                        send('Останавливаю барабан', event.object['message']['peer_id'])
 
                 else:
                     rid=rid +random.randint(0,42)
@@ -127,16 +131,23 @@ for event in longpoll.listen():
                     if msg[0]=='/mute':
 
                         if msg[1] in comands.keys():
-                            COMAND=True
-                            comands[msg[1]]=True
-                            send('Выключена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,99)==motya_num):
+                                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                                COMAND=True
+                            else:
+                                comands[msg[1]]=True
+                                send('Выключена команда {}'.format(msg[1]),event.object['message']['peer_id'])
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                     elif msg[0]=='/unmute':
                         if msg[1] in comands.keys():
-                            COMAND=True
-                            comands[msg[1]]=False
-                            send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
+                            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,99)==motya_num):
+                                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                                COMAND=True
+                            else:
+
+                                comands[msg[1]]=False
+                                send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
                         elif msg[1]=='all':
                             COMAND=True
                             for i in comands.keys():
@@ -145,6 +156,11 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
+                    if event.object['message']['from_id']==M1['red'][0]:
+                        num=random.randint(0,99)
+                        print('got it:', num)
+                        if num==motya_num:
+                            joke=True
                     if ( f.findWord(message_text, 'на хуй') or  f.findWord(message_text, 'нахуй')) and not comands["хуй"]:
                         MSG.append('Сам иди на хуй, пидор')
                     if f.findWord(message_text,"бот"):
@@ -162,7 +178,7 @@ for event in longpoll.listen():
                                 MSG.append('@k_o_l_y_a_24({})'.format(M1['yellow'][1][random.randint(0, len(M1['yellow'][1])-1)]))
                             elif (words[2]=='мотю') or (words[2]=='матвея'):
                                 MSG.append('@whitewolf185({})'.format(M1['red'][1][random.randint(0, len(M1['red'][1])-1)]))
-                            elif (words[2]=='ирку') or (words[2]=='шлюху' or (words[2]=='иру') :
+                            elif (words[2]=='ирку') or (words[2]=='шлюху') or (words[2]=='иру') :
                                 MSG.append('@zhur__zhur({})'.format(M1['shluha'][1][random.randint(0, len(M1['shluha'][1])-1)]))
                             elif (words[2]=='диню') or (words[2]=='дениса'):
                                 MSG.append('@deeenizka({})'.format(M1['blue'][1][random.randint(0, len(M1['blue'][1])-1)]))
@@ -250,8 +266,11 @@ for event in longpoll.listen():
                         send('Блять, смерть',event.object['message']['peer_id'])
                         sys.exit()
                     elif message_text=='/mute':
-                        sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239161')
-                        mute_mode=True
+                        if (event.object[event.object['message']['from_id']]==M1['red'][0] and random.randint(0,99)==motya_num):
+                            sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                        else:
+                            sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239161')
+                            mute_mode=True
                     elif message_text=='/commands':
                         send(f.printdic(comands),event.object['message']['peer_id'])
                     elif (message_text=='кого') or (message_text=='кого?'):
@@ -278,18 +297,34 @@ for event in longpoll.listen():
                             PHOTOS.append(['А ну адавай мать','photo-178950051_457239158'])
                         elif (n==9):
                             PHOTOS.append(['Твоя мама - наша мама','photo-178950051_457239157'])
+
                     if len(MSG)!=0 and len(PHOTOS)!=0:
-                        if random.randint(0,1)==1:
-                            send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'])
+                        if joke:
+                            sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                         else:
-                            r_id=random.randint(0,len(PHOTOS)-1)
-                            sendphoto(PHOTOS[r_id][0],event.object['message']['peer_id'],PHOTOS[r_id][1])
+                            if random.randint(0,1)==1:
+                                send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'])
+                            else:
+                                r_id=random.randint(0,len(PHOTOS)-1)
+                                sendphoto(PHOTOS[r_id][0],event.object['message']['peer_id'],PHOTOS[r_id][1])
                     elif len(MSG)!=0:
-                        send(MSG[random.randint(0, len(MSG) - 1)], event.object['message']['peer_id'])
+                        if joke:
+                            sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                        else:
+                            send(MSG[random.randint(0, len(MSG) - 1)], event.object['message']['peer_id'])
                     elif len(PHOTOS)!=0:
-                        r_id = random.randint(0, len(PHOTOS) - 1)
-                        sendphoto(PHOTOS[r_id][0], event.object['message']['peer_id'], PHOTOS[r_id][1])
+                        if joke:
+                            sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                        else:
+                            r_id = random.randint(0, len(PHOTOS) - 1)
+                            sendphoto(PHOTOS[r_id][0], event.object['message']['peer_id'], PHOTOS[r_id][1])
+                    elif joke:
+                            sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239178')
+
         else:
             if message_text=='/unmute':
-                send('Я снова с вами',event.object['message']['peer_id'])
-                mute_mode=False
+                if (event.object[event.object['message']['from_id']]==M1['red'][0] and random.randint(0,99)==motya_num):
+                    sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+                else:
+                    send('Я снова с вами',event.object['message']['peer_id'])
+                    mute_mode=False
