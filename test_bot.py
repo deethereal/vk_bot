@@ -7,13 +7,13 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
 joke=False
-parasites=["лол", "ы","бля","сука","сук", "бл"]
+parasites=["сука","блин",'((((','))))','))0)' ]
 
 
 def sendphoto(msg, peerID, attach): # msg — сообщение
@@ -156,12 +156,12 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
-                    if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!=''):
+                    if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
                         with open('chat.txt', 'a') as c:
                             if event.object['message']['text'][-1]!='.':
-                                c.write(event.object['message']['text']+'.')
+                                c.write(event.object['message']['text']+'. ')
                             else:
-                                c.write(event.object['message']['text'])
+                                c.write(event.object['message']['text']+' ')
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
                         print('got it:', num)
@@ -272,7 +272,7 @@ for event in longpoll.listen():
                         send('Блять, смерть',event.object['message']['peer_id'])
                         sys.exit()
                     elif message_text=='/mute':
-                        if (event.object[event.object['message']['from_id']]==M1['red'][0] and random.randint(0,199)==motya_num):
+                        if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
                             sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                         else:
                             sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239161')
@@ -329,8 +329,15 @@ for event in longpoll.listen():
 
         else:
             if message_text=='/unmute':
-                if (event.object[event.object['message']['from_id']]==M1['red'][0] and random.randint(0,199)==motya_num):
+                if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
                     sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                 else:
                     send('Я снова с вами',event.object['message']['peer_id'])
                     mute_mode=False
+            else:
+                if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
+                        with open('chat.txt', 'a') as c:
+                            if event.object['message']['text'][-1]!='.':
+                                c.write(event.object['message']['text']+'. ')
+                            else:
+                                c.write(event.object['message']['text']+' ')
