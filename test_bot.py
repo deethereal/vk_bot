@@ -7,9 +7,8 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token=''
-with open ('/home/ununtu/bot/token.txt' , r) as t:
-    token = t.readline()
+with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
+    token = t.readline().rstrip()
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
