@@ -7,7 +7,9 @@ import random
 import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
-token = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' # Здесь ввести token сообщества (не удаляя апострофы)
+token=''
+with open ('/home/ununtu/bot/token.txt' , r) as t:
+    token = t.readline()
 groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
