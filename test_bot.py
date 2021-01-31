@@ -237,9 +237,9 @@ for event in longpoll.listen():
                             continue
                     if f.findIII(message_text) and not comands["ы"]:
                         MSG.append(f.findIII(message_text))
-                    elif message_text=='!отладка':
+                    elif message_text=='!онлайн:
                         #now=int(round(time.time() * 1000))
-                        send("надо пофиксить",event.object['message']['peer_id'])
+                        send("да",event.object['message']['peer_id'])
                     elif message_text=='/rollmode':
                         roll = True
                         rid = int(event.object['message']['conversation_message_id'])
