@@ -75,6 +75,9 @@ for event in longpoll.listen():
                     '/commands -- состояние команд\n'
                     '/mute команда_нейм -- выключить команду\n'
                     '/unmute команда_нейм -- включить команду\n'
+                    '!гена(1 или 2) -- генерация предложения по 1 или 2 словам\n'
+                    'генана -- режим постоянной генерации\n'
+                    'гена возьми -- остановить генерацию текста\n'
                     'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
         elif message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
@@ -132,12 +135,13 @@ for event in longpoll.listen():
                 if message_text!="гена возьми":
                     send(m.learn(int(message_text[6])), event.object['message']['peer_id'])
                 else:
+                    send("Закончилась генерация", event.object['message']['peer_id'])
                     genamode=False
             elif message_text[0:5] == "!гена":
-                print("отладка")
                 send(m.learn(int(message_text[6])), event.object['message']['peer_id'])
             elif message_text=="генана":
                 genamode=True
+                send("Началась генерация",event.object['message']['peer_id'])
             else:
                 if len(message_text.split())==2:
                     msg=message_text.split()
