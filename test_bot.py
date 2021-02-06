@@ -142,6 +142,15 @@ for event in longpoll.listen():
             elif message_text=="генана":
                 genamode=True
                 send("Началась генерация",event.object['message']['peer_id'])
+            elif message_text == '!онлайн':
+                # now=int(round(time.time() * 1000))
+                send("да-да", event.object['message']['peer_id'])
+
+            elif message_text == '/rollmode':
+                roll = True
+                rid = int(event.object['message']['conversation_message_id'])
+                send('Расскручиваю барабан', event.object['message']['peer_id'])
+
             else:
                 if len(message_text.split())==2:
                     msg=message_text.split()
@@ -252,14 +261,6 @@ for event in longpoll.listen():
                             continue
                     if f.findIII(message_text) and not comands["ы"]:
                         MSG.append(f.findIII(message_text))
-                    elif message_text=='!онлайн':
-                        #now=int(round(time.time() * 1000))
-                        send("да-да",event.object['message']['peer_id'])
-
-                    elif message_text=='/rollmode':
-                        roll = True
-                        rid = int(event.object['message']['conversation_message_id'])
-                        send('Расскручиваю барабан',event.object['message']['peer_id'])
 
                     elif message_text!='' and message_text!='/votekick' and message_text.split()[0]=='/votekick':
                         if message_text.split()[1]=='purple' or message_text.split()[1]=='god':
