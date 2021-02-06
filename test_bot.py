@@ -1,4 +1,5 @@
 import functions as f
+import mark as m
 import time
 import datetime
 from vk_api.bot_longpoll import VkBotEventType
@@ -146,7 +147,6 @@ for event in longpoll.listen():
                                 sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                                 COMAND=True
                             else:
-
                                 comands[msg[1]]=False
                                 send('Включена команда {}'.format(msg[1]),event.object['message']['peer_id'])
                         elif msg[1]=='all':
@@ -240,6 +240,9 @@ for event in longpoll.listen():
                     elif message_text=='!онлайн':
                         #now=int(round(time.time() * 1000))
                         send("да",event.object['message']['peer_id'])
+                    elif message_text[0:5]=="!гена":
+                        print("отладка")
+                        send(m.learn(int(message_text[6])),event.object['message']['peer_id'])
                     elif message_text=='/rollmode':
                         roll = True
                         rid = int(event.object['message']['conversation_message_id'])
