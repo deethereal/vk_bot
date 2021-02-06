@@ -133,7 +133,7 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    send(m.learn(int(message_text[6])), event.object['message']['peer_id'])
+                    send(m.learn(1), event.object['message']['peer_id'])
                 else:
                     send("Закончилась генерация", event.object['message']['peer_id'])
                     genamode=False

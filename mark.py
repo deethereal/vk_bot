@@ -10,5 +10,3 @@ def learn(par):
         return result.capitalize()
     else:
         return 'Доступные параметры: "1" или "2"'
-
-print(learn(2))
