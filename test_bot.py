@@ -33,6 +33,7 @@ rid=12
 roll=False
 mute_mode=False
 votekick = False
+genamode=False
 votekickTime=0
 votekickID=0
 votekickN=2
@@ -127,6 +128,16 @@ for event in longpoll.listen():
                 else:
                     rid=rid +random.randint(0,42)
                     send(str(rid) ,event.object['message']['peer_id'])
+            elif genamode:
+                if message_text!="гена возьми":
+                    send(m.learn(int(message_text[6])), event.object['message']['peer_id'])
+                else:
+                    genamode=False
+            elif message_text[0:5] == "!гена":
+                print("отладка")
+                send(m.learn(int(message_text[6])), event.object['message']['peer_id'])
+            elif message_text=="генана":
+                genamode=True
             else:
                 if len(message_text.split())==2:
                     msg=message_text.split()
@@ -239,10 +250,8 @@ for event in longpoll.listen():
                         MSG.append(f.findIII(message_text))
                     elif message_text=='!онлайн':
                         #now=int(round(time.time() * 1000))
-                        send("да",event.object['message']['peer_id'])
-                    elif message_text[0:5]=="!гена":
-                        print("отладка")
-                        send(m.learn(int(message_text[6])),event.object['message']['peer_id'])
+                        send("да-да",event.object['message']['peer_id'])
+
                     elif message_text=='/rollmode':
                         roll = True
                         rid = int(event.object['message']['conversation_message_id'])

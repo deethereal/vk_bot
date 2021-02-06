@@ -4,6 +4,11 @@ def learn(par):
         with open ("chat.txt","r") as ch:
             text=ch.read()
         text_model = markovify.Text(text, state_size=par)
-        return (text_model.make_sentence ()).capitalize()
+        result=text_model.make_sentence()
+        while result is None:
+            result = text_model.make_sentence()
+        return result.capitalize()
     else:
         return 'Доступные параметры: "1" или "2"'
+
+print(learn(2))
