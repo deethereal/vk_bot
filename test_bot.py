@@ -1,7 +1,7 @@
 import functions as f, mark as m, time, datetime, sys, random, vk_api, re, string
 from vk_api.bot_longpoll import VkBotEventType
 from vk_api import VkApi
-from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
+from vk_api.bot_longpoll import VkBotLongPoll
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
     token = t.readline().rstrip()
 groupID = 178950051
@@ -10,6 +10,43 @@ longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
 joke=False
 parasites=["сука","блин",'((((','))))','))0)' ]
+
+def mes_proc(my_ev):
+    with open('data/chat.txt', 'a') as c:
+        out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+        c.write(out + '. ')
+    if my_ev['message']['from_id']==M1['red'][0]:
+        with open('data/motya.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['orange'][0]:
+        with open('data/nekit.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['yellow'][0]:
+        with open('data/kolya.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['green'][0]:
+        with open('data/semen.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['sasha'][0]:
+        with open('data/sasha.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['blue'][0]:
+        with open('data/dinya.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['god'][0]:
+        with open('data/vlad.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
+    elif my_ev['message']['from_id']==M1['shluha'][0]:
+        with open('data/ira.txt', 'a') as c:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            c.write(out + '. ')
 
 
 def sendphoto(msg, peerID, attach): # msg — сообщение
@@ -127,9 +164,7 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    with open('chat.txt', 'a') as c:
-                        out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
-                        c.write(out + '. ')
+                    mes_proc(event.object)
                     send(m.learn(1), event.object['message']['peer_id'])
                 else:
                     send("Закончилась генерация", event.object['message']['peer_id'])
@@ -178,9 +213,7 @@ for event in longpoll.listen():
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
                     if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
-                        with open('chat.txt', 'a') as c:
-                            out = re.sub('[%s]' % re.escape(my_ponct), '', event.object['message']['text'])
-                            c.write(out+'. ')
+                        mes_proc(event.object)
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
                         print('got it:', num)
@@ -348,6 +381,4 @@ for event in longpoll.listen():
                     mute_mode=False
             else:
                 if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
-                        with open('chat.txt', 'a') as c:
-                            out = re.sub('[%s]' % re.escape(my_ponct), '', event.object['message']['text'])
-                            c.write(out + '. ')
+                        mes_proc(event.object)
