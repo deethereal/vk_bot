@@ -1,11 +1,5 @@
-import functions as f
-import mark as m
-import time
-import datetime
+import functions as f, mark as m, time, datetime, sys, random, vk_api, re, string
 from vk_api.bot_longpoll import VkBotEventType
-import sys
-import random
-import vk_api
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll#, VkBotEventType
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
@@ -182,10 +176,8 @@ for event in longpoll.listen():
                 if not COMAND:
                     if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
                         with open('chat.txt', 'a') as c:
-                            if event.object['message']['text'][-1]!='.':
-                                c.write(event.object['message']['text']+'. ')
-                            else:
-                                c.write(event.object['message']['text']+' ')
+                            out = re.sub('[%s]' % re.escape(string.punctuation), '', event.object['message']['text'])
+                            c.write(out+'. ')
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
                         print('got it:', num)
@@ -354,7 +346,5 @@ for event in longpoll.listen():
             else:
                 if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
                         with open('chat.txt', 'a') as c:
-                            if event.object['message']['text'][-1]!='.':
-                                c.write(event.object['message']['text']+'. ')
-                            else:
-                                c.write(event.object['message']['text']+' ')
+                            out = re.sub('[%s]' % re.escape(string.punctuation), '', event.object['message']['text'])
+                            c.write(out + '. ')
