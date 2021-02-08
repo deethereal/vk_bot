@@ -86,6 +86,7 @@ for event in longpoll.listen():
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
         COMAND=False
+        arrive=time.time_ns()
         message_text = event.object['message']['text'].lower()
         if message_text=='/help':
                 COMAND=True
@@ -175,7 +176,8 @@ for event in longpoll.listen():
                 genamode=True
                 send("Началась генерация",event.object['message']['peer_id'])
             elif message_text == '!онлайн':
-                send("да-да", event.object['message']['peer_id'])
+                dep=time.time_ns()
+                send("да-да\n задержка: "+str((arrive-dep)//10**6)+" мс", event.object['message']['peer_id'])
 
             elif message_text == '/rollmode':
                 roll = True
