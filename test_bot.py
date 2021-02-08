@@ -1,6 +1,7 @@
 import functions as f
 import mark as m
 import time
+import string
 import datetime
 from vk_api.bot_longpoll import VkBotEventType
 import sys
@@ -143,7 +144,6 @@ for event in longpoll.listen():
                 genamode=True
                 send("Началась генерация",event.object['message']['peer_id'])
             elif message_text == '!онлайн':
-                # now=int(round(time.time() * 1000))
                 send("да-да", event.object['message']['peer_id'])
 
             elif message_text == '/rollmode':
@@ -183,10 +183,8 @@ for event in longpoll.listen():
                 if not COMAND:
                     if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
                         with open('chat.txt', 'a') as c:
-                            if event.object['message']['text'][-1]!='.':
-                                c.write(event.object['message']['text']+'. ')
-                            else:
-                                c.write(event.object['message']['text']+' ')
+                            ms=event.object['message']['text'].translate(None, string.punctuation)
+                            c.write(ms+'. ')
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
                         print('got it:', num)
@@ -355,7 +353,5 @@ for event in longpoll.listen():
             else:
                 if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
                         with open('chat.txt', 'a') as c:
-                            if event.object['message']['text'][-1]!='.':
-                                c.write(event.object['message']['text']+'. ')
-                            else:
-                                c.write(event.object['message']['text']+' ')
+                            ms = event.object['message']['text'].translate(None, string.punctuation)
+                            c.write(ms + '. ')
