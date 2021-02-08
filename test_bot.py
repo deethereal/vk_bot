@@ -21,7 +21,7 @@ def kick(chatID, userID):
 def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
-
+my_ponct='!#&*,;?\^_`{}'
 motya_num=185
 rid=12
 roll=False
@@ -176,7 +176,7 @@ for event in longpoll.listen():
                 if not COMAND:
                     if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
                         with open('chat.txt', 'a') as c:
-                            out = re.sub('[%s]' % re.escape(string.punctuation), '', event.object['message']['text'])
+                            out = re.sub('[%s]' % re.escape(my_ponct), '', event.object['message']['text'])
                             c.write(out+'. ')
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
@@ -346,5 +346,5 @@ for event in longpoll.listen():
             else:
                 if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
                         with open('chat.txt', 'a') as c:
-                            out = re.sub('[%s]' % re.escape(string.punctuation), '', event.object['message']['text'])
+                            out = re.sub('[%s]' % re.escape(my_ponct), '', event.object['message']['text'])
                             c.write(out + '. ')
