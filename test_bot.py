@@ -21,7 +21,7 @@ def kick(chatID, userID):
 def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
-my_ponct='!#&*,;?\^_`{}'
+my_ponct='!#&*,;\^_`{}'
 motya_num=185
 rid=12
 roll=False
