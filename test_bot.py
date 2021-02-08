@@ -177,7 +177,7 @@ for event in longpoll.listen():
                 send("Началась генерация",event.object['message']['peer_id'])
             elif message_text == '!онлайн':
                 dep=time.time_ns()
-                send("да-да\n задержка: "+str((arrive-dep)//10**6)+" мс", event.object['message']['peer_id'])
+                send("да-да\n задержка: "+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
 
             elif message_text == '/rollmode':
                 roll = True
