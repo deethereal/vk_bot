@@ -96,7 +96,7 @@ for event in longpoll.listen():
                     send('Я умею: \n '
                     '/roll -- выбросить сулчайное восьмизначное число\n'
                     '/rollmode — после каждого сообщения выплевывать сулчайное восьмизначное число. \nЧтобы завершить rollmode -- "хватит пожалуйста " или !stop\n'
-                    '/votekick <color> — кикнуть члена или Ырку\n'
+                    '/votekick <color> — кикнуть члена или Ырку с членом\n'
         	        '      <color>:\n'
         	        '      все цвета совпадают, кроме\n'
         	        '      Ира - "shluha"\n'
@@ -165,8 +165,9 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    mes_proc(event.object)
-                    send(m.learn(mar_par), event.object['message']['peer_id'])
+                    if (message_text not in parasites) and (message_text!='') and (len(message_text)>3) and (message_text[0]!='h' and message_text[1]!='t' and message_text!='t'):
+                        mes_proc(event.object)
+                        send(m.learn(mar_par), event.object['message']['peer_id'])
                 else:
                     send("Закончилась генерация", event.object['message']['peer_id'])
                     genamode=False
@@ -221,7 +222,7 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
-                    if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t'):
+                    if (message_text not in parasites) and (message_text!='') and (len(message_text)>3) and (message_text[0]!='h' and message_text[1]!='t' and message_text!='t'):
                         mes_proc(event.object)
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
@@ -388,6 +389,5 @@ for event in longpoll.listen():
                 else:
                     send('Я снова с вами',event.object['message']['peer_id'])
                     mute_mode=False
-            else:
-                if (event.object['message']['text'] not in parasites) and (event.object['message']['text']!='') and (len(event.object['message']['text'])>3) and (event.object['message']['text'][0]!='h' and event.object['message']['text'][1]!='t' and event.object['message']['text'][2]!='t') :
-                        mes_proc(event.object)
+            elif (message_text not in parasites) and (message_text != '') and (len(message_text) > 3) and (message_text[0] != 'h' and message_text[1] != 't' and message_text != 't'):
+                    mes_proc(event.object)
