@@ -211,7 +211,7 @@ for event in longpoll.listen():
                 np=str(random.randint(1,2))
                 m.learn(np)
                 dep=time.time_ns()
-                send("Длительность обучения c параметром "+np+" : " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'])
+                send("Длительность генерации c параметром "+np+" : " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'])
             elif message_text == '/rollmode':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
