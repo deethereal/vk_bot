@@ -170,28 +170,52 @@ for event in longpoll.listen():
                         mes_proc(event.object)
 
                 else:
-                    send("Закончилась генерация", event.object['message']['peer_id'])
-                    genamode=False
+                    if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                        sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                                  'photo-178950051_457239178')
+                    else:
+                        send("Закончилась генерация", event.object['message']['peer_id'])
+                        genamode=False
             elif message_text == "!гена":
-                send(m.learn(1), event.object['message']['peer_id'])
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    send(m.learn(1), event.object['message']['peer_id'])
             elif message_text == "!генаа":
-                send(m.learn(2), event.object['message']['peer_id'])
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    send(m.learn(2), event.object['message']['peer_id'])
             elif message_text=="генана":
-                mar_par=1
-                genamode=True
-                send("Началась генерация",event.object['message']['peer_id'])
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    mar_par=1
+                    genamode=True
+                    send("Началась генерация",event.object['message']['peer_id'])
             elif message_text=="генанаа":
-                mar_par=2
-                genamode=True
-                send("Началась генерация",event.object['message']['peer_id'])
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    mar_par=2
+                    genamode=True
+                    send("Началась генерация",event.object['message']['peer_id'])
             elif message_text == '!онлайн':
                 dep=time.time_ns()
                 send("да-да\nзадержка: "+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
 
             elif message_text == '/rollmode':
-                roll = True
-                rid = int(event.object['message']['conversation_message_id'])
-                send('Расскручиваю барабан', event.object['message']['peer_id'])
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    roll = True
+                    rid = int(event.object['message']['conversation_message_id'])
+                    send('Расскручиваю барабан', event.object['message']['peer_id'])
 
             else:
                 if len(message_text.split())==2:
