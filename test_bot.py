@@ -207,7 +207,10 @@ for event in longpoll.listen():
             elif message_text == '!онлайн':
                 dep=time.time_ns()
                 send("да-да\nзадержка: "+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
-
+            elif message_text == '!отладка':
+                m.learn(random.randint(1,2))
+                dep=time.time_ns()
+                send("Длительность обучения: " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'])
             elif message_text == '/rollmode':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
