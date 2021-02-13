@@ -12,7 +12,7 @@ joke=False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-        with open('data/chat.txt', 'a') as c:
+    with open('data/chat.txt', 'a') as c:
         out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
         c.write(out + '. ')
     if my_ev['message']['from_id']==M1['red'][0]:
