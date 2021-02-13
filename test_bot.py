@@ -58,6 +58,8 @@ def kick(chatID, userID):
 def add(userID,chatID, timeout):
     time.sleep(timeout)
     vk.messages.addChatUser(user_id=userID, chat_id=chatID)
+def reply(msg, peerID,re_id):
+    vk.messages.send(random_id=random.randint(0, 999999), message=msg, reply_to=re_id, peer_id=peerID)
 my_ponct='!#&*,;\^_`{}'
 motya_num=185
 rid=12
@@ -244,7 +246,7 @@ for event in longpoll.listen():
                 np=str(random.randint(1,2))
                 m.learn(np)
                 dep=time.time_ns()
-                send("Длительность генерации c параметром "+np+" : " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'])
+                reply("Длительность генерации c параметром "+np+" : " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'], event.object['message']['id'])
             elif message_text == '/rollmode':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
