@@ -209,7 +209,7 @@ for event in longpoll.listen():
                         elif len(message_text[7:-1].split(','))==2:
                             send(m.sent_s(var_par,message_text[7:-3],bool(message_text[-2])),event.object['message']['peer_id'])
                         elif len(message_text[7:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[7:-3]),event.object['message']['peer_id'])
+                            send(m.sent_s(var_par, message_text[7:-1]),event.object['message']['peer_id'])
                     else:
                         if message_text[6].isdigit():
                             leng=int(message_text[6])
@@ -220,7 +220,7 @@ for event in longpoll.listen():
                         elif len(message_text[6:-1].split(','))==2:
                             send(m.sent_s(var_par,message_text[6:-3],bool(message_text[-2])),event.object['message']['peer_id'])
                         elif len(message_text[6:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[6:-3]),event.object['message']['peer_id'])
+                            send(m.sent_s(var_par, message_text[6:-1]),event.object['message']['peer_id'])
             elif message_text=="генана":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
