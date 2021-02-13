@@ -11,7 +11,7 @@ def learn(par):
     else:
         return 'Доступные параметры: "1" или "2"'
 def long_sent(par,leng):
-    if leng>30:
+    if leng>10:
         with open("data/chat.txt", "r") as ch:
             text = ch.read()
         text_model = markovify.Text(text, state_size=par)
