@@ -12,40 +12,40 @@ joke=False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-    with open('data/chat.txt', 'a') as c:
-        out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+        with open('data/chat.txt', 'a') as c:
+        out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
         c.write(out + '. ')
     if my_ev['message']['from_id']==M1['red'][0]:
         with open('data/motya.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['orange'][0]:
         with open('data/nekit.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['yellow'][0]:
         with open('data/kolya.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['green'][0]:
         with open('data/semen.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['sasha'][0]:
         with open('data/sasha.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['blue'][0]:
         with open('data/dinya.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['god'][0]:
         with open('data/vlad.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
     elif my_ev['message']['from_id']==M1['shluha'][0]:
         with open('data/ira.txt', 'a') as c:
-            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text)
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
 
 
