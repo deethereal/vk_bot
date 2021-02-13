@@ -15,7 +15,7 @@ def long_sent(par,leng):
         with open("data/chat.txt", "r") as ch:
             text = ch.read()
         text_model = markovify.Text(text, state_size=par)
-        result = text_model.make_short_sentence(min_chars=leng)
+        result = text_model.make_short_sentence(min_chars=leng,max_chars=5*leng)
         for i in range(30):
             if result is not None:
                 return result.capitalize()
