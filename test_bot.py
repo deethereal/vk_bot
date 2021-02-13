@@ -107,7 +107,11 @@ for event in longpoll.listen():
                     '/commands -- состояние команд\n'
                     '/mute команда_нейм -- выключить команду\n'
                     '/unmute команда_нейм -- включить команду\n'
-                    '!гена(!генаа) -- генерация предложения по 1 (или 2) словам\n'
+                    '!гена(необязательный параметр:минимально число) генерация предложения по 1 слову предложения длиной символов не меньше минимального\n'
+                    '!гена(необязательный параметр:WORD,необязательный параметр:1 или 0) генерация предложения по 1 слову начиная с слова WORD, если 1'
+                    '-- использовать только те предложения, где WORD является первым словом, 0 -- использовать любые.\nПО УМОЛЧАНИЮ СТОИТ 0 МОЖНО НЕ ПИСАТЬ ЕГО. "1" ПИСАТЬ СРАЗУ ПОСЛЕ ЗАЯПТОЙ БЕЗ ПРОБЕЛОВ\n'
+                    'генирировать предложение минимальной длиный с определенного слова ПОКА нельзя'
+                    'то же самое и для "!генаа\n'
                     'генана(генанаа) -- режим постоянной генерации\n'
                     'гена возьми -- остановить генерацию текста\n'
                     'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
@@ -188,6 +192,24 @@ for event in longpoll.listen():
                               'photo-178950051_457239178')
                 else:
                     send(m.learn(2), event.object['message']['peer_id'])
+            elif message_text[0:5]=='!гена':
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    var_par=1
+                    if message_text[6]=='а':
+                        var_par=2
+                    if message_text[8].isdigit():
+                        leng=int(message_text[8])
+                        for i in range(9,len(message_text)):
+                            if message_text[i].isdigit():
+                                leng=leng*10+int(message_text[i])
+                        send(m.long_sent(var_par,leng),event.object['message']['peer_id'])
+                    elif len(message_text[8:-1].split(','))==2:
+                        send(m.sent_s(var_par,message_text[8:-3],bool(message_text[-2])),event.object['message']['peer_id'])
+                    elif len(message_text[8:-1].split(','))==1:
+                        send(m.sent_s(var_par, message_text[8:-3]),event.object['message']['peer_id'])
             elif message_text=="генана":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],

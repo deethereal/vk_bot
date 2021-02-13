@@ -10,3 +10,29 @@ def learn(par):
         return result.capitalize()
     else:
         return 'Доступные параметры: "1" или "2"'
+def long_sent(par,leng):
+    if leng>30:
+        with open("data/chat.txt", "r") as ch:
+            text = ch.read()
+        text_model = markovify.Text(text, state_size=par)
+        result = text_model.make_short_sentence(min_chars=leng)
+        for i in range(30):
+            if result is not None:
+                return result.capitalize()
+            else:
+                result = text_model.make_short_sentence(min_chars=leng)
+        return "Мне не удалось сгенерировать предложение длины:" +str(leng)
+    return "Укажите большую длину"
+def sent_s(par,word,st=False):
+    with open("data/chat.txt", "r") as ch:
+        text = ch.read()
+    text_model = markovify.Text(text, state_size=par)
+    try:
+        result = text_model.make_sentence_with_start(word,strict=st)
+        while result is None:
+            result = text_model.make_sentence_with_start(word,strict=st)
+        return result.capitalize()
+    except KeyError:
+        return f"Слова {word} нет в тексте, задайте другое"
+    except markovify.text.ParamError:
+        return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
