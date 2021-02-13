@@ -20,7 +20,7 @@ def long_sent(par,leng):
             if result is not None:
                 return result.capitalize()
             else:
-                result = text_model.make_short_sentence(min_chars=leng)
+                result = text_model.make_short_sentence(min_chars=leng,max_chars=5*leng)
         return "Мне не удалось сгенерировать предложение длины:" +str(leng)
     return "Укажите большую длину"
 def sent_s(par,word,st=False):
