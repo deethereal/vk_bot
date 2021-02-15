@@ -47,19 +47,19 @@ def malina():
     if now.hour<13:
         hn=12
     if (now.minute%10==0):
-        with open ('semen.txt','r') as f:
+        with open ('150078285.txt','r') as f:
             line=f.readlines()
             if line[0]!=str(now.day)+'\n':
                 s='@voidrad(как) там малинка?'
                 h=24
                 if now.hour<13:
                     h=12
-                with open ('semen.txt','w') as f:
+                with open ('150078285.txt','w') as f:
                     f.write(str(now.day)+"\n"+str(h))
                 return s
             elif hn!=int(line[1]):
                 s='@voidrad(как) там малинка?'
-                with open ('semen.txt','w') as f:
+                with open ('150078285.txt','w') as f:
                     f.write(str(now.day)+"\n"+str(hn))
                 return s
     return False
