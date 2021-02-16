@@ -35,7 +35,7 @@ votekickTime=0
 votekickID=0
 votekickN=2
 votekickpercent=0
-M1 = {'red':[207227130,['Мотя','Матвей']], 'orange':[125928980,['Никита','Матвей...ой в смысле Никита',"Писюканов"]], 'yellow':[62501050,['Коля',"Колека"]], 'green':[150078285,['Cемён','Семен','Semen']], 'sasha':[218917421,['Саша']], 'blue':[206312673,['Диня',"Денис"]],'god':[236709769,['Влад']], 'shluha':[240702553,['Ирка','Шлюха','Ира']]}
+M1 = {'red':[207227130,['мотя','матвей']], 'orange':[125928980,['никита','матвей...ой в смысле никита',"писюканов"]], 'yellow':[62501050,['коля',"колека"]], 'green':[150078285,['семён','семен','Semen','сема','сёма']], 'sasha':[218917421,['саша']], 'blue':[206312673,['диня',"денис"]],'god':[236709769,['влад']], 'shluha':[240702553,['ирка','шлюха','ира']]}
 comands={'да':True, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
 torch=['torch',"торч","калик","кальян","дядя коля","табак"]
 imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
@@ -182,6 +182,10 @@ for event in longpoll.listen():
                     mar_par=2
                     genamode=True
                     send("Началась генерация",event.object['message']['peer_id'])
+            elif message_text[0:4]=='!сим':
+                p_id=f.find_id(message_text[7:-2])
+                if p_id:
+                    send(m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
             elif message_text == '!онлайн':
                 send("да-да", event.object['message']['peer_id'])
                 dep = time.time_ns()
@@ -372,7 +376,7 @@ for event in longpoll.listen():
                             sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                         else:
                             if random.randint(0,1)==1:
-                                send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'])
+                                send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'].capitalize())
                             else:
                                 r_id=random.randint(0,len(PHOTOS)-1)
                                 sendphoto(PHOTOS[r_id][0],event.object['message']['peer_id'],PHOTOS[r_id][1])

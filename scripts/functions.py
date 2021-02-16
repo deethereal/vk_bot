@@ -25,8 +25,11 @@ def counter_plus():
         file.writelines(lines)
 
 
-
-
+def find_id(name,dic):
+    for item in dic:
+        if name in dic[item][1]:
+            return dic[item][0]
+    return None
 
 def printdic(dic):
     s=''
