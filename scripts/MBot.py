@@ -24,6 +24,8 @@ def kick(chatID, userID):
     vk.messages.removeChatUser(chat_id=chatID%1000, user_id=userID)
 def reply(msg, peerID,re_id):
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, reply_to=re_id, peer_id=peerID)
+
+
 my_ponct='!#&*,;\^_`{}'
 motya_num=185
 rid=12
