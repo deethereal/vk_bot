@@ -188,6 +188,8 @@ for event in longpoll.listen():
                 p_id=f.find_id(message_text[7:-2])
                 if p_id:
                     send(m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
+                else:
+                    send("Не нашел такого, попробуйте что-то более стандартное", event.object['message']['peer_id'])
             elif message_text == '!онлайн':
                 send("да-да", event.object['message']['peer_id'])
                 dep = time.time_ns()
