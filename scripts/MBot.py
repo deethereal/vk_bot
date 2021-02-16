@@ -208,8 +208,9 @@ for event in longpoll.listen():
                     genamode=True
                     send("Началась генерация",event.object['message']['peer_id'])
             elif message_text == '!онлайн':
-                dep=time.time_ns()
-                send("да-да\nзадержка: "+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
+                send("да-да", event.object['message']['peer_id'])
+                dep = time.time_ns()
+                send('задержка: '+str((dep-arrive)//10**6)+" мс")
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
                 m.learn(np)
