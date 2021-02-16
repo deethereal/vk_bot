@@ -185,7 +185,7 @@ for event in longpoll.listen():
                     genamode=True
                     send("Началась генерация",event.object['message']['peer_id'])
             elif message_text[0:4]=='!сим':
-                p_id=f.find_id(message_text[7:-2],M1)
+                p_id=f.find_id(message_text[7:-1],M1)
                 if p_id:
                     send(m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
                 else:
