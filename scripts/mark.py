@@ -24,7 +24,7 @@ def long_sent(par,leng):
         return "Мне не удалось сгенерировать предложение длины:" +str(leng)
     return "Укажите большую длину"
 def sent_s(par,word,st=False):
-    with open("/home/bot/vk_bot/data/chat.txt", "r") as ch:
+    with open("/home/ubuntu/bot/vk_bot/data/chat.txt", "r") as ch:
         text = ch.read()
     text_model = markovify.Text(text, state_size=par)
     try:
