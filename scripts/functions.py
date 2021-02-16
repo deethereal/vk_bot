@@ -28,7 +28,7 @@ def counter_plus():
 def find_id(name,dic):
     for item in dic:
         if name in dic[item][1]:
-            return dic[item][0]
+            return item, dic[item][0]
     return None
 
 def printdic(dic):

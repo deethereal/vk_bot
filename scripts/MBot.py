@@ -184,10 +184,10 @@ for event in longpoll.listen():
                     mar_par=2
                     genamode=True
                     send("Началась генерация",event.object['message']['peer_id'])
-            elif message_text[0:4]=='!сим':
-                p_id=f.find_id(message_text[7:-1],M1)
+            elif message_text[0:4]=='!сим': #ДОПИЛИТЬ КАК НАКОПИТСЯ
+                key,p_id=f.find_id(message_text[7:-1],M1)
                 if p_id:
-                    send(m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
+                    send("Как сказла бы "+M1[key][1][random.randint(0, len(M1['yellow'][1])-1)]+":\n"+m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
                 else:
                     send("Не нашел такого, попробуйте что-то более стандартное", event.object['message']['peer_id'])
             elif message_text == '!онлайн':
