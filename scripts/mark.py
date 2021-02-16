@@ -1,6 +1,5 @@
 import markovify
 way='/home/ubuntu/bot/vk_bot/data/chat.txt'
-
 def learn(par):
     if par  in (1,2):
         with open (way,"r") as ch:
@@ -37,7 +36,10 @@ def sent_s(par,word,st=False):
     except KeyError:
         return f"Слова {word} нет в тексте, задайте другое"
     except markovify.text.ParamError:
-        return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
+        if st:
+            return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
+        else:
+            return f"Извините, я долбоеб и не смог построить предложение минимальной длины."
 def simulate(par,id):
     with open('/home/ubuntu/bot/vk_bot/data/'+str(id)+'.txt','r') as f:
         text=f.read()
