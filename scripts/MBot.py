@@ -12,7 +12,7 @@ joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', 'a') as c, open('data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
+    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', 'a') as c, open('/home/ubuntu/bot/vk_bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
         out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
         c.write(out + '. ')
         p.write(out + '. ')
