@@ -210,7 +210,7 @@ for event in longpoll.listen():
             elif message_text == '!онлайн':
                 send("да-да", event.object['message']['peer_id'])
                 dep = time.time_ns()
-                send('задержка: '+str((dep-arrive)//10**6)+" мс")
+                send('задержка: '+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
                 m.learn(np)
