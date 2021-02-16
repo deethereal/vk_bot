@@ -1,4 +1,4 @@
-import functions as f, mark as m, time, datetime, sys, random, vk_api, re, string
+import functions as f, mark as m, time, datetime, sys, random, vk_api, re
 from vk_api.bot_longpoll import VkBotEventType
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll
@@ -8,24 +8,20 @@ groupID = 178950051
 vk_session: VkApi = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
-joke=False
+joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-    with open('data/chat.txt', 'a') as c, open('data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
+    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', 'a') as c, open('data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
         out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
         c.write(out + '. ')
         p.write(out + '. ')
-
 def sendphoto(msg, peerID, attach): # msg — сообщение
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
 def send(msg, peerID):
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID)
 def kick(chatID, userID):
     vk.messages.removeChatUser(chat_id=chatID%1000, user_id=userID)
-def add(userID,chatID, timeout):
-    time.sleep(timeout)
-    vk.messages.addChatUser(user_id=userID, chat_id=chatID)
 def reply(msg, peerID,re_id):
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, reply_to=re_id, peer_id=peerID)
 my_ponct='!#&*,;\^_`{}'
@@ -46,13 +42,13 @@ imposter=['imposter','impostor','импостер',"импостор", "пред
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
-
-#send("Сам иди нахуй", 2000000001)
+with open('/home/ubuntu/bot/vk_bot/data/help.txt', 'r') as h:
+    text_help=h.read()
 for event in longpoll.listen():
     joke=False
     flag=False
-    MSG=[]
-    PHOTOS=[]
+    MSG = []
+    PHOTOS = []
     print (event)
     if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
         COMAND=False
@@ -63,28 +59,7 @@ for event in longpoll.listen():
                 if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
                     sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                 else:
-                    send('Я умею: \n '
-                    '/roll -- выбросить сулчайное восьмизначное число\n'
-                    '/rollmode — после каждого сообщения выплевывать сулчайное восьмизначное число. \nЧтобы завершить rollmode -- "хватит пожалуйста " или !stop\n'
-                    '/votekick <color> — кикнуть члена или Ырку с членом\n'
-        	        '      <color>:\n'
-        	        '      все цвета совпадают, кроме\n'
-        	        '      Ира - "shluha"\n'
-                    '      Саша - "sasha"\n'
-                    '/mute -- выключить меня\n'
-                    '/unmute -- включить меня\n'
-                    'execute_time -- убить меня(может только денис)\n'
-                    '/commands -- состояние команд\n'
-                    '/mute команда_нейм -- выключить команду\n'
-                    '/unmute команда_нейм -- включить команду\n'
-                    '!гена(необязательный параметр:минимально число) генерация предложения по 1 слову предложения длиной символов не меньше минимального и не больше 5*min\n'
-                    '!гена(необязательный параметр:WORD,необязательный параметр:1 или 0) генерация предложения по 1 слову начиная с слова WORD, если 1'
-                    '-- использовать только те предложения, где WORD является первым словом, 0 -- использовать любые.\nРегистр у WORD важен. ПО УМОЛЧАНИЮ СТОИТ 0 МОЖНО НЕ ПИСАТЬ ЕГО. "1" ПИСАТЬ СРАЗУ ПОСЛЕ ЗАПЯТОЙ БЕЗ ПРОБЕЛОВ\n'
-                    'генирировать предложение минимальной длиный с определенного слова ПОКА нельзя'
-                    'то же самое и для "!генаа\n'
-                    'генана(генанаа) -- режим постоянной генерации\n'
-                    'гена возьми -- остановить генерацию текста\n'
-                    'бот позови "имя" -- позвать кого-то\n',event.object['message']['peer_id'])
+                    send(text_help,event.object['message']['peer_id'])
         elif message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
