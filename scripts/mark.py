@@ -1,5 +1,6 @@
 import markovify
 way='/home/ubuntu/bot/vk_bot/data/chat.txt'
+
 def learn(par):
     if par  in (1,2):
         with open (way,"r") as ch:
