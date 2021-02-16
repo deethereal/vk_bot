@@ -1,2 +1,2 @@
 # vk_bot
-![alt text](https://sun1-99.userapi.com/impg/hBBo9ctfOIQjkDT2HAgqpK7Jf97kce20gAzQLw/0Uj_ua5vE28.jpg?size=384x421&quality=96&proxy=1&sign=5612eb30078372917474baa64b66d1b8)​
+![alt text](https://sun9-33.userapi.com/impf/Ph6h3y9xmTlgqTQ4vvNyBicTTzvEwdXrIrNzUg/CAQsBcvEzNQ.jpg?size=367x345&quality=96&proxy=1&sign=3d3b80db614a0cd1406bccbb645ae2a3&type=album)​
