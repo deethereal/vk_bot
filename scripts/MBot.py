@@ -133,6 +133,16 @@ for event in longpoll.listen():
                               'photo-178950051_457239178')
                 else:
                     send(m.learn(1), event.object['message']['peer_id'])
+            elif message_text[0:5]=='!анек':
+                if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
+                    sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
+                              'photo-178950051_457239178')
+                else:
+                    if len(message_text)==5:
+                        send(m.anek(), event.object['message']['peer_id'])
+                    else:
+                        send(m.anek(int(message_text[7]),int(message_text[9:-1])))
+
             elif message_text == "!генаа":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
