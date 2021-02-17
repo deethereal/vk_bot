@@ -1,5 +1,8 @@
 import markovify
+import re
 way='/home/ubuntu/bot/vk_bot/data/chat.txt'
+
+
 def learn(par):
     if par  in (1,2):
         with open (way,"r") as ch:
@@ -48,3 +51,18 @@ def simulate(par,id):
     while result is None:
             result = text_model.make_sentence()
     return result.capitalize()
+def anek(par=3, num=6):
+    if par>4:
+        return "Слишком сильная связь, нужна цифра до 5"
+    else:
+        with open('/home/ubuntu/bot/vk_bot/data/anekdot.txt','r') as a:
+            text = a.read()
+        text_model=markovify.NewlineText(text,state_size=par)
+        anek=''
+
+        for i in range(num):
+            result = text_model.make_sentence()
+            while result is None or (i==0 and (result[0]=='-' or result[0].islower())):
+                result = text_model.make_sentence()
+            anek+=result+'\n'
+        return anek
