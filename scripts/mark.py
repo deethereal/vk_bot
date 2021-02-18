@@ -13,7 +13,7 @@ def create_model():
     with open('/home/ubuntu/bot/vk_bot/data/log.txt', "w") as f:
         f.write(time.asctime())
     end=time.time_ns()
-    return f"Модель создана за {(end-start)//10 ** 6} мс"
+    return f"Модель создана за {(end-start)//10 ** 9} с"
 def use_model(par='2'):
     with open(way+par+'.txt', "r") as f:
         text_model= markovify.Text.from_json(f.read())
