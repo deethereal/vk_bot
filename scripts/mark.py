@@ -50,7 +50,7 @@ def simulate(par,id):
     while result is None:
             result = text_model.make_sentence()
     return result.capitalize()
-def anek(par=3, num=6):
+def anek(par=2, num=5):
     if par>4:
         return "Слишком сильная связь, нужна цифра до 5"
     else:
