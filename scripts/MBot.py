@@ -141,7 +141,7 @@ for event in longpoll.listen():
                     if len(message_text)==5:
                         send(m.anek(), event.object['message']['peer_id'])
                     else:
-                        send(m.anek(int(message_text[7]),int(message_text[9:-1])), event.object['message']['peer_id'])
+                        send(m.anek(int(message_text[6]),int(message_text[8:-1])), event.object['message']['peer_id'])
             elif message_text == "!генаа":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
