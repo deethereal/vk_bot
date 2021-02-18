@@ -116,7 +116,7 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    send(m.learn(mar_par), event.object['message']['peer_id'])
+                    send(m.use_model(str(mar_par)), event.object['message']['peer_id'])
                     if (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
                         mes_proc(event.object)
 
@@ -132,7 +132,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.learn(1), event.object['message']['peer_id'])
+                    send(m.use_model('1'), event.object['message']['peer_id'])
             elif message_text[0:5]=='!анек':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
@@ -148,7 +148,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.learn(2), event.object['message']['peer_id'])
+                    send(m.use_model('2'), event.object['message']['peer_id'])
             elif message_text[0:5]=='!гена':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
@@ -206,7 +206,7 @@ for event in longpoll.listen():
                 send('задержка: '+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
-                m.learn(np)
+                m.use_model(str(np))
                 dep=time.time_ns()
                 reply("Длительность генерации c параметром "+np+" : " + str((dep - arrive) // 10 ** 6) + " мс", event.object['message']['peer_id'], event.object['message']['id'])
             elif message_text == '/rollmode':
@@ -217,7 +217,11 @@ for event in longpoll.listen():
                     roll = True
                     rid = int(event.object['message']['conversation_message_id'])
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
-
+            elif message_text=='!обнова':
+                send(m.create_model(),event.object['message']['peer_id'])
+            elif message_text=="!верси":
+                with open('/home/ubuntu/bot/vk_bot/data/log.txt', 'r') as log:
+                    send(f"Последняя модель была создана {log.read()}",event.object['message']['peer_id'])
             else:
                 if len(message_text.split())==2:
                     msg=message_text.split()

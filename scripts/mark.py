@@ -1,14 +1,19 @@
 import markovify
+import time
 way='/home/ubuntu/bot/vk_bot/data/text_model_'
 
 def create_model():
-    with open('/Users/denis/Documents/vk_bot/data/old_chat.txt', "r") as ch:
+    start = time.time_ns()
+    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', "r") as ch:
         text = ch.read()
-    with open('/Users/denis/Documents/vk_bot/data/text_model_1.txt', "w") as f:
+    with open('/home/ubuntu/bot/vk_bot/data/text_model_1.txt', "w") as f:
         f.write( markovify.Text(text, state_size=1).to_json())
-    with open('/Users/denis/Documents/vk_bot/data/text_model_2.txt', "w") as f:
+    with open('/home/ubuntu/bot/vk_bot/data/text_model_2.txt', "w") as f:
         f.write( markovify.Text(text, state_size=2).to_json())
-
+    with open('/home/ubuntu/bot/vk_bot/data/log.txt', "w") as f:
+        f.write(time.asctime([time.clock()]))
+    end=time.time_ns()
+    return f"Модель создана за {(end-start)//10 ** 6} мс"
 def use_model(par='2'):
     with open(way+par+'.txt', "r") as f:
         text_model= markovify.Text.from_json(f.read())
@@ -56,7 +61,6 @@ def sent_s(par,word,st=False):
                     return result.capitalize().replace(' ?.', '? ')
                 else:
                     result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
-
 def simulate(par,id):
     with open('/home/ubuntu/bot/vk_bot/data/'+str(id)+'.txt','r') as f:
         text=f.read()
@@ -80,13 +84,3 @@ def anek(par=2, num=5):
                 result = text_model.make_sentence()
             anek+=result+'\n'
         return anek
-def old_learn(par=2):
-    with open('/Users/denis/Documents/vk_bot/data/old_chat.txt', "r") as ch:
-        text = ch.read()
-    text_model = markovify.Text(text, state_size=par)
-    result = text_model.make_sentence(max_overlap_ratio=0.5)
-    while result is None :
-        result = text_model.make_sentence(max_overlap_ratio=0.5)
-    return result.capitalize().replace(' ?.','? ')
-
-print(use_model())
