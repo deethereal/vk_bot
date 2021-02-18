@@ -138,7 +138,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send('Внимание анекдот:\n',event.object['message']['peer_id'])
+                    send('Внимание анекдот:',event.object['message']['peer_id'])
                     if len(message_text)==5:
                         send(m.anek(), event.object['message']['peer_id'])
                     else:
