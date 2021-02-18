@@ -219,9 +219,9 @@ for event in longpoll.listen():
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
             elif message_text=='!обнова':
                 send(m.create_model(),event.object['message']['peer_id'])
-            elif message_text=="!верси":
+            elif message_text=="!версия":
                 with open('/home/ubuntu/bot/vk_bot/data/log.txt', 'r') as log:
-                    send(f"Последняя модель была создана {log.read()}",event.object['message']['peer_id'])
+                    send(f"Последняя модель была создана {log.read()}", event.object['message']['peer_id'])
             else:
                 if len(message_text.split())==2:
                     msg=message_text.split()
