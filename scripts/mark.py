@@ -1,5 +1,4 @@
 import markovify
-import re
 way='/home/ubuntu/bot/vk_bot/data/chat.txt'
 
 
