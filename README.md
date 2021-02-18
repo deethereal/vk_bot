@@ -1,4 +1,4 @@
-[![GitHub release](https://img.shields.io/github/v/release/deethereal/vk_bot?color=orange)](https://GitHub.com/deethereal/vk_bot/releases/)
+[![GitHub release](https://img.shields.io/github/v/release/deethereal/vk_bot?color=orange&label=version)](https://GitHub.com/deethereal/vk_bot/releases/)
 [![GitHub commits](https://img.shields.io/github/commit-activity/m/deethereal/vk_bot?color=blueviolet)](https://GitHub.com/deethereal/vk_bot/commits/main)
 [![GitHub commits](https://img.shields.io/github/last-commit/deethereal/vk_bot?color=blue)](https://GitHub.com/deethereal/vk_bot/commit/)
 # Matvey_Bot
