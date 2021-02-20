@@ -28,7 +28,7 @@ def long_sent(par,leng):
         result = text_model.make_short_sentence(min_chars=leng,max_chars=5*leng,max_overlap_ratio=0.5)
         for i in range(50):
             if result is not None:
-                return result.capitalize().replace(' ?.','? ')
+                return result.capitalize().replace(' ?.','? ').replace(".?","? ")
             else:
                 result = text_model.make_short_sentence(min_chars=leng,max_chars=5*leng,max_overlap_ratio=0.5)
         return "Мне не удалось сгенерировать предложение длины:" +str(leng)
@@ -41,7 +41,7 @@ def sent_s(par,word,st=False):
             result = text_model.make_sentence_with_start(word,strict=st,max_overlap_ratio=0.5)
             while result is None:
                 result = text_model.make_sentence_with_start(word,strict=st,max_overlap_ratio=0.5)
-            return result.capitalize().replace(' ?.','? ')
+            return result.capitalize().replace(' ?.','? ').replace(".?","? ")
         except KeyError:
             return f"Слова {word} нет в тексте, задайте другое"
         except markovify.text.ParamError:
@@ -51,16 +51,17 @@ def sent_s(par,word,st=False):
             result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
             while result is None:
                 result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
-            return result.capitalize().replace(' ?.', '? ')
+            return result.capitalize().replace(' ?.', '? ').replace(".?","? ")
         except KeyError:
             return f"Слова {word} нет в тексте, задайте другое"
         except markovify.text.ParamError:
             result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
             for _ in range(50):
                 if result is not None:
-                    return result.capitalize().replace(' ?.', '? ')
+                    return result.capitalize().replace(' ?.', '? ').replace(".?","? ")
                 else:
                     result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
+            return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
 def simulate(par,id):
     with open('/home/ubuntu/bot/vk_bot/data/'+str(id)+'.txt','r') as f:
         text=f.read()
@@ -68,7 +69,7 @@ def simulate(par,id):
     result = text_model.make_sentence()
     while result is None:
             result = text_model.make_sentence()
-    return result.capitalize().replace(' ?.', '? ')
+    return result.capitalize().replace(' ?.', '? ').replace(".?","? ")
 def anek(par=2, num=5):
     if par>4:
         return "Слишком сильная связь, нужна цифра до 5"
