@@ -11,12 +11,12 @@ def create_model():
     with open(T_lin_way+'chat.txt', "r") as ch:
         text = ch.read()
     with open(T_lin_way+'text_model_1.json', "w") as f:
-        f.write(markovify.Text(text, state_size=1).to_json())
+        f.write(markovify.Text(text, state_size=1,retain_original=False).to_json())
     with zipfile.ZipFile(T_lin_way+'z1.zip', 'w') as z1:
         z1.write(T_lin_way+'text_model_1.json',arcname='text_model_1.json',compress_type=zipfile.ZIP_DEFLATED)
     os.remove(T_lin_way+'text_model_1.json')
     with open(T_lin_way+'/text_model_2.json', "w") as f:
-        f.write(markovify.Text(text, state_size=2).to_json())
+        f.write(markovify.Text(text, state_size=2,retain_original=False).to_json())
     with zipfile.ZipFile(T_lin_way + 'z2.zip', 'w') as z2:
         z2.write(T_lin_way+'text_model_2.json', arcname='text_model_2.json',compress_type=zipfile.ZIP_DEFLATED)
     os.remove(T_lin_way+'text_model_2.json')
