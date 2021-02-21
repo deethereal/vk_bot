@@ -46,6 +46,7 @@ booba=["сиськи","сиська","сиську","грудь","boobs",'booba'
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
 with open('/home/ubuntu/bot/vk_bot/data/help.txt', 'r') as h:
     text_help=h.read()
+send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
 for event in longpoll.listen():
     joke=False
     flag=False
@@ -218,6 +219,7 @@ for event in longpoll.listen():
                     rid = int(event.object['message']['conversation_message_id'])
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
             elif message_text=='!обнова':
+                send("Начинаю создание модели...",event.object['message']['peer_id'])
                 send(m.create_model(),event.object['message']['peer_id'])
             elif message_text=="!версия":
                 with open('/home/ubuntu/bot/vk_bot/data/log.txt', 'r') as log:

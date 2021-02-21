@@ -1,29 +1,42 @@
 import markovify
 import time
-way='/home/ubuntu/bot/vk_bot/data/text_model_'
+import zipfile
+import os
+
+lin_way='/home/ubuntu/test_bot/vk_bot/data/'
+mac_way='/Users/denis/Documents/vk_bot/data/'
 
 def create_model():
     start = time.time_ns()
-    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', "r") as ch:
+    with open(mac_way+'chat.txt', "r") as ch:
         text = ch.read()
-    with open('/home/ubuntu/bot/vk_bot/data/text_model_1.txt', "w") as f:
-        f.write( markovify.Text(text, state_size=1).to_json())
-    with open('/home/ubuntu/bot/vk_bot/data/text_model_2.txt', "w") as f:
-        f.write( markovify.Text(text, state_size=2).to_json())
-    with open('/home/ubuntu/bot/vk_bot/data/log.txt', "w") as f:
+    with open(mac_way+'text_model_1.json', "w") as f:
+        f.write(markovify.Text(text, state_size=1).to_json())
+    with zipfile.ZipFile(mac_way+'z1.zip', 'w') as z1:
+        z1.write(mac_way+'text_model_1.json',arcname='text_model_1.json',compress_type=zipfile.ZIP_DEFLATED)
+    os.remove(mac_way+'text_model_1.json')
+    with open(mac_way+'/text_model_2.json', "w") as f:
+        f.write(markovify.Text(text, state_size=2).to_json())
+    with zipfile.ZipFile(mac_way + 'z2.zip', 'w') as z2:
+        z2.write(mac_way+'text_model_2.json', arcname='text_model_2.json',compress_type=zipfile.ZIP_DEFLATED)
+    os.remove(mac_way+'text_model_2.json')
+    with open(mac_way+'log.txt', "w") as f:
         f.write(time.asctime())
     end=time.time_ns()
     return f"Модель создана за {(end-start)//10 ** 9} с"
 def use_model(par='2'):
-    with open(way+par+'.txt', "r") as f:
+    with zipfile.ZipFile(mac_way+'z'+par+'.zip','r') as oz:
+        oz.extractall()
+    with open('text_model_'+par+'.json', "r") as f:
         text_model= markovify.Text.from_json(f.read())
     result = text_model.make_sentence(max_overlap_ratio=0.5)
     while result is None:
         result = text_model.make_sentence(max_overlap_ratio=0.5)
+    os.remove('text_model_'+par+'.json')
     return result.capitalize().replace(' ?.','? ')
 def long_sent(par,leng):
     if leng>10:
-        with open(way+str(par)+'.txt', "r") as f:
+        with open(lin_way+str(par)+'.txt', "r") as f:
             text_model = markovify.Text.from_json(f.read())
         result = text_model.make_short_sentence(min_chars=leng,max_chars=5*leng,max_overlap_ratio=0.5)
         for i in range(50):
@@ -34,7 +47,7 @@ def long_sent(par,leng):
         return "Мне не удалось сгенерировать предложение длины:" +str(leng)
     return "Укажите большую длину"
 def sent_s(par,word,st=False):
-    with open(way + str(par) + '.txt', "r") as f:
+    with open(lin_way + str(par) + '.txt', "r") as f:
         text_model = markovify.Text.from_json(f.read())
     if st:
         try:
@@ -63,7 +76,7 @@ def sent_s(par,word,st=False):
                     result = text_model.make_sentence_with_start(word, strict=st, max_overlap_ratio=0.5)
             return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
 def simulate(par,id):
-    with open('/home/ubuntu/bot/vk_bot/data/'+str(id)+'.txt','r') as f:
+    with open(lin_way+str(id)+'.txt','r') as f:
         text=f.read()
     text_model=markovify.Text(text, state_size=par)
     result = text_model.make_sentence()
