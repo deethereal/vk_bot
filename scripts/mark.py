@@ -3,29 +3,29 @@ import time
 import zipfile
 import os
 
-lin_way='/home/ubuntu/test_bot/vk_bot/data/'
+lin_way='/home/ubuntu/bot/vk_bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
-
+T_lin_way='/home/ubuntu/test_bot/vk_bot/data/'
 def create_model():
     start = time.time_ns()
-    with open(mac_way+'chat.txt', "r") as ch:
+    with open(T_lin_way+'chat.txt', "r") as ch:
         text = ch.read()
-    with open(mac_way+'text_model_1.json', "w") as f:
+    with open(T_lin_way+'text_model_1.json', "w") as f:
         f.write(markovify.Text(text, state_size=1).to_json())
-    with zipfile.ZipFile(mac_way+'z1.zip', 'w') as z1:
-        z1.write(mac_way+'text_model_1.json',arcname='text_model_1.json',compress_type=zipfile.ZIP_DEFLATED)
-    os.remove(mac_way+'text_model_1.json')
-    with open(mac_way+'/text_model_2.json', "w") as f:
+    with zipfile.ZipFile(T_lin_way+'z1.zip', 'w') as z1:
+        z1.write(T_lin_way+'text_model_1.json',arcname='text_model_1.json',compress_type=zipfile.ZIP_DEFLATED)
+    os.remove(T_lin_way+'text_model_1.json')
+    with open(T_lin_way+'/text_model_2.json', "w") as f:
         f.write(markovify.Text(text, state_size=2).to_json())
-    with zipfile.ZipFile(mac_way + 'z2.zip', 'w') as z2:
-        z2.write(mac_way+'text_model_2.json', arcname='text_model_2.json',compress_type=zipfile.ZIP_DEFLATED)
-    os.remove(mac_way+'text_model_2.json')
-    with open(mac_way+'log.txt', "w") as f:
+    with zipfile.ZipFile(T_lin_way + 'z2.zip', 'w') as z2:
+        z2.write(T_lin_way+'text_model_2.json', arcname='text_model_2.json',compress_type=zipfile.ZIP_DEFLATED)
+    os.remove(T_lin_way+'text_model_2.json')
+    with open(T_lin_way+'log.txt', "w") as f:
         f.write(time.asctime())
     end=time.time_ns()
     return f"Модель создана за {(end-start)//10 ** 9} с"
 def use_model(par='2'):
-    with zipfile.ZipFile(mac_way+'z'+par+'.zip','r') as oz:
+    with zipfile.ZipFile(T_lin_way+'z'+par+'.zip','r') as oz:
         oz.extractall()
     with open('text_model_'+par+'.json', "r") as f:
         text_model= markovify.Text.from_json(f.read())
