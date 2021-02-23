@@ -1,0 +1,22 @@
+{
+  "name": "telegram_bot",
+  "version": "0.5.0",
+  "description": "tg bot for our use",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deethereal/vk_bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deethereal/vk_bot/issues"
+  },
+  "homepage": "https://github.com/deethereal/vk_bot#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.51.0"
+  }
+}
