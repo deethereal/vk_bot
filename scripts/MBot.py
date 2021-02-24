@@ -112,7 +112,7 @@ for event in longpoll.listen():
                         send('Останавливаю барабан', event.object['message']['peer_id'])
 
                 else:
-                    rid=rid +random.randint(0,42)
+                    rid=rid +random.randint(1,42)
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
