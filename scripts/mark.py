@@ -6,34 +6,32 @@ import os
 lin_way='/home/ubuntu/bot/vk_bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/vk_bot/data/'
-def create_model():
-    start = time.time_ns()
-    with open(T_lin_way+'chat.txt', "r") as ch:
-        text = ch.read()
-    with open(T_lin_way+'text_model_1.json', "w") as f:
-        f.write(markovify.Text(text, state_size=1,retain_original=False).to_json())
-    with zipfile.ZipFile(T_lin_way+'z1.zip', 'w') as z1:
-        z1.write(T_lin_way+'text_model_1.json',arcname='text_model_1.json',compress_type=zipfile.ZIP_DEFLATED)
-    os.remove(T_lin_way+'text_model_1.json')
-    with open(T_lin_way+'/text_model_2.json', "w") as f:
-        f.write(markovify.Text(text, state_size=2,retain_original=False).to_json())
-    with zipfile.ZipFile(T_lin_way + 'z2.zip', 'w') as z2:
-        z2.write(T_lin_way+'text_model_2.json', arcname='text_model_2.json',compress_type=zipfile.ZIP_DEFLATED)
-    os.remove(T_lin_way+'text_model_2.json')
-    with open(T_lin_way+'log.txt', "w") as f:
-        f.write(time.asctime())
-    end=time.time_ns()
-    return f"Модель создана за {(end-start)//10 ** 9} с"
 def use_model(par='2'):
-    with zipfile.ZipFile(T_lin_way+'z'+par+'.zip','r') as oz:
+    st=time.time_ns()
+    with zipfile.ZipFile(mac_way+'z'+par+'.zip','r') as oz:
         oz.extractall()
-    with open('text_model_'+par+'.json', "r") as f:
-        text_model= markovify.Text.from_json(f.read())
-    result = text_model.make_sentence(max_overlap_ratio=0.5)
-    while result is None:
-        result = text_model.make_sentence(max_overlap_ratio=0.5)
-    os.remove('text_model_'+par+'.json')
-    return result.capitalize().replace(' ?.','? ')
+    combined_model = None
+    for i in range(1,4):
+        with open ('/Users/denis/Documents/vk_bot/scripts/text_model_'+par+str(i)+'.json') as f:
+            model = markovify.Text.from_json(f.read())
+        if combined_model:
+            combined_model = markovify.combine(models=[combined_model, model])
+        else:
+            combined_model = model
+        print("прошло " + str((time.time_ns() - st) // 10 ** 6)+" мс")
+    with open(mac_way + 'chat.txt') as f:
+        model = markovify.Text(f, state_size=int(par),retain_original=False)
+    combined_model = markovify.combine(models=[combined_model, model])
+    print("прошло "+str((time.time_ns() - st) // 10 ** 6)+" мс")
+    result = combined_model.make_sentence()
+    if result is not None:
+        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " "+ str((time.time_ns() - st) // 10 ** 6)
+    for _ in range(150):
+        if result is not None:
+            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")+ " "+str((time.time_ns() - st) // 10 ** 6)
+        else:
+            result = combined_model.make_sentence()
+    return "мне не хватило 150 итераци, давай еще"
 def long_sent(par,leng):
     if leng>10:
         with open(lin_way+str(par)+'.txt', "r") as f:
@@ -98,3 +96,7 @@ def anek(par=2, num=5):
                 result = text_model.make_sentence()
             anek+=result+'\n'
         return anek
+print("C параметром одын:")
+print(use_model('1'))
+print("C параметром два:")
+print(use_model())
