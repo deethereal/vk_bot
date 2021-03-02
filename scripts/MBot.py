@@ -118,7 +118,7 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    send(m.use_model(str(mar_par)), event.object['message']['peer_id'])
+                    send(m.use_model(mar_par,models), event.object['message']['peer_id'])
                     if (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
                         mes_proc(event.object)
 
@@ -160,26 +160,41 @@ for event in longpoll.listen():
                     if message_text[5]=='а':
                         var_par=2
                         if message_text[7].isdigit():
-                            leng=int(message_text[7])
-                            for i in range(8,len(message_text)):
-                                if message_text[i].isdigit():
-                                    leng=leng*10+int(message_text[i])
-                            send(m.long_sent(var_par,leng),event.object['message']['peer_id'])
-                        elif len(message_text[7:-1].split(','))==2:
-                            send(m.sent_s(var_par,message_text[7:-3],bool(message_text[-2])),event.object['message']['peer_id'])
-                        elif len(message_text[7:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[7:-1]),event.object['message']['peer_id'])
-                    else:
-                        if message_text[6].isdigit():
-                            leng=int(message_text[6])
-                            for i in range(7,len(message_text)):
-                                if message_text[i].isdigit():
-                                    leng=leng*10+int(message_text[i])
-                            send(m.long_sent(var_par,leng),event.object['message']['peer_id'])
-                        elif len(message_text[6:-1].split(','))==2:
-                            send(m.sent_s(var_par,message_text[6:-3],bool(message_text[-2])),event.object['message']['peer_id'])
-                        elif len(message_text[6:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[6:-1]),event.object['message']['peer_id'])
+                            nums=message_text[7:-1].split(',')
+                            if len(nums)==1:
+                                nums[1]=500
+                            send(m.size_of_sent(var_par,models,min_len=nums[0],max_len=nums[1],models=models),event.object['message']['peer_id'])
+                        else:
+                            wds = message_text[7:-1].split(',')
+                            if len(wds)==1:
+                                send(m.sent_s(par=var_par, word=message_text[7:-1],models=models),event.object['message']['peer_id'])
+                            elif len(wds)==2:
+                                send(m.sent_s(par=var_par,word=message_text[7:-3],state=bool(message_text[-2]),models=models),event.object['message']['peer_id'])
+                            elif len(wds) == 3:
+                                send(m.sent_s(par=var_par,word=args[0],state=bool(args[1]),min_len=int(args[2]),models=models),event.object['message']['peer_id'])
+                            elif len(wds) == 4:
+                                send(m.sent_s(par=var_par,word=args[0],state=bool(args[1]),min_len=int(args[2]),max_len=int(args[3]),models=models),event.object['message']['peer_id'])
+                    elif message_text[6].isdigit():
+                        nums = message_text[6:-1].split(',')
+                        if len(nums) == 1:
+                            nums[1] = 500
+                            send(m.size_of_sent(var_par, models, min_len=nums[0], max_len=nums[1]),
+                             event.object['message']['peer_id'])
+                        else:
+                            args = message_text[7:-1].split(',')
+                            if len(args) == 1:
+                                send(m.sent_s(par=var_par, word=message_text[6:-1]), event.object['message']['peer_id'])
+                            elif len(args) == 2:
+                                send(m.sent_s(par=var_par, word=message_text[6:-3], state=bool(message_text[-2])),
+                                 event.object['message']['peer_id'])
+                            elif len(args) == 3:
+                                send(m.sent_s(par=var_par, word=args[0], state=bool(args[1]), min_len=int(args[2])),
+                                     event.object['message']['peer_id'])
+                            elif len(args) == 4:
+                                send(m.sent_s(par=var_par, word=args[0], state=bool(args[1]), min_len=int(args[2]),
+                                              max_len=int(args[3])), event.object['message']['peer_id'])
+
+
             elif message_text=="генана":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
