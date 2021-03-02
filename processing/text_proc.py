@@ -5,9 +5,10 @@ import os
 
 my_ponct='!#&*,;\^_`{}'
 mac_way='/Users/denis/Documents/vk_bot/data/'
+T_lin_way='/home/ubuntu/test_bot/data/'
 def proc():
-    for i in range(1,4):
-        with open ('/Users/denis/Documents/vk_bot/data/part'+str(i)+'.txt', 'r') as f:
+    for i in range(1,5):
+        with open (T_lin_way+'part'+str(i)+'.txt', 'r') as f:
             text=f.read()
         sentences = text.split('\n')
         new_sentences = []
@@ -23,31 +24,27 @@ def proc():
                     new_sentences.append((el+". ").lower())
         print(len(new_sentences))
         print((new_sentences[0:10]))
-        with open ('/Users/denis/Documents/vk_bot/data/part'+str(i)+'.txt','w') as nf:
+        with open (T_lin_way+'part'+str(i)++str(i)+'.txt','w') as nf:
            for el in new_sentences:
             el.replace('🌚', ' 🌚')
             nf.write(el)
 def create_one():
-    for i in range(1,4):
-        with open(mac_way+'part'+str(i)+'.txt', "r") as ch:
+    for i in range(1,5):
+        with open(T_lin_way+'part'+str(i)+'.txt', "r") as ch:
             text = ch.read()
-        with open(mac_way+'text_model_1'+str(i)+'.json', "w") as f:
+        with open(T_lin_way+'text_model_1'+str(i)+'.json', "w") as f:
             f.write(markovify.Text(text, state_size=1,retain_original=False).to_json())
-        with zipfile.ZipFile(mac_way+'z1.zip', 'a') as z1:
-            z1.write(mac_way+'text_model_1'+str(i)+'.json',arcname='text_model_1'+str(i)+'.json',compress_type=zipfile.ZIP_DEFLATED)
-        os.remove(mac_way+'text_model_1'+str(i)+'.json')
 def create_two():
-    for i in range(1, 4):
-        with open(mac_way + 'part' + str(i) + '.txt', "r") as ch:
+    for i in range(1, 5):
+        with open(T_lin_way + 'part' + str(i) + '.txt', "r") as ch:
             text = ch.read()
-        with open(mac_way + 'text_model_2' + str(i) + '.json', "w") as f:
+        with open(T_lin_way + 'text_model_1' + str(i) + '.json', "w") as f:
             f.write(markovify.Text(text, state_size=2, retain_original=False).to_json())
-        with zipfile.ZipFile(mac_way + 'z2.zip', 'a') as z1:
-            z1.write(mac_way + 'text_model_2' + str(i) + '.json', arcname='text_model_2' + str(i) + '.json',
-                     compress_type=zipfile.ZIP_DEFLATED)
-        os.remove(mac_way + 'text_model_2' + str(i) + '.json')
+
+
+
 def delete_old():
-    with open (mac_way+'chat.txt') as ch:
+    with open (mac_way+'part4.txt') as ch:
         text=ch.read()
     sentences = text.split('. ')
     print(sentences[5])
@@ -65,7 +62,7 @@ def delete_old():
             old_start=False
             print('снова начал писать')
     print(len(new_sentences))
-    with open('/Users/denis/Documents/vk_bot/data/chat.txt', 'w') as nf:
+    with open('/data/part4.txt', 'w') as nf:
         for el in new_sentences:
             nf.write(el)
 

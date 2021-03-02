@@ -5,33 +5,34 @@ import os
 
 lin_way='/home/ubuntu/bot/vk_bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
-T_lin_way='/home/ubuntu/test_bot/vk_bot/data/'
+T_lin_way='/home/ubuntu/test_bot/data/'
 def use_model(par='2'):
     st=time.time_ns()
-    with zipfile.ZipFile(mac_way+'z'+par+'.zip','r') as oz:
-        oz.extractall()
     combined_model = None
-    for i in range(1,4):
-        with open ('/Users/denis/Documents/vk_bot/scripts/text_model_'+par+str(i)+'.json') as f:
+    for i in range(1, 5):
+        with open(T_lin_way+'text_model_'+par+str(i)+'.json') as f:
             model = markovify.Text.from_json(f.read())
-        if combined_model:
-            combined_model = markovify.combine(models=[combined_model, model])
-        else:
-            combined_model = model
-        print("прошло " + str((time.time_ns() - st) // 10 ** 6)+" мс")
-    with open(mac_way + 'chat.txt') as f:
-        model = markovify.Text(f, state_size=int(par),retain_original=False)
+            if combined_model:
+                combined_model = markovify.combine(models=[combined_model, model])
+            else:
+                combined_model = model
+            print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
+    with open(mac_way + 'actual.txt') as f:
+        model = markovify.Text(f, state_size=int(par), retain_original=False)
     combined_model = markovify.combine(models=[combined_model, model])
-    print("прошло "+str((time.time_ns() - st) // 10 ** 6)+" мс")
+    print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
     result = combined_model.make_sentence()
     if result is not None:
-        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " "+ str((time.time_ns() - st) // 10 ** 6)
+        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
+            (time.time_ns() - st) // 10 ** 6)
     for _ in range(150):
         if result is not None:
-            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")+ " "+str((time.time_ns() - st) // 10 ** 6)
+            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
+                (time.time_ns() - st) // 10 ** 6)
         else:
             result = combined_model.make_sentence()
     return "мне не хватило 150 итераци, давай еще"
+
 def long_sent(par,leng):
     if leng>10:
         with open(lin_way+str(par)+'.txt', "r") as f:
