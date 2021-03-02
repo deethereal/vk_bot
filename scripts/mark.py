@@ -17,7 +17,7 @@ def use_model(par='2'):
             else:
                 combined_model = model
             print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
-    with open(mac_way + 'actual.txt') as f:
+    with open(T_lin_way + 'actual.txt') as f:
         model = markovify.Text(f, state_size=int(par), retain_original=False)
     combined_model = markovify.combine(models=[combined_model, model])
     print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")

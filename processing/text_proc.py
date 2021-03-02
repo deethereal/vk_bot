@@ -38,7 +38,7 @@ def create_two():
     for i in range(1, 5):
         with open(T_lin_way + 'part' + str(i) + '.txt', "r") as ch:
             text = ch.read()
-        with open(T_lin_way + 'text_model_1' + str(i) + '.json', "w") as f:
+        with open(T_lin_way + 'text_model_2' + str(i) + '.json', "w") as f:
             f.write(markovify.Text(text, state_size=2, retain_original=False).to_json())
 
 
@@ -70,4 +70,5 @@ def move_trash():
     for i in range(1,3):
         for j in range(1,4):
             os.remove('/Users/denis/Documents/vk_bot/scripts/text_model_'+str(i)+str(j)+'.json')
-move_trash()
+create_one()
+create_two()
