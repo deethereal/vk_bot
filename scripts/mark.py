@@ -83,7 +83,7 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
 
 
 def size_of_sent(par,models,min_len=1, max_len=500):
-    if len<1:
+    if min_len<1:
         return "Введите положительную длину"
     else:
         st = time.time_ns()
