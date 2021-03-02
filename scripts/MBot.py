@@ -162,7 +162,7 @@ for event in longpoll.listen():
                         if message_text[7].isdigit():
                             nums=message_text[7:-1].split(',')
                             if len(nums)==1:
-                                nums[1]=500
+                                nums.append(500)
                             send(m.size_of_sent(var_par,models,min_len=nums[0],max_len=nums[1],models=models),event.object['message']['peer_id'])
                         else:
                             wds = message_text[7:-1].split(',')
@@ -178,7 +178,7 @@ for event in longpoll.listen():
                     elif message_text[6].isdigit():
                         nums = message_text[6:-1].split(',')
                         if len(nums) == 1:
-                            nums[1] = 500
+                            nums.append(500)
                             send(m.size_of_sent(var_par, models, min_len=nums[0], max_len=nums[1]),
                              event.object['message']['peer_id'])
                     else:
