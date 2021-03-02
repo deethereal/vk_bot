@@ -31,11 +31,11 @@ def use_model(par,models):
     result=model.make_sentence()
     if result is not None:
         return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-            (time.time_ns() - st) // 10 ** 6+' мс')
+            (time.time_ns() - st) // 10 ** 6)+' мс'
     for _ in range(150):
         if result is not None:
             return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                (time.time_ns() - st) // 10 ** 6+' мс')
+                (time.time_ns() - st) // 10 ** 6)+' мс'
         else:
             result = model.make_sentence()
     return "мне не хватило 150 итераци, давай еще"
