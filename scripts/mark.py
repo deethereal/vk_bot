@@ -17,9 +17,9 @@ def get_model():
                     combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
                     combined_model[j] = model
-                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создание параметра" +str(j+1))
+                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создание параметра " +str(j+1))
         with open(T_lin_way + 'actual.txt') as f:
-            model = markovify.Text(f, state_size=j, retain_original=False)
+            model = markovify.Text(f, state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
         print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создана с параметром "+str(j+1))
     return combined_model
