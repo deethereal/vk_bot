@@ -184,16 +184,16 @@ for event in longpoll.listen():
                         else:
                             args = message_text[7:-1].split(',')
                             if len(args) == 1:
-                                send(m.sent_s(par=var_par, word=message_text[6:-1]), event.object['message']['peer_id'])
+                                send(m.sent_s(par=var_par, models=models,word=message_text[6:-1]), event.object['message']['peer_id'])
                             elif len(args) == 2:
-                                send(m.sent_s(par=var_par, word=message_text[6:-3], state=bool(message_text[-2])),
+                                send(m.sent_s(par=var_par, word=message_text[6:-3], state=bool(message_text[-2]),models=models),
                                  event.object['message']['peer_id'])
                             elif len(args) == 3:
-                                send(m.sent_s(par=var_par, word=args[0], state=bool(args[1]), min_len=int(args[2])),
+                                send(m.sent_s(par=var_par, word=args[0], state=bool(args[1]), min_len=int(args[2]),models=models),
                                      event.object['message']['peer_id'])
                             elif len(args) == 4:
                                 send(m.sent_s(par=var_par, word=args[0], state=bool(args[1]), min_len=int(args[2]),
-                                              max_len=int(args[3])), event.object['message']['peer_id'])
+                                              max_len=int(args[3]),models=models), event.object['message']['peer_id'])
 
 
             elif message_text=="генана":
