@@ -105,6 +105,4 @@ def anek(par=2, num=5):
             anek+=result+'\n'
         return anek
 print("C параметром одын:")
-print(use_model('1'))
-print("C параметром два:")
-print(use_model())
+
