@@ -8,20 +8,21 @@ mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
 def get_model():
     combined_model = [None,None]
-    for j in range(1,2):
+    for j in range(0,2):
         st = time.time_ns()
         for i in range(1, 5):
             with open(T_lin_way+'text_model_'+str(j)+str(i)+'.json') as f:
                 model = markovify.Text.from_json(f.read())
-                if combined_model[j-1]:
-                    combined_model[j-1] = markovify.combine(models=[combined_model[j-1], model])
+                if combined_model[j]:
+                    combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
-                    combined_model[j-1] = model
-                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
+                    combined_model[j] = model
+                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создание параметра" +str(j+1))
         with open(T_lin_way + 'actual.txt') as f:
             model = markovify.Text(f, state_size=j, retain_original=False)
-        combined_model[j-1] = markovify.combine(models=[combined_model[j-1], model])
-        print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
+        combined_model[j] = markovify.combine(models=[combined_model[j], model])
+        print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создана с параметром "+str(j+1))
+    return combined_model
 
 def use_model(par,models):
     st = time.time_ns()
