@@ -44,7 +44,7 @@ def use_model(par,models):
 
 def sent_s(par,word,models,min_len=1, max_len=500,state=False):
     st = time.time_ns()
-    if min_len<=1:
+    if min_len<1:
         return "Укажите большую длину "
     else:
         model = models[par]
