@@ -167,13 +167,14 @@ for event in longpoll.listen():
                         else:
                             wds = message_text[7:-1].split(',')
                             if len(wds)==1:
-                                send(m.sent_s(par=var_par, word=message_text[7:-1],models=models),event.object['message']['peer_id'])
+                                print("Я зашел суда с параметром "+wds[0])
+                                send(m.sent_s(par=var_par, word=wds[0],models=models),event.object['message']['peer_id'])
                             elif len(wds)==2:
-                                send(m.sent_s(par=var_par,word=message_text[7:-3],state=bool(message_text[-2]),models=models),event.object['message']['peer_id'])
+                                send(m.sent_s(par=var_par,word=wds[1],state=bool(message_text[-2]),models=models),event.object['message']['peer_id'])
                             elif len(wds) == 3:
-                                send(m.sent_s(par=var_par,word=args[0],state=bool(args[1]),min_len=int(args[2]),models=models),event.object['message']['peer_id'])
+                                send(m.sent_s(par=var_par,word=wds[0],state=bool(wds[1]),min_len=int(wds[2]),models=models),event.object['message']['peer_id'])
                             elif len(wds) == 4:
-                                send(m.sent_s(par=var_par,word=args[0],state=bool(args[1]),min_len=int(args[2]),max_len=int(args[3]),models=models),event.object['message']['peer_id'])
+                                send(m.sent_s(par=var_par,word=wds[0],state=bool(wds[1]),min_len=int(wds[2]),max_len=int(wds[3]),models=models),event.object['message']['peer_id'])
                     elif message_text[6].isdigit():
                         nums = message_text[6:-1].split(',')
                         if len(nums) == 1:
