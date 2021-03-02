@@ -47,7 +47,7 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
     if min_len<1:
         return "Укажите большую длину "
     else:
-        model = models[par]
+        model = models[par-1]
         if st:
             try:
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len,strict=state, min_words=min_len, max_overlap_ratio=0.49)
