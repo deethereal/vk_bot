@@ -47,6 +47,7 @@ votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False,
 with open('/home/ubuntu/bot/vk_bot/data/help.txt', 'r') as h:
     text_help=h.read()
 send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
+models=m.get_model()
 for event in longpoll.listen():
     joke=False
     flag=False
@@ -133,7 +134,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.use_model('1'), event.object['message']['peer_id'])
+                    send(m.use_model(0,models), event.object['message']['peer_id'])
             elif message_text[0:5]=='!анек':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
@@ -149,7 +150,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.use_model('2'), event.object['message']['peer_id'])
+                    send(m.use_model(1,models), event.object['message']['peer_id'])
             elif message_text[0:5]=='!гена':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],

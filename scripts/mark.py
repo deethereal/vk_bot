@@ -6,32 +6,39 @@ import os
 lin_way='/home/ubuntu/bot/vk_bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
-def use_model(par='2'):
-    st=time.time_ns()
-    combined_model = None
-    for i in range(1, 5):
-        with open(T_lin_way+'text_model_'+par+str(i)+'.json') as f:
-            model = markovify.Text.from_json(f.read())
-            if combined_model:
-                combined_model = markovify.combine(models=[combined_model, model])
-            else:
-                combined_model = model
-            print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
-    with open(T_lin_way + 'actual.txt') as f:
-        model = markovify.Text(f, state_size=int(par), retain_original=False)
-    combined_model = markovify.combine(models=[combined_model, model])
-    print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
-    result = combined_model.make_sentence()
+def get_model():
+    combined_model = [None,None]
+    for j in range(1,2):
+        st = time.time_ns()
+        for i in range(1, 5):
+            with open(T_lin_way+'text_model_'+str(j)+str(i)+'.json') as f:
+                model = markovify.Text.from_json(f.read())
+                if combined_model[j-1]:
+                    combined_model[j-1] = markovify.combine(models=[combined_model[j-1], model])
+                else:
+                    combined_model[j-1] = model
+                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
+        with open(T_lin_way + 'actual.txt') as f:
+            model = markovify.Text(f, state_size=j, retain_original=False)
+        combined_model[j-1] = markovify.combine(models=[combined_model[j-1], model])
+        print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс")
+
+def use_model(par,models):
+    st = time.time_ns()
+    par-=1
+    model=models[par]
+    result=model.make_sentence()
     if result is not None:
         return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-            (time.time_ns() - st) // 10 ** 6)
+            (time.time_ns() - st) // 10 ** 6+' мс')
     for _ in range(150):
         if result is not None:
             return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                (time.time_ns() - st) // 10 ** 6)
+                (time.time_ns() - st) // 10 ** 6+' мс')
         else:
-            result = combined_model.make_sentence()
+            result = model.make_sentence()
     return "мне не хватило 150 итераци, давай еще"
+
 
 def long_sent(par,leng):
     if leng>10:
