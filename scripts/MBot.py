@@ -228,6 +228,7 @@ for event in longpoll.listen():
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
             elif message_text=='!обнова':
                 send("Начинаю создание модели...",event.object['message']['peer_id'])
+                models=None
                 st = time.time_ns()
                 models=m.get_model()
                 send("Модель создана за "+ str((time.time_ns() - st) // 10 ** 6)+' мс')
