@@ -153,7 +153,7 @@ for event in longpoll.listen():
                     else:
                         args=message_text[5:-1].split(',')
                         try:
-                            send(m.anek(int(args),int(args(2))), event.object['message']['peer_id'])
+                            send(m.anek(int(args[0]),int(args[1])), event.object['message']['peer_id'])
                         except:
                             send("Пошеел нахуй тестировщик хуев", event.object['message']['peer_id'])
             elif message_text == "!генаа":
