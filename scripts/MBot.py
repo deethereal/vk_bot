@@ -12,7 +12,7 @@ joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-    with open('/home/ubuntu/bot/vk_bot/data/chat.txt', 'a') as c, open('/home/ubuntu/bot/vk_bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
+    with open('/home/ubuntu/bot/data/actual.txt', 'a') as c, open('/home/ubuntu/bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
         out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
         c.write(out + '. ')
         p.write(out + '. ')
@@ -38,14 +38,17 @@ votekickID=0
 votekickN=2
 votekickpercent=0
 M1 = {'red':[207227130,['мотя','матвей']], 'orange':[125928980,['никита','матвей...ой в смысле никита',"писюканов"]], 'yellow':[62501050,['коля',"колека"]], 'green':[150078285,['семён','семен','Semen','сема','сёма']], 'sasha':[218917421,['саша']], 'blue':[206312673,['диня',"денис"]],'god':[236709769,['влад']], 'shluha':[240702553,['ирка','шлюха','ира']]}
-comands={'да':True, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":False} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
+comands={'да':True, "хочу":False, "хачу":False, "кальян":False, "мама":False,"пидор":False,"ы":False,"хуй":True} #состояние выключенности команд, ВЫВОДИТСЯ ВКЛЮЧЕННОСТЬ!!
 torch=['torch',"торч","калик","кальян","дядя коля","табак"]
 imposter=['imposter','impostor','импостер',"импостор", "предатель","компостор","компостер","пидорас","пидор"]
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
-with open('/home/ubuntu/bot/vk_bot/data/help.txt', 'r') as h:
+with open('help.txt', 'r') as h, open('gen.txt', 'r') as g:
     text_help=h.read()
+    text_gen=g.read()
+models = m.get_model()
+#send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
 for event in longpoll.listen():
     joke=False
     flag=False
@@ -57,11 +60,17 @@ for event in longpoll.listen():
         arrive=time.time_ns()
         message_text = event.object['message']['text'].lower()
         if message_text=='/help':
-                COMAND=True
-                if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
-                    sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
-                else:
-                    send(text_help,event.object['message']['peer_id'])
+            COMAND=True
+            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
+                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+            else:
+                send(text_help,event.object['message']['peer_id'])
+        elif message_text=='/gen':
+            COMAND=True
+            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
+                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+            else:
+                send(text_gen,event.object['message']['peer_id'])
         elif message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
@@ -116,7 +125,7 @@ for event in longpoll.listen():
                     send(str(rid) ,event.object['message']['peer_id'])
             elif genamode:
                 if message_text!="гена возьми":
-                    send(m.use_model(str(mar_par)), event.object['message']['peer_id'])
+                    send(m.use_model(mar_par,models), event.object['message']['peer_id'])
                     if (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
                         mes_proc(event.object)
 
@@ -132,7 +141,7 @@ for event in longpoll.listen():
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.use_model('1'), event.object['message']['peer_id'])
+                    send(m.use_model(0,models), event.object['message']['peer_id'])
             elif message_text[0:5]=='!анек':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
@@ -142,42 +151,42 @@ for event in longpoll.listen():
                     if len(message_text)==5:
                         send(m.anek(), event.object['message']['peer_id'])
                     else:
-                        send(m.anek(int(message_text[6]),int(message_text[8:-1])), event.object['message']['peer_id'])
+                        args=message_text[6:-1].split(',')
+                        try:
+                            send(m.anek(int(args[0]),int(args[1])), event.object['message']['peer_id'])
+                        except:
+                            send("Пошеел нахуй тестировщик хуев", event.object['message']['peer_id'])
             elif message_text == "!генаа":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
-                    send(m.use_model('2'), event.object['message']['peer_id'])
+                    send(m.use_model(1,models), event.object['message']['peer_id'])
             elif message_text[0:5]=='!гена':
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
                               'photo-178950051_457239178')
                 else:
                     var_par=1
+                    strt=6
                     if message_text[5]=='а':
+                        strt=7
                         var_par=2
-                        if message_text[7].isdigit():
-                            leng=int(message_text[7])
-                            for i in range(8,len(message_text)):
-                                if message_text[i].isdigit():
-                                    leng=leng*10+int(message_text[i])
-                            send(m.long_sent(var_par,leng),event.object['message']['peer_id'])
-                        elif len(message_text[7:-1].split(','))==2:
-                            send(m.sent_s(var_par,message_text[7:-3],bool(message_text[-2])),event.object['message']['peer_id'])
-                        elif len(message_text[7:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[7:-1]),event.object['message']['peer_id'])
+                    if message_text[strt].isdigit():
+                        nums=message_text[strt:-1].split(',')
+                        if len(nums)==1:
+                            nums.append(500)
+                        send(m.size_of_sent(var_par,models,min_len=int(nums[0]),max_len=int(nums[1]),models=models),event.object['message']['peer_id'])
                     else:
-                        if message_text[6].isdigit():
-                            leng=int(message_text[6])
-                            for i in range(7,len(message_text)):
-                                if message_text[i].isdigit():
-                                    leng=leng*10+int(message_text[i])
-                            send(m.long_sent(var_par,leng),event.object['message']['peer_id'])
-                        elif len(message_text[6:-1].split(','))==2:
-                            send(m.sent_s(var_par,message_text[6:-3],bool(message_text[-2])),event.object['message']['peer_id'])
-                        elif len(message_text[6:-1].split(','))==1:
-                            send(m.sent_s(var_par, message_text[6:-1]),event.object['message']['peer_id'])
+                        wds = list(map(lambda x: x.replace(" ",""),message_text[strt:-1].split(',')))
+                        if len(wds)==1:
+                            send(m.sent_s(par=var_par, word=wds[0],models=models),event.object['message']['peer_id'])
+                        elif len(wds)==2:
+                            send(m.sent_s(par=var_par,word=wds[0],min_len=int(wds[1]), models=models),event.object['message']['peer_id'])
+                        elif len(wds) == 3:
+                            send(m.sent_s(par=var_par,word=wds[0],min_len=int(wds[1]) ,max_len=int(wds[2]),models=models),event.object['message']['peer_id'])
+                        elif len(wds) == 4:
+                            send(m.sent_s(par=var_par,word=wds[0],state=bool(wds[3]),min_len=int(wds[1]),max_len=int(wds[2]),models=models),event.object['message']['peer_id'])
             elif message_text=="генана":
                 if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
                     sendphoto('Запрос отклонен по причине:', event.object['message']['peer_id'],
@@ -218,9 +227,13 @@ for event in longpoll.listen():
                     rid = int(event.object['message']['conversation_message_id'])
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
             elif message_text=='!обнова':
-                send(m.create_model(),event.object['message']['peer_id'])
+                send("Начинаю создание модели...",event.object['message']['peer_id'])
+                del models
+                st = time.time_ns()
+                models=m.get_model()
+                send("Модель создана за "+ str((time.time_ns() - st) // 10 ** 9)+' мс', event.object['message']['peer_id'])
             elif message_text=="!версия":
-                with open('/home/ubuntu/bot/vk_bot/data/log.txt', 'r') as log:
+                with open('/home/ubuntu/test_bot/data/log.txt', 'r') as log:
                     send(f"Последняя модель была создана {log.read()}", event.object['message']['peer_id'])
             else:
                 if len(message_text.split())==2:
