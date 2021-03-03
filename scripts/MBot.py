@@ -47,8 +47,8 @@ votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False,
 with open('help.txt', 'r') as h, open('gen.txt', 'r') as g:
     text_help=h.read()
     text_gen=g.read()
+models = m.get_model()
 send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
-models=m.get_model()
 for event in longpoll.listen():
     joke=False
     flag=False

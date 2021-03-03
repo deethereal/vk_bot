@@ -10,13 +10,13 @@ def get_model():
     combined_model = [None,None]
     for j in range(0,2):
         for i in range(1, 5):
-            with open(T_lin_way+'text_model_'+str(j+1)+str(i)+'.json') as f:
+            with open(T_lin_way+'text_model_'+str(j+1)+str(i)+'.json',"r") as f:
                 model = markovify.Text.from_json(f.read())
                 if combined_model[j]:
                     combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
                     combined_model[j] = model
-        with open(T_lin_way + 'actual.txt') as f:
+        with open(T_lin_way + 'actual.txt',"r") as f:
             model = markovify.Text(f.read(), state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
     with open('/home/ubuntu/test_bot/data/log.txt', "w") as f:
