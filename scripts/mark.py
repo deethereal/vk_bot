@@ -10,13 +10,13 @@ def get_model():
     combined_model = [None,None]
     for j in range(0,2):
         for i in range(1, 5):
-            with open(T_lin_way+'text_model_'+str(j+1)+str(i)+'.json',"r") as f:
+            with open(lin_way+'text_model_'+str(j+1)+str(i)+'.json',"r") as f:
                 model = markovify.Text.from_json(f.read())
                 if combined_model[j]:
                     combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
                     combined_model[j] = model
-        with open(T_lin_way + 'actual.txt',"r") as f:
+        with open(lin_way + 'actual.txt',"r") as f:
             model = markovify.Text(f.read(), state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
     with open('/home/ubuntu/test_bot/data/log.txt', "w") as f:
@@ -31,12 +31,10 @@ def use_model(par,models):
     model=models[par]
     result=model.make_sentence()
     if result is not None:
-        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-            (time.time_ns() - st) // 10 ** 6)+' мс'
+        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
     for _ in range(150):
         if result is not None:
-            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                (time.time_ns() - st) // 10 ** 6)+' мс'
+            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
         else:
             result = model.make_sentence()
     return "мне не хватило 150 итераци, давай еще"
@@ -52,13 +50,12 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
             try:
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len,strict=state, min_words=min_len, max_overlap_ratio=0.49)
                 if result is not None:
-                    return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                        (time.time_ns() - st) // 10 ** 6) + ' мс'
+                    return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
                 for _ in range(150):
                     result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,
                                                             strict=state, max_overlap_ratio=0.49)
                     if result is not None:
-                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str((time.time_ns() - st) // 10 ** 6) + ' мс'
+                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
                 return "мне не хватило 150 итераци, давай еще"
             except KeyError:
                 return f"Слова {word} нет в тексте, задайте другое"
@@ -69,14 +66,14 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 while result is None:
                     result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
-                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str((time.time_ns() - st) // 10 ** 6) + ' мс'
+                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
             except KeyError:
                 return f"Слова {word} нет в тексте, задайте другое"
             except markovify.text.ParamError:
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 for _ in range(50):
                     if result is not None:
-                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str((time.time_ns() - st) // 10 ** 6) + ' мс'
+                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
                     else:
                         result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
@@ -91,12 +88,10 @@ def size_of_sent(par,models,min_len=1, max_len=500):
         model = models[par]
         result = model.make_sentence(max_words=max_len, min_words=min_len)
         if result is not None:
-            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                (time.time_ns() - st) // 10 ** 6) + ' мс'
+            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
         for _ in range(150):
             if result is not None:
-                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ") + " " + str(
-                    (time.time_ns() - st) // 10 ** 6) + ' мс'
+                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
             else:
                 result = model.make_sentence(max_words=max_len, min_words=min_len)
         return "мне не хватило 150 итераци, давай еще"
@@ -114,7 +109,7 @@ def anek(par=2, num=5):
     if num>50:
         return "Никаких лонгридов в мою смену(максимум 50 строк)"
     else:
-        with open('/home/ubuntu/test_bot/data/anekdot.txt','r') as a:
+        with open('/home/ubuntu/bot/data/anekdot.txt','r') as a:
             text = a.read()
         text_model=markovify.NewlineText(text,state_size=par)
         anek=''

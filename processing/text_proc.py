@@ -4,11 +4,12 @@ import zipfile
 import os
 
 my_ponct='!#&*,;\^_`{}'
+lin_way='/home/ubuntu/bot/vk_bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
 def proc():
     for i in range(1,5):
-        with open (T_lin_way+'part'+str(i)+'.txt', 'r') as f:
+        with open (lin_way+'part'+str(i)+'.txt', 'r') as f:
             text=f.read()
         sentences = text.split('\n')
         new_sentences = []
@@ -24,21 +25,21 @@ def proc():
                     new_sentences.append((el+". ").lower())
         print(len(new_sentences))
         print((new_sentences[0:10]))
-        with open (T_lin_way+'part'+str(i)++str(i)+'.txt','w') as nf:
+        with open (lin_way+'part'+str(i)++str(i)+'.txt','w') as nf:
            for el in new_sentences:
             el.replace('🌚', ' 🌚')
             nf.write(el)
 def create_one():
     for i in range(1,5):
-        with open(T_lin_way+'part'+str(i)+'.txt', "r") as ch:
+        with open(lin_way+'part'+str(i)+'.txt', "r") as ch:
             text = ch.read()
-        with open(T_lin_way+'text_model_1'+str(i)+'.json', "w") as f:
+        with open(lin_way+'text_model_1'+str(i)+'.json', "w") as f:
             f.write(markovify.Text(text, state_size=1,retain_original=False).to_json())
 def create_two():
     for i in range(1, 5):
-        with open(T_lin_way + 'part' + str(i) + '.txt', "r") as ch:
+        with open(lin_way + 'part' + str(i) + '.txt', "r") as ch:
             text = ch.read()
-        with open(T_lin_way + 'text_model_2' + str(i) + '.json', "w") as f:
+        with open(lin_way + 'text_model_2' + str(i) + '.json', "w") as f:
             f.write(markovify.Text(text, state_size=2, retain_original=False).to_json())
 
 
