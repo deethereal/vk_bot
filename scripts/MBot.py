@@ -151,7 +151,7 @@ for event in longpoll.listen():
                     if len(message_text)==5:
                         send(m.anek(), event.object['message']['peer_id'])
                     else:
-                        args=message_text[5:-1].split(',')
+                        args=message_text[6:-1].split(',')
                         try:
                             send(m.anek(int(args[0]),int(args[1])), event.object['message']['peer_id'])
                         except:
