@@ -231,7 +231,7 @@ for event in longpoll.listen():
                 del models
                 st = time.time_ns()
                 models=m.get_model()
-                send("Модель создана за "+ str((time.time_ns() - st) // 10 ** 6)+' мс')
+                send("Модель создана за "+ str((time.time_ns() - st) // 10 ** 9)+' мс', event.object['message']['peer_id'])
             elif message_text=="!версия":
                 with open('/home/ubuntu/test_bot/data/log.txt', 'r') as log:
                     send(f"Последняя модель была создана {log.read()}", event.object['message']['peer_id'])
