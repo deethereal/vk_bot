@@ -175,9 +175,9 @@ for event in longpoll.listen():
                         if len(wds)==1:
                             send(m.sent_s(par=var_par, word=wds[0],models=models),event.object['message']['peer_id'])
                         elif len(wds)==2:
-                            send(m.sent_s(par=var_par,word=wds[1],min_len=int(wds[1]), models=models),event.object['message']['peer_id'])
+                            send(m.sent_s(par=var_par,word=wds[0],min_len=int(wds[1]), models=models),event.object['message']['peer_id'])
                         elif len(wds) == 3:
-                            send(m.sent_s(par=var_par,word=wds[0],max_len=int(wds[2]),min_len=int(wds[1]),models=models),event.object['message']['peer_id'])
+                            send(m.sent_s(par=var_par,word=wds[0],min_len=int(wds[1]) ,max_len=int(wds[2]),models=models),event.object['message']['peer_id'])
                         elif len(wds) == 4:
                             send(m.sent_s(par=var_par,word=wds[0],state=bool(wds[3]),min_len=int(wds[1]),max_len=int(wds[2]),models=models),event.object['message']['peer_id'])
             elif message_text=="генана":
