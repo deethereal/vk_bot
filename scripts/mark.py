@@ -111,6 +111,8 @@ def simulate(par,id):
 def anek(par=2, num=5):
     if par>4:
         return "Слишком сильная связь, нужна цифра до 5"
+    if num>50:
+        return "Никаких лонгридов в мою смену(максимум 50 строк)"
     else:
         with open('/home/ubuntu/test_bot/data/anekdot.txt','r') as a:
             text = a.read()
