@@ -9,8 +9,6 @@ T_lin_way='/home/ubuntu/test_bot/data/'
 def get_model():
     combined_model = [None,None]
     for j in range(0,2):
-        print("Модель номер "+str(j+1)+":")
-        st = time.time_ns()
         for i in range(1, 5):
             with open(T_lin_way+'text_model_'+str(j+1)+str(i)+'.json') as f:
                 model = markovify.Text.from_json(f.read())
@@ -18,11 +16,13 @@ def get_model():
                     combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
                     combined_model[j] = model
-                print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создание параметра " +str(j+1))
         with open(T_lin_way + 'actual.txt') as f:
             model = markovify.Text(f, state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
-        print("прошло " + str((time.time_ns() - st) // 10 ** 6) + " мс создана с параметром "+str(j+1))
+    with open('/home/ubuntu/test_bot/data/log.txt', "w") as f:
+        seconds=time.time()+3600*3
+        now=time.ctime(seconds)
+        f.write(now)
     return combined_model
 
 def use_model(par,models):

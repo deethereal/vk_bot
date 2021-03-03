@@ -44,8 +44,9 @@ imposter=['imposter','impostor','импостер',"импостор", "пред
 y_words=['уеба','уёба','yеба', 'уебa','уeба','yeба','yебa','уeбa','yeба','yёба','уёбa','yёбa', 'yeбa']
 booba=["сиськи","сиська","сиську","грудь","boobs",'booba',"буба"]
 votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False, 240702553:False}
-with open('/home/ubuntu/bot/vk_bot/data/help.txt', 'r') as h:
+with open('help.txt', 'r') as h, open('gen.txt', 'r') as g:
     text_help=h.read()
+    text_gen=g.read()
 send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
 models=m.get_model()
 for event in longpoll.listen():
@@ -59,11 +60,17 @@ for event in longpoll.listen():
         arrive=time.time_ns()
         message_text = event.object['message']['text'].lower()
         if message_text=='/help':
-                COMAND=True
-                if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
-                    sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
-                else:
-                    send(text_help,event.object['message']['peer_id'])
+            COMAND=True
+            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
+                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+            else:
+                send(text_help,event.object['message']['peer_id'])
+        elif message_text=='/gen':
+            COMAND=True
+            if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
+                sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
+            else:
+                send(text_gen,event.object['message']['peer_id'])
         elif message_text=='?mute?':
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
@@ -221,9 +228,11 @@ for event in longpoll.listen():
                     send('Расскручиваю барабан', event.object['message']['peer_id'])
             elif message_text=='!обнова':
                 send("Начинаю создание модели...",event.object['message']['peer_id'])
-                send(m.create_model(),event.object['message']['peer_id'])
+                st = time.time_ns()
+                models=m.get_model()
+                send("Модель создана за "+ str((time.time_ns() - st) // 10 ** 6)+' мс')
             elif message_text=="!версия":
-                with open('/home/ubuntu/bot/vk_bot/data/log.txt', 'r') as log:
+                with open('/home/ubuntu/test_bot/data/log.txt', 'r') as log:
                     send(f"Последняя модель была создана {log.read()}", event.object['message']['peer_id'])
             else:
                 if len(message_text.split())==2:
