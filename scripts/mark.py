@@ -17,7 +17,7 @@ def get_model():
                 else:
                     combined_model[j] = model
         with open(T_lin_way + 'actual.txt') as f:
-            model = markovify.Text(f, state_size=j+1, retain_original=False)
+            model = markovify.Text(f.read(), state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
     with open('/home/ubuntu/test_bot/data/log.txt', "w") as f:
         seconds=time.time()+3600*3
