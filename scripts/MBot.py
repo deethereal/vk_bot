@@ -12,10 +12,11 @@ joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
 def mes_proc(my_ev):
-    with open('/home/ubuntu/bot/data/actual.txt', 'a') as c, open('/home/ubuntu/bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
-        out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
-        c.write(out + '. ')
-        p.write(out + '. ')
+    if message_text[0:16]!='всего сообщений:':
+        with open('/home/ubuntu/bot/data/actual.txt', 'a') as c, open('/home/ubuntu/bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
+            out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
+            c.write(out + '. ')
+            p.write(out + '. ')
 def sendphoto(msg, peerID, attach): # msg — сообщение
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
 def send(msg, peerID):
