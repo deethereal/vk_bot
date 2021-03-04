@@ -4,7 +4,7 @@ import zipfile
 import os
 
 my_ponct='!#&*,;\^_`{}'
-lin_way='/home/ubuntu/bot/vk_bot/data/'
+lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
 def proc():

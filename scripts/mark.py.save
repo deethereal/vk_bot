@@ -5,7 +5,6 @@ import os
 
 lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
-T_lin_way='/home/ubuntu/test_bot/data/'
 def get_model():
     combined_model = [None,None]
     for j in range(0,2):
@@ -17,11 +16,10 @@ def get_model():
                     combined_model[j] = markovify.combine(models=[combined_model[j], model])
                 else:
                     combined_model[j] = model
-            print("Cоздал модель " + str(j + 1) + " номер " + str(i))
+	    print("Cоздал модель "+str(j+1) + " номер "+str(i))	
         with open(lin_way + 'actual.txt',"r") as f:
             model = markovify.Text(f.read(), state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
-    print("Cоздал оригинал")
     with open('/home/ubuntu/data/log.txt', "w") as f:
         seconds=time.time()+3600*3
         now=time.ctime(seconds)
