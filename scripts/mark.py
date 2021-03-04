@@ -22,7 +22,7 @@ def get_model():
             model = markovify.Text(f.read(), state_size=j+1, retain_original=False)
         combined_model[j] = markovify.combine(models=[combined_model[j], model])
     print("Cоздал оригинал")
-    with open('/home/ubuntu/data/log.txt', "w") as f:
+    with open('/home/ubuntu/bot/data/log.txt', "w") as f:
         seconds=time.time()+3600*3
         now=time.ctime(seconds)
         f.write(now)
