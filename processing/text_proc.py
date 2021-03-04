@@ -55,17 +55,17 @@ def splitin():
                 if el[0:16]!='всего сообщений:':
                     with open(lin_way+'new_part4.txt','a') as f:
                         f.write(el+'. ')
-                else:
-                    with open(lin_way+'new_part4.txt','a') as f:
-                        f.write(el+'. ')
+            else:
+                with open(lin_way+'new_part4.txt','a') as f:
+                    f.write(el+'. ')
         else:
             if len(el)>17:
                 if el[0:16]!='всего сообщений:':
                     with open(lin_way+'part5.txt','a') as f:
                         f.write(el+'. ')
-                else:
-                    with open(lin_way+'part5.txt','a') as f:
-                        f.write(el+'. ')
+            else:
+                with open(lin_way+'part5.txt','a') as f:
+                    f.write(el+'. ')
 
 
 
