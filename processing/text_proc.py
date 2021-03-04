@@ -42,6 +42,32 @@ def create_two():
         with open(lin_way + 'text_model_2' + str(i) + '.json', "w") as f:
             f.write(markovify.Text(text, state_size=2, retain_original=False).to_json())
 
+def splitin():
+    with open(lin_way + 'part4.txt', 'r') as f:
+        text=f.read()
+    sentences = text.split('. ')
+    flag=True
+    for el in sentences:
+        if el=='типа без разрывов':
+            flag=False
+        if flag:
+            if len(el)>17:
+                if el[0:16]!='всего соообщений':
+                    with open(lin_way+'new_part4.txt','a') as f:
+                        f.write(el+'. ')
+                else:
+                    with open(lin_way+'new_part4.txt','a') as f:
+                        f.write(el+'. ')
+        else:
+            if len(el)>17:
+                if el[0:16]!='всего соообщений':
+                    with open(lin_way+'part5.txt','a') as f:
+                        f.write(el+'. ')
+                else:
+                    with open(lin_way+'part5.txt','a') as f:
+                        f.write(el+'. ')
+
+
 
 
 def delete_old():
@@ -71,5 +97,4 @@ def move_trash():
     for i in range(1,3):
         for j in range(1,4):
             os.remove('/Users/denis/Documents/vk_bot/scripts/text_model_'+str(i)+str(j)+'.json')
-create_one()
-create_two()
+splitin()
