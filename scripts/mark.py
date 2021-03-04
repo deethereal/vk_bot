@@ -9,7 +9,7 @@ T_lin_way='/home/ubuntu/test_bot/data/'
 def get_model():
     combined_model = [None,None]
     for j in range(0,2):
-        for i in range(1, 5):
+        for i in range(1, 6):
             print("Cоздаю модель "+str(j+1) + " номер "+str(i))
             with open(lin_way+'text_model_'+str(j+1)+str(i)+'.json',"r") as f:
                 model = markovify.Text.from_json(f.read())

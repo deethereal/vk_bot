@@ -8,7 +8,7 @@ lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
 def proc():
-    for i in range(1,5):
+    for i in range(1,6):
         with open (lin_way+'part'+str(i)+'.txt', 'r') as f:
             text=f.read()
         sentences = text.split('\n')
@@ -30,13 +30,13 @@ def proc():
             el.replace('🌚', ' 🌚')
             nf.write(el)
 def create_one():
-    for i in range(1,5):
+    for i in range(1,6):
         with open(lin_way+'part'+str(i)+'.txt', "r") as ch:
             text = ch.read()
         with open(lin_way+'text_model_1'+str(i)+'.json', "w") as f:
             f.write(markovify.Text(text, state_size=1,retain_original=False).to_json())
 def create_two():
-    for i in range(1, 5):
+    for i in range(1, 6):
         with open(lin_way + 'part' + str(i) + '.txt', "r") as ch:
             text = ch.read()
         with open(lin_way + 'text_model_2' + str(i) + '.json', "w") as f:
@@ -55,6 +55,7 @@ def splitin():
                 if el[0:16]!='всего сообщений:':
                     with open(lin_way+'new_part4.txt','a') as f:
                         f.write(el+'. ')
+
             else:
                 with open(lin_way+'new_part4.txt','a') as f:
                     f.write(el+'. ')
@@ -71,7 +72,7 @@ def splitin():
 
 
 def delete_old():
-    with open (mac_way+'part4.txt') as ch:
+    with open ('/Users/denis/Documents/part5.txt') as ch:
         text=ch.read()
     sentences = text.split('. ')
     print(sentences[5])
@@ -88,8 +89,9 @@ def delete_old():
         if el == old_end:
             old_start=False
             print('снова начал писать')
+    print(len(sentences))
     print(len(new_sentences))
-    with open('/data/part4.txt', 'w') as nf:
+    with open('/Users/denis/Documents/new_part5.txt', 'a') as nf:
         for el in new_sentences:
             nf.write(el)
 
@@ -97,4 +99,5 @@ def move_trash():
     for i in range(1,3):
         for j in range(1,4):
             os.remove('/Users/denis/Documents/vk_bot/scripts/text_model_'+str(i)+str(j)+'.json')
-splitin()
+create_two()
+create_one()
