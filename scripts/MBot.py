@@ -206,7 +206,7 @@ for event in longpoll.listen():
                     genamode=True
                     send("Началась генерация",event.object['message']['peer_id'])
             elif message_text[0:4]=='!сим': #ДОПИЛИТЬ КАК НАКОПИТСЯ
-                key,p_id=f.find_id(message_text[7:-1],M1)
+                key,p_id=f.find_id(message_text[4:-1],M1)
                 if key=='red':
                     if p_id:
                         send("Как сказла бы "+M1[key][1][random.randint(0, len(M1['yellow'][1])-1)]+":\n"+m.simulate(int(message_text[5]),str(p_id)),event.object['message']['peer_id'])
