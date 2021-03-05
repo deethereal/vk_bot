@@ -24,7 +24,8 @@ def get_model():
     with open('/home/ubuntu/bot/data/log.txt', "w") as f:
         seconds=time.time()+3600*3
         now=time.ctime(seconds)
-        f.write(now)
+        x = ' '.join(now.split()[1:-1])[0:-3]
+        f.write(x)
     return combined_model
 def use_model(par,models):
     st = time.time_ns()
