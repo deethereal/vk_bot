@@ -107,7 +107,7 @@ def simulate(par,id):
 def jojo():
     with open(lin_way+'jojo.txt','r') as f:
         jjtext=f.read()
-    text_model = markovify.Text(jjtext, state_size=random.randint(1,2))
+    text_model = markovify.NewlineText(jjtext, state_size=random.randint(1,2))
     result = text_model.make_sentence()
     while result is None:
         result = text_model.make_sentence()
