@@ -2,9 +2,6 @@
 import random
 import re
 import datetime
-
-
-
 def counter_plus():
     with open('text.txt', "r") as file:
         lines = file.readlines()
@@ -24,7 +21,6 @@ def counter_plus():
     with open("text.txt", "w") as file:
         file.writelines(lines)
 
-
 def find_id(name,dic):
     for item in dic:
         if name in dic[item][1]:
@@ -37,11 +33,6 @@ def printdic(dic):
     for key in dk:
         s+=key+' -- ' +str(not dic.get(key))+' \n'
     return s
-
-
-
-
-
 
 
 def malina():
