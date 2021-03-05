@@ -1,7 +1,6 @@
 import markovify
 import time
-import zipfile
-import os
+import random
 
 lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
@@ -98,13 +97,21 @@ def size_of_sent(par,models,min_len=1, max_len=500):
                 result = model.make_sentence(max_words=max_len, min_words=min_len)
         return "мне не хватило 150 итераци, давай еще"
 def simulate(par,id):
-    with open(lin_way+str(id)+'.txt','r') as f:
+    with open(lin_way+'ids/'+str(id)+'.txt','r') as f:
         text=f.read()
     text_model=markovify.Text(text, state_size=par)
     result = text_model.make_sentence()
     while result is None:
             result = text_model.make_sentence()
     return result.capitalize().replace(' ?.', '? ').replace(".?","? ")
+def jojo():
+    with open(lin_way+'jojo.txt','r') as f:
+        jjtext=f.read()
+    text_model = markovify.Text(jjtext, state_size=random.randint(1,2))
+    result = text_model.make_sentence()
+    while result is None:
+        result = text_model.make_sentence()
+    return result.capitalize()
 def anek(par=2, num=5):
     if par>4:
         return "Слишком сильная связь, нужна цифра до 5"

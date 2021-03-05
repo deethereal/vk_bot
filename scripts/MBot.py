@@ -215,6 +215,8 @@ for event in longpoll.listen():
                 send("да-да", event.object['message']['peer_id'])
                 dep = time.time_ns()
                 send('задержка: '+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
+            elif message_text=="!жожо":
+                send(m.jojo(),event.object['message']['peer_id'])
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
                 m.use_model(str(np))
