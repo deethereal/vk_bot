@@ -5,6 +5,7 @@ import random
 lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'
 T_lin_way='/home/ubuntu/test_bot/data/'
+
 def get_model():
     combined_model = [None,None]
     for j in range(0,2):
@@ -28,7 +29,6 @@ def get_model():
         f.write(x)
     return combined_model
 def use_model(par,models):
-    st = time.time_ns()
     par-=1
     model=models[par]
     result=model.make_sentence()
