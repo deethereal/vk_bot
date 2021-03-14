@@ -3,7 +3,7 @@ const TgBot = require('node-telegram-bot-api');
 let token = '';
 
 let start = new Promise((resolve, reject) => {
-    fs.readFile(__dirname + '\\token.txt', 'utf8', (err, data) => {
+    fs.readFile(__dirname + '/token.txt', 'utf8', (err, data) => {
         if (err) {
             reject(err);
         }
