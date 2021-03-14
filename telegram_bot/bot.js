@@ -33,7 +33,7 @@ start
                         tmp = tmp.replace(/\s+/g," ");
                         (tmp[tmp.length - 1] != ".") ? result += tmp + "." : result += tmp;
                         console.log(result);
-                        fs.appendFileSync(__dirname + '\\words.txt', `\n${result}`)
+                        fs.appendFileSync(__dirname + '/words.txt', `\n${result}`)
                     }
                 }
             })
