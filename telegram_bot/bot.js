@@ -22,8 +22,19 @@ start
             })
 
             bot.on('message', (msg) => {
+                //if нужен, чтобы не обрабатывать пересылаемые сообщения
                 if(msg.forward_from_chat === undefined){
-                    console.log(msg.text);
+                    let result = '';
+                    if(msg.text.split(" ").length > 1){
+                        let url = msg.text.match(/\bhttp.+\b/);
+                        let tmp = msg.text.toLowerCase();
+                        tmp = tmp.replace(/[!#&\*,;\\^_`{}]/g," ");
+                        tmp = tmp.replace(/\bhttp.+\b/,url);
+                        tmp = tmp.replace(/\s+/g," ");
+                        (tmp[tmp.length - 1] != ".") ? result += tmp + "." : result += tmp;
+                        console.log(result);
+                        fs.appendFileSync(__dirname + '\\words.txt', `\n${result}`)
+                    }
                 }
             })
 
