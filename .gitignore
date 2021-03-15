@@ -1,4 +1,8 @@
-/telegram_bot/test.js
+#files
 token.txt
+/telegram_bot/words.txt
+
+#folders
+/telegram_bot/test.js
 /.idea/
 /telegram_bot/node_modules/

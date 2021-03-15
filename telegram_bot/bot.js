@@ -21,9 +21,17 @@ start
                 polling: true
             })
 
+            //тут вводить список команд, которые используются ботом
+            const commands = ["/check"];
+
+            bot.onText(/\/check/, (msg) => {
+                const {id} = msg.chat;
+                bot.sendMessage(id, "Im работать");
+            })
+
             bot.on('message', (msg) => {
                 //if нужен, чтобы не обрабатывать пересылаемые сообщения
-                if(msg.forward_from_chat === undefined){
+                if(msg.forward_from_chat === undefined && commands.indexOf(msg.text) == -1){
                     let result = '';
                     if(msg.text.split(" ").length > 1){
                         let url = msg.text.match(/\bhttp.+\b/);
