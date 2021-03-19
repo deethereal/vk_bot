@@ -33,10 +33,10 @@ def use_model(par,models):
     model=models[par]
     result=model.make_sentence()
     if result is not None:
-        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+        return result.capitalize().replace('.', ' ').replace(" ?", "? ")
     for _ in range(150):
         if result is not None:
-            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+            return result.capitalize().replace('.', ' ').replace(" ?", "? ")
         else:
             result = model.make_sentence()
     return "мне не хватило 150 итераци, давай еще"
@@ -68,14 +68,14 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 while result is None:
                     result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
-                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+                return result.capitalize().replace('.', ' ').replace(" ?", "? ")
             except KeyError:
                 return f"Слова {word} нет в тексте, задайте другое"
             except markovify.text.ParamError:
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 for _ in range(50):
                     if result is not None:
-                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+                        return result.capitalize().replace('.', ' ').replace(" ?", "? ")
                     else:
                         result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,strict=st, max_overlap_ratio=0.49)
                 return f"Слово {word} нет является началом ни в одном предложении, задайте другое. Либо я долбоеб и не смог построить предложение минимальной длины."
@@ -90,10 +90,10 @@ def size_of_sent(par,models,min_len=1, max_len=500):
         model = models[par]
         result = model.make_sentence(max_words=max_len, min_words=min_len)
         if result is not None:
-            return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+            return result.capitalize().replace('.', ' ').replace(" ?", "? ")
         for _ in range(150):
             if result is not None:
-                return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+                return result.capitalize().replace('.', ' ').replace(" ?", "? ")
             else:
                 result = model.make_sentence(max_words=max_len, min_words=min_len)
         return "мне не хватило 150 итераци, давай еще"
@@ -104,7 +104,7 @@ def simulate(par,id):
     result = text_model.make_sentence()
     while result is None:
             result = text_model.make_sentence()
-    return result.capitalize().replace(' ?.', '? ').replace(".?","? ")
+    return result.capitalize().replace('.', ' ').replace(" ?", "? ")
 def jojo():
     with open(lin_way+'jojo.txt','r') as f:
         jjtext=f.read()
