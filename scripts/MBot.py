@@ -178,7 +178,7 @@ for event in longpoll.listen():
                         nums=message_text[strt:-1].split(',')
                         if len(nums)==1:
                             nums.append(500)
-                        send(m.size_of_sent(var_par,models,min_len=int(nums[0]),max_len=int(nums[1]),models=models),event.object['message']['peer_id'])
+                        send(m.size_of_sent(var_par,models,min_len=int(nums[0]),max_len=int(nums[1])),event.object['message']['peer_id'])
                     else:
                         wds = list(map(lambda x: x.replace(" ",""),message_text[strt:-1].split(',')))
                         if len(wds)==1:
