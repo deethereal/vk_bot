@@ -52,12 +52,12 @@ def sent_s(par,word,models,min_len=1, max_len=500,state=False):
             try:
                 result = model.make_sentence_with_start(beginning=word, max_words=max_len,strict=state, min_words=min_len, max_overlap_ratio=0.49)
                 if result is not None:
-                    return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+                    return result.capitalize().replace('.', ' ').replace(" ?", "? ")
                 for _ in range(150):
                     result = model.make_sentence_with_start(beginning=word, max_words=max_len, min_words=min_len,
                                                             strict=state, max_overlap_ratio=0.49)
                     if result is not None:
-                        return result.capitalize().replace(' ?.', '? ').replace(".?", "? ")
+                        return result.capitalize().replace('.', ' ').replace(" ?", "? ")
                 return "мне не хватило 150 итераци, давай еще"
             except KeyError:
                 return f"Слова {word} нет в тексте, задайте другое"
