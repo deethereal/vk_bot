@@ -390,7 +390,7 @@ for event in longpoll.listen():
                     elif ((message_text=='да') or (message_text=='da') or (message_text=='lf')) and not comands["да"]:
                         sendphoto('',event.object['message']['peer_id'],'photo-178950051_457239162')
                     elif (f.findWord(message_text, 'мама') or f.findWord(message_text, 'мамка') or f.findWord(message_text, 'мамку') or f.findWord(message_text, 'маму') or f.findWord(message_text, 'маман') or f.findWord(message_text, 'маме') or f.findWord(message_text, 'мамке')) and not comands["мама"]:
-                        n = random.randint(0, 9)
+                        n = random.randint(0, 10)
                         if (n==0):
                             MSG.append('А у Семёна ТАКАЯ МАМА' )
                         elif (n==1):
@@ -409,6 +409,8 @@ for event in longpoll.listen():
                             PHOTOS.append(['А ну адавай мать','photo-178950051_457239158'])
                         elif (n==9):
                             PHOTOS.append(['Твоя мама - наша мама','photo-178950051_457239157'])
+                        elif (n==10):
+                            PHOTOS.append(['','photo-178950051_457239181'])
 
                     if len(MSG)!=0 and len(PHOTOS)!=0:
                         if joke:
