@@ -341,7 +341,7 @@ for event in longpoll.listen():
                                 PHOTOS.append([f.ha4u(message_text),'photo-178950051_457239175' ])
                         except ValueError:
                             continue
-                    if f.findWord(message_text,'хочу') and not comands["хочу"]:
+                    if f.findWord(message_text,'хочу') and not comands["хочу"] and not f.findWord(message_text,'не хочу'):
                         try:
                             if (f.ho4u(message_text)):
                                 PHOTOS.append([f.ho4u(message_text),'photo-178950051_457239175' ])
