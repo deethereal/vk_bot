@@ -130,8 +130,8 @@ def find_word_dec_in_list(msg,arr):
     for word in arr:
         if (word[-1] not in vowels or word[-1]=='е' or word[-1]=='о') and second_dec(msg,word):
             return True
+    return False
 
-        return False
 def second_dec(msg,word):
     if findWord(msg,word+'а'):
         return True
