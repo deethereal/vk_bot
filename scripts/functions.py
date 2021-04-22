@@ -124,3 +124,23 @@ def findIII(msg):
             return I
     else:
         return False
+
+
+def second_dec(msg,word):
+    if findWord(msg,word+'а'):
+        return True
+    if findWord(msg,word+'у'):
+        return True
+    if findWord(msg,word+'ом'):
+        return True
+    if findWord(msg,word+'е'):
+        return True
+    if findWord(msg,word+'ов'):
+        return True
+    if findWord(msg,word+'ам'):
+        return True
+    if findWord(msg,word+'ами'):
+        return True
+    if findWord(msg,word+'ах'):
+        return True
+    return False
