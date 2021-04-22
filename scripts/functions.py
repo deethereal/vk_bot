@@ -125,7 +125,13 @@ def findIII(msg):
     else:
         return False
 
+def find_word_dec_in_list(msg,arr):
+    vowels='июоэаоеуыя'
+    for word in arr:
+        if (word[-1] not in vowels or word[-1]=='е' or word[-1]=='о') and second_dec(msg,word):
+            return True
 
+        return False
 def second_dec(msg,word):
     if findWord(msg,word+'а'):
         return True
