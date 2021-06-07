@@ -20,7 +20,8 @@ def mes_proc(my_ev):
 def sendphoto(msg, peerID, attach): # msg — сообщение
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
 def send(msg, peerID):
-    vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID)
+    return vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID)['message_id']
+
 def kick(chatID, userID):
     vk.messages.removeChatUser(chat_id=chatID%1000, user_id=userID)
 def reply(msg, peerID,re_id):
@@ -222,6 +223,11 @@ for event in longpoll.listen():
                 send('задержка: '+str((dep-arrive)//10**6)+" мс", event.object['message']['peer_id'])
             elif message_text=="!жожо":
                 send(m.jojo(),event.object['message']['peer_id'])
+            elif message_text=='!тест':
+                del_id = send('тест', event.object['message']['peer_id'])
+                time.sleep(0.5)
+                vk.messages.delete(del_id, peer_id=event.object['message']['peer_id'],delete_for_all=1)
+
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
                 m.use_model(str(np))
