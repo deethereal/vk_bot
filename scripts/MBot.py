@@ -2,6 +2,7 @@ import functions as f, mark as m, time, datetime, sys, random, vk_api, re
 from vk_api.bot_longpoll import VkBotEventType
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll
+from vk_api.upload import VkUpload
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
     token = t.readline().rstrip()
 groupID = 178950051
@@ -10,6 +11,14 @@ longpoll = VkBotLongPoll(vk_session, groupID)
 vk = vk_session.get_api()
 joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
+
+def upload_photo(upload, photo):
+    response = upload.photo_messages(photo)[0]
+
+    owner_id = response['owner_id']
+    photo_id = response['id']
+    access_key = response['access_key']
+    return owner_id, photo_id, access_key
 
 def mes_proc(my_ev):
     if message_text[0:16]!='всего сообщений:':
@@ -21,7 +30,10 @@ def sendphoto(msg, peerID, attach): # msg — сообщение
     vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID, attachment =attach)
 def send(msg, peerID):
     return vk.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=peerID)
-
+def send_upload_photo(peerID,owner_id, photo_id, access_key):
+    attachment = f'photo{owner_id}_{photo_id}_{access_key}'
+    vk.messages.send(
+        random_id=random.randint(0, 999999),peer_id=peerID,attachment=attachment)
 def kick(chatID, userID):
     vk.messages.removeChatUser(chat_id=chatID%1000, user_id=userID)
 def reply(msg, peerID,re_id):
@@ -224,9 +236,8 @@ for event in longpoll.listen():
             elif message_text=="!жожо":
                 send(m.jojo(),event.object['message']['peer_id'])
             elif message_text=='!тест':
-                del_id = send('тест', event.object['message']['peer_id'])
-                time.sleep(0.5)
-               # vk.messages.delete([del_id],delete_for_all=1)
+                upload = VkUpload(vk)
+                send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/data/test.jpg'))
 
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))
