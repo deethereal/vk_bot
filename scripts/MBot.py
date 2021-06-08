@@ -115,6 +115,8 @@ for event in longpoll.listen():
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
+                else:
+                    mes_proc(event.object)
                 if time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150 or abs(votekickpercent)>=3 or votekickN==8:
                     if (votekickpercent>0 and votekickN>=4) or (votekickpercent>500):
                         try:
