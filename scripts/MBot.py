@@ -21,7 +21,8 @@ def upload_photo(upload, photo):
     return owner_id, photo_id, access_key
 
 def mes_proc(my_ev):
-    if message_text[0:16]!='всего сообщений:':
+    message_text = my_ev['message']['text'].lower()
+    if message_text[0:16]!='всего сообщений:' and (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
         with open('/home/ubuntu/bot/data/actual.txt', 'a') as c, open('/home/ubuntu/bot/data/'+str(my_ev['message']['from_id'])+'.txt', 'a') as p:
             out = re.sub('[%s]' % re.escape(my_ponct), '', message_text).replace('🌚',' 🌚')
             c.write(out + '. ')
@@ -144,8 +145,7 @@ for event in longpoll.listen():
             elif genamode:
                 if message_text!="гена возьми":
                     send(m.use_model(mar_par,models), event.object['message']['peer_id'])
-                    if (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
-                        mes_proc(event.object)
+                    mes_proc(event.object)
 
                 else:
                     if (event.object['message']['from_id'] == M1['red'][0] and random.randint(99, 199) == motya_num):
@@ -293,8 +293,7 @@ for event in longpoll.listen():
                         else:
                             send("Такой команды нет",event.object['message']['peer_id'])
                 if not COMAND:
-                    if (message_text not in parasites) and (message_text!='') and (len(message_text)>3):
-                        mes_proc(event.object)
+                    mes_proc(event.object)
                     if event.object['message']['from_id']==M1['red'][0]:
                         num=random.randint(0,199)
                         print('got it:', num)
@@ -462,5 +461,5 @@ for event in longpoll.listen():
                 else:
                     send('Я снова с вами',event.object['message']['peer_id'])
                     mute_mode=False
-            elif (message_text not in parasites) and (message_text != '') and (len(message_text) > 3):
-                    mes_proc(event.object)
+            else:
+                mes_proc(event.object)
