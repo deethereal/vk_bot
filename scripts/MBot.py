@@ -269,7 +269,7 @@ for event in longpoll.listen():
                 send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/data/test.jpg'))
             elif message_text[:5]=="!стат":
                 if message_text[6:12]=="онлайн":
-                    if len(message_text[13:-2].split(','))==0:
+                    if message_text[13:-2].split(',')[0]=='':
                         f.create_pic(names,hs,colors)
                     else:
                         f.create_pic(names, hs, colors,message_text[13:-2].split(','))
@@ -473,7 +473,7 @@ for event in longpoll.listen():
                             sendphoto('Запрос отклонен по причине:',event.object['message']['peer_id'],'photo-178950051_457239178')
                         else:
                             if random.randint(0,1)==1:
-                                send(MSG[random.randint(0,len(MSG)-1)],event.object['message']['peer_id'].capitalize())
+                                send(MSG[random.randint(0,len(MSG)-1)].capitalize(),event.object['message']['peer_id'])
                             else:
                                 r_id=random.randint(0,len(PHOTOS)-1)
                                 sendphoto(PHOTOS[r_id][0],event.object['message']['peer_id'],PHOTOS[r_id][1])
