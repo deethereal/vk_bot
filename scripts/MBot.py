@@ -278,8 +278,8 @@ for event in longpoll.listen():
 
                     try:
                         upload = VkUpload(vk)
-                        send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/vk_bot/scripts/stat.png'))
-                        os.remove('stat.png')
+                        send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, 'stat.jpg'))
+                        os.remove('stat.jpg')
                     except:
                         pass
 
