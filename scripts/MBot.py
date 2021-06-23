@@ -266,7 +266,7 @@ for event in longpoll.listen():
                 send(m.jojo(),event.object['message']['peer_id'])
             elif message_text=='!тест':
                 upload = VkUpload(vk)
-                send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, 'stat.png'))
+                send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/vk_bot/scripts/stat.png'))
             elif message_text[:5]=="!стат":
                 if message_text[6:12]=="онлайн":
                     if message_text[13:-2].replace(' ','').split(',')[0]=='':
@@ -278,7 +278,7 @@ for event in longpoll.listen():
 
                     try:
                         upload = VkUpload(vk)
-                        send_upload_photo(event.object['message']['peer_id'],*upload_photo(upload, 'stat.png'))
+                        send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/vk_bot/scripts/stat.png'))
                         os.remove('stat.png')
                     except:
                         pass
