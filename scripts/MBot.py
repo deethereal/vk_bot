@@ -272,6 +272,7 @@ for event in longpoll.listen():
                     if message_text[13:-2].replace(' ','').split(',')[0]=='':
                         f.create_pic(names,hs,colors)
                     else:
+                        print(message_text[13:-2].replace(' ','').split(','))
                         f.create_pic(names, hs, colors,message_text[13:-2].replace(' ','').split(','))
                     upload = VkUpload(vk)
                     send_upload_photo(event.object['message']['peer_id'],*upload_photo(upload, 'stat.png'))
