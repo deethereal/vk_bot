@@ -60,8 +60,8 @@ def show_result(df, names, hs, colors, Name=None):
         plt.xlabel('Часы (левый включительно, правый нет)', fontsize=15)
         plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
         plt.legend()
-        # plt.grid(True)
-        plt.savefig('stat.png')
+        plt.grid(True)
+        plt.savefig('stat.png',dpi=100)
     else:
         valid_names = []
         invalid_names = []
@@ -97,8 +97,8 @@ def show_result(df, names, hs, colors, Name=None):
             plt.title(data, fontsize=16)
             plt.xlabel('Часы (левый включительно, правый нет)', fontsize=15)
             plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
-            # plt.grid(True)
-            plt.savefig('stat.png')
+            plt.grid(True)
+            plt.savefig('stat.png',dpi=100)
             if len(invalid_names) != 0:
                 print("Я не нашел имена", *invalid_names)
         else:
