@@ -3,6 +3,7 @@ from vk_api.bot_longpoll import VkBotEventType
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll
 from vk_api.upload import VkUpload
+import os
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
     token = t.readline().rstrip()
 groupID = 178950051
@@ -12,6 +13,32 @@ vk = vk_session.get_api()
 joke = False
 parasites=["сука","блин",'((((','))))','))0)' ]
 
+id2name_color={207227130:['Матвей','#ff0000'], 125928980:['Никита','#ff5e00'], 62501050:['Коля','#ffee00'], 150078285:['Семен','#33b80f'], 218917421:['Саша','#00d5ff'], 206312673:['Денис',"#005eff"], 236709769:['Влад','#6600ff'], 240702553:['Ира','#000000']}
+
+hs = []
+for i in range(23):
+    h=str(i)
+    nh=str(i+1)
+    if i<10:
+        h='0'+h
+        if i<9:
+            nh='0'+nh
+    hs.append(h+'-'+nh)
+names=[]
+colors = []
+for k in id2name_color.keys():
+    names.append(id2name_color[k][0])
+    colors.append(id2name_color[k][1])
+hs = []
+for i in range(23):
+    h=str(i)
+    nh=str(i+1)
+    if i<10:
+        h='0'+h
+        if i<9:
+            nh='0'+nh
+    hs.append(h+'-'+nh)
+hs.append('23-00')
 def upload_photo(upload, photo):
     response = upload.photo_messages(photo)[0]
 
@@ -240,6 +267,15 @@ for event in longpoll.listen():
             elif message_text=='!тест':
                 upload = VkUpload(vk)
                 send_upload_photo(event.object['message']['peer_id'], *upload_photo(upload, '/home/ubuntu/bot/data/test.jpg'))
+            elif message_text[:5]=="!стат":
+                if message_text[6:12]=="онлайн":
+                    if len(message_text[13:-2].split(','))==0:
+                        f.create_pic(names,hs,colors)
+                    else:
+                        f.create_pic(names, hs, colors,message_text[13:-2].split(','))
+                    send_upload_photo(event.object['message']['peer_id'],
+                                      *upload_photo(upload, 'stat.png'))
+                    os.remove('stat.png')
 
             elif message_text == '!отладка':
                 np=str(random.randint(1,2))

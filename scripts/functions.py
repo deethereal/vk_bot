@@ -2,6 +2,10 @@
 import random
 import re
 import datetime
+import numpy as np, pandas as pd
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+
 def counter_plus():
     with open('text.txt', "r") as file:
         lines = file.readlines()
@@ -35,6 +39,75 @@ def printdic(dic):
     return s
 
 
+
+
+def show_result(df, names, hs, colors, Name=None):
+    int_hs = np.array([int(x[0:2]) for x in hs])
+    if Name == None:
+        fig, ax = plt.subplots(figsize=(20, 10))
+        for i in range(len(names)):
+            if i < 3:
+                plt.bar(int_hs - ((3 - i) / 9), df[df.columns[i]].values, color=colors[i], label=names[i], width=1 / 9)
+            else:
+                plt.bar(int_hs + ((i - 3) / 9), df[df.columns[i]].values, color=colors[i], label=names[i], width=1 / 9)
+
+        ax.set_xticks(int_hs)
+        ax.set_xticklabels(hs)
+        delta = timedelta(hours=3, minutes=0)
+        now = datetime.now() + delta
+        data = "Данные с 07.06 11:48 по " + str(now.strftime("%d.%m% %H:%M"))
+        plt.title(data, fontsize=16)
+        plt.xlabel('Часы (левый включительно, правый нет)', fontsize=15)
+        plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
+        plt.legend()
+        # plt.grid(True)
+        plt.savefig('stat.png')
+    else:
+        valid_names = []
+        invalid_names = []
+        for name in Name:
+            if name in df.columns:
+                valid_names.append(name)
+            else:
+                invalid_names.append(name)
+        if len(valid_names) != 0:
+            true_val_names = []
+            for teor_name in df.columns:
+                if teor_name in valid_names:
+                    true_val_names.append(teor_name)
+            valid_names = true_val_names
+            count = len(valid_names)
+            fig, ax = plt.subplots(figsize=(20, 10))
+            W = 2 / (3 * count)
+            center = (count - 1) / 2
+            for pair in enumerate(valid_names):
+                if pair[1] == 'Семен':
+                    c = colors[3]
+                else:
+                    c = colors[names.index(pair[1])]
+                plt.bar(int_hs - 2 * (center - pair[0]) / (3 * count), df[pair[1]].values, color=c, label=pair[1],
+                        width=W)
+                plt.legend()
+
+            ax.set_xticks(int_hs)
+            ax.set_xticklabels(hs)
+            delta = timedelta(hours=3, minutes=0)
+            now = datetime.now() + delta
+            data = "Данные с 07.06 11:48 по " + str(now.strftime("%d.%m% %H:%M"))
+            plt.title(data, fontsize=16)
+            plt.xlabel('Часы (левый включительно, правый нет)', fontsize=15)
+            plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
+            # plt.grid(True)
+            plt.savefig('stat.png')
+            if len(invalid_names) != 0:
+                print("Я не нашел имена", *invalid_names)
+        else:
+            print("Я не нашел ни одного из данных имен")
+def create_pic(names, hs, colors, Names=None):
+    df = pd.read_csv('/home/ubuntu/bot/stat/dataframe.csv')
+    df = df.set_index('hours')
+    df = df.rename({'Cемен': 'Семен'}, axis=1)
+    show_result(df, names,hs,colors,Names)
 def malina():
     now=datetime.datetime.now()
     hn=24
