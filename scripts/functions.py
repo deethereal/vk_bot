@@ -61,7 +61,7 @@ def show_result(df, names, hs, colors, Name=None):
         plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
         plt.legend()
         plt.grid(True)
-        plt.savefig('stat.jpg',dpi=50)
+        plt.savefig('stat.jpg',dpi=400,bbox_inches='tight')
     else:
         valid_names = []
         invalid_names = []
