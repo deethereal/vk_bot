@@ -55,7 +55,10 @@ def show_result(df, names, hs, colors, Name=None):
         ax.set_xticklabels(hs)
         delta = timedelta(hours=3, minutes=0)
         now = datetime.now() + delta
-        data = "Данные с 07.06 11:48 по " + str(now.strftime("%d.%m %H:%M"))
+        date_time_str = '2021-06-07 11:48'
+        date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M%f')
+        days = (now - date_time_obj).days
+        data = "Данные с 07.06 11:48 по " + str(now.strftime("%d.%m %H:%M")) + "(" + str(days) + " целых дней)"
         plt.title(data, fontsize=16)
         plt.xlabel('Часы (левый включительно, правый нет)', fontsize=15)
         plt.ylabel('Количество дней, когда был онлайн больше 5 минут в это время', fontsize=15)
