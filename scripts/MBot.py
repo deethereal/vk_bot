@@ -119,45 +119,43 @@ for event in longpoll.listen():
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
             if votekick:
+                ids = [str(x) for x in list(votekickdone.keys())]
+                ids = ','.join(ids)
+                resp = vk.users.get(user_ids=ids,fields='online')
+                online_now = sum(resp[i]['online'] for i in range(8))
                 if message_text=='f1':
                     if not votekickdone[event.object['message']['from_id']]:
-                        votekickN+=1
-                        votekickpercent+=1
+                        said_yes+=1
                         votekickdone[event.object['message']['from_id']]=True
-                        send('Голос принят',event.object['message']['peer_id'] )
+                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против',event.object['message']['peer_id'] )
                 elif message_text=='f2':
                     if not votekickdone[event.object['message']['from_id']]:
-                        votekickN+=1
-                        votekickpercent-=1
+                        said_no+=1
                         votekickdone[event.object['message']['from_id']]=True
-                        send('Голос принят',event.object['message']['peer_id'] )
+                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против',event.object['message']['peer_id'] )
                 elif message_text=='f1мыздесьзакон':
                     if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
-                        votekickpercent+=1000
+                        said_yes+=8
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 elif message_text=='f2мыздесьзакон':
                     if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
-                        votekickpercent-=1000
+                        said_no+=8
                         send('Хорошо, пап',event.object['message']['peer_id'] )
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 else:
                     mes_proc(event.object)
-                if time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150 or abs(votekickpercent)>=3 or votekickN==8:
-                    if (votekickpercent>0 and votekickN>=4) or (votekickpercent>500):
+                if time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150 or (said_yes+said_no)>=max(4,online_now):
+                    if (said_yes>said_no):
                         try:
                             kick(event.object['message']['peer_id'], votekickID)
                             send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
-                            votekick=False
-                            votekickN=2
-                            votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
                         except vk_api.exceptions.ApiError:
                             send('Эта хуйня слишком тяжелая, не могу(((',event.object['message']['peer_id'] )
-                            votekick=False
-                            votekickN=2
-                            votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                        votekick=False
+                        votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
                     if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
@@ -421,7 +419,8 @@ for event in longpoll.listen():
                                 votekickTime=time.mktime(dt.timetuple())
                                 votekickID=M1[message_text.split()[1]][0]
                                 votekick=True
-                                votekickpercent=0
+                                said_yes = 1
+                                said_no = 1
                                 votekickdone[event.object['message']['from_id']]=True
                                 votekickdone[votekickID]=True
                                 key=message_text.split()[1]
