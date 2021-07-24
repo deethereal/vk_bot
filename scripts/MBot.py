@@ -128,18 +128,21 @@ for event in longpoll.listen():
                 online_now = sum(resp[i]['online'] for i in range(8))
                 if message_text=='!статус':
                     send(
-                        f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против',
+                        f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против'
+                        f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',
                         event.object['message']['peer_id'])
                 elif message_text=='f1':
                     if not votekickdone[event.object['message']['from_id']]:
                         said_yes+=1
                         votekickdone[event.object['message']['from_id']]=True
-                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против',event.object['message']['peer_id'] )
+                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против'
+                             f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',event.object['message']['peer_id'] )
                 elif message_text=='f2':
                     if not votekickdone[event.object['message']['from_id']]:
                         said_no+=1
                         votekickdone[event.object['message']['from_id']]=True
-                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против',event.object['message']['peer_id'] )
+                        send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против'
+                             f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',event.object['message']['peer_id'] )
                 elif message_text=='f1мыздесьзакон':
                     if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
                         said_yes+=8
