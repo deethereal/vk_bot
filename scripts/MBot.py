@@ -124,7 +124,8 @@ for event in longpoll.listen():
                 ids = ','.join(ids)
                 ID=(requests.get("https://api.vk.com/method/users.get?user_ids="+ids+f"&fields=online&access_token={token}&v=5.87"))
                 #print('\n',ID,'\n')
-                online_now = sum(ID[i]['online'] for i in range(8))
+                resp = ID.json()['response']
+                online_now = sum(resp[i]['online'] for i in range(8))
                 if message_text=='!статус':
                     send(
                         f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против',
