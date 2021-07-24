@@ -154,8 +154,10 @@ for event in longpoll.listen():
                             #send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
                         except vk_api.exceptions.ApiError:
                             send('Эта хуйня слишком тяжелая, не могу(((',event.object['message']['peer_id'] )
-                        votekick=False
-                        votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                else:
+                    send('В этот раз никого не кикнули', event.object['message']['peer_id'])
+                votekick=False
+                votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
                     if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
