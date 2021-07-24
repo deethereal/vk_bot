@@ -156,6 +156,9 @@ for event in longpoll.listen():
                     else:
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 else:
+                    if  time.mktime(datetime.datetime.now().timetuple())-votekickTime>=120:
+                        if int(time.mktime(datetime.datetime.now().timetuple())-votekickTime)%5==0:
+                            send(f'До конца голосования {max(0,150-int(time.mktime(datetime.datetime.now().timetuple())-votekickTime))} cекунд',event.object['message']['peer_id'] )
                     mes_proc(event.object)
 
 
@@ -168,12 +171,11 @@ for event in longpoll.listen():
                             send('Эта хуйня слишком тяжелая, не могу(((',event.object['message']['peer_id'] )
                     else:
                         send('В этот раз никого не кикнули', event.object['message']['peer_id'])
-                    send('Голосование кончилось', event.object['message']['peer_id'])
                     votekick = False
                     votekickdone = {207227130: False, 125928980: False, 62501050: False, 150078285: False,
                                     218917421: False, 206312673: False, 236709769: False}
                 elif time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150:
-                    send('Голосование кончилось', event.object['message']['peer_id'])
+                    send('Время вышло, голосование кончилось', event.object['message']['peer_id'])
                     votekick=False
                     votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False,
                                   218917421:False, 206312673:False, 236709769:False}
