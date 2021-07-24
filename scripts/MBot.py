@@ -4,6 +4,7 @@ from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll
 from vk_api.upload import VkUpload
 import os
+import requests
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
     token = t.readline().rstrip()
 groupID = 178950051
@@ -121,9 +122,9 @@ for event in longpoll.listen():
             if votekick:
                 ids = [str(x) for x in list(votekickdone.keys())]
                 ids = ','.join(ids)
-                resp = vk.users.get(user_ids=ids,fields='online')
-                print('\n',resp,'\n')
-                online_now = sum(resp[i]['online'] for i in range(8))
+                ID=(requests.get("https://api.vk.com/method/users.get?user_ids="+ids+f"&fields=online&access_token={token}&v=5.87"))
+                #print('\n',ID,'\n')
+                online_now = sum(ID[i]['online'] for i in range(8))
                 if message_text=='!статус':
                     send(
                         f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против',
