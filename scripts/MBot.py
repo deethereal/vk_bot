@@ -129,20 +129,20 @@ for event in longpoll.listen():
                 if message_text=='!статус':
                     send(
                         f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против'
-                        f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',
+                        f'\nДо конца голосования {max(0,150-datetime.datetime.now().timetuple()-votekickTime)} cекунд',
                         event.object['message']['peer_id'])
                 elif message_text=='f1':
                     if not votekickdone[event.object['message']['from_id']]:
                         said_yes+=1
                         votekickdone[event.object['message']['from_id']]=True
                         send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против'
-                             f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',event.object['message']['peer_id'] )
+                             f'\nДо конца голосования {max(0,150-datetime.datetime.now().timetuple()-votekickTime)} cекунд',event.object['message']['peer_id'] )
                 elif message_text=='f2':
                     if not votekickdone[event.object['message']['from_id']]:
                         said_no+=1
                         votekickdone[event.object['message']['from_id']]=True
                         send(f'Голос принят, необходимое количество голосов = {max(4,online_now)}\n{said_yes} -- за\n{said_no} -- против'
-                             f'\nДо конца голосования {150-datetime.datetime.now().timetuple()-votekickTime} cекунд',event.object['message']['peer_id'] )
+                             f'\nДо конца голосования {max(0,150-datetime.datetime.now().timetuple()-votekickTime)} cекунд',event.object['message']['peer_id'] )
                 elif message_text=='f1мыздесьзакон':
                     if (M1['god'][0]==event.object['message']['from_id'] or M1['blue'][0]==event.object['message']['from_id']) :
                         said_yes+=8
@@ -157,7 +157,9 @@ for event in longpoll.listen():
                         sendphoto('',event.object['message']['peer_id'],'video-159328378_456239420')
                 else:
                     mes_proc(event.object)
-                if time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150 or (said_yes+said_no)>=max(4,online_now):
+
+
+                if(said_yes+said_no)>=max(4,online_now):
                     if (said_yes>said_no):
                         try:
                             kick(event.object['message']['peer_id'], votekickID)
@@ -167,8 +169,10 @@ for event in longpoll.listen():
                     else:
                         send('В этот раз никого не кикнули', event.object['message']['peer_id'])
                     send('Голосование кончилось', event.object['message']['peer_id'])
-                    votekick=False
-                    votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                elif time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150:
+                    send('Голосование кончилось', event.object['message']['peer_id'])
+                votekick=False
+                votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
                     if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
