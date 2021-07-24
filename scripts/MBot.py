@@ -122,6 +122,7 @@ for event in longpoll.listen():
                 ids = [str(x) for x in list(votekickdone.keys())]
                 ids = ','.join(ids)
                 resp = vk.users.get(user_ids=ids,fields='online')
+                print(resp)
                 online_now = sum(resp[i]['online'] for i in range(8))
                 if message_text=='f1':
                     if not votekickdone[event.object['message']['from_id']]:
