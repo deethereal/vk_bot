@@ -151,7 +151,7 @@ for event in longpoll.listen():
                     if (said_yes>said_no):
                         try:
                             kick(event.object['message']['peer_id'], votekickID)
-                            send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
+                            #send('Голосование, кстати, закончено',event.object['message']['peer_id'] )
                         except vk_api.exceptions.ApiError:
                             send('Эта хуйня слишком тяжелая, не могу(((',event.object['message']['peer_id'] )
                         votekick=False
