@@ -169,10 +169,14 @@ for event in longpoll.listen():
                     else:
                         send('В этот раз никого не кикнули', event.object['message']['peer_id'])
                     send('Голосование кончилось', event.object['message']['peer_id'])
+                    votekick = False
+                    votekickdone = {207227130: False, 125928980: False, 62501050: False, 150078285: False,
+                                    218917421: False, 206312673: False, 236709769: False}
                 elif time.mktime(datetime.datetime.now().timetuple())-votekickTime>=150:
                     send('Голосование кончилось', event.object['message']['peer_id'])
-                votekick=False
-                votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False, 218917421:False, 206312673:False, 236709769:False}
+                    votekick=False
+                    votekickdone={207227130:False, 125928980:False, 62501050:False, 150078285:False,
+                                  218917421:False, 206312673:False, 236709769:False}
             elif roll:
                 if message_text=='хватит пожалуйста' or message_text=='!stop':
                     if (event.object['message']['from_id']==M1['red'][0] and random.randint(0,199)==motya_num):
