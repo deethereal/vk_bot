@@ -122,8 +122,13 @@ for event in longpoll.listen():
                 ids = [str(x) for x in list(votekickdone.keys())]
                 ids = ','.join(ids)
                 resp = vk.users.get(user_ids=ids,fields='online')
-                print(resp)
+                print('\n',resp,'\n')
                 online_now = sum(resp[i]['online'] for i in range(8))
+                if message_text=='!статус':
+                    send(
+                        f'Hеобходимое количество голосов = {max(4, online_now)}\n{said_yes} -- за\n{said_no} -- против',
+                        event.object['message']['peer_id'])
+
                 if message_text=='f1':
                     if not votekickdone[event.object['message']['from_id']]:
                         said_yes+=1
