@@ -421,14 +421,16 @@ for event in longpoll.listen():
                             send('Этого пидораса я кикнуть не могу, он слишком тяжелый:(',event.object['message']['peer_id'] )
                     elif f.findWord(message_text,'хачу') and not comands["хочу"]:
                         try:
-                            if (f.ho4u(message_text)):
-                                PHOTOS.append([f.ho4u(message_text,"а"),'photo-178950051_457239175' ])
+                            ans = f.ho4u(message_text,"а")
+                            if (ans):
+                                PHOTOS.append([ans,'photo-178950051_457239175' ])
                         except ValueError:
                             continue
                     if f.findWord(message_text,'хочу') and not comands["хочу"] and not f.findWord(message_text,'не хочу'):
                         try:
-                            if (f.ho4u(message_text)):
-                                PHOTOS.append([f.ho4u(message_text,"о"),'photo-178950051_457239175' ])
+                            ans = f.ho4u(message_text,"o")
+                            if (ans):
+                                PHOTOS.append([ans,'photo-178950051_457239175' ])
                         except ValueError:
                             continue
                     if f.findIII(message_text) and not comands["ы"]:
