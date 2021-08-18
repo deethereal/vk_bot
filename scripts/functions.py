@@ -5,7 +5,8 @@ import datetime
 import numpy as np, pandas as pd
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
-
+my_ponct='!#&*,;\^_`{}()🌚'
+ho4u_words = ["хочу","хачу","я","ну","тоже", "а", "бля"]
 def counter_plus():
     with open('text.txt', "r") as file:
         lines = file.readlines()
@@ -153,29 +154,31 @@ def findWordInList(msg, words):
 
 
 
-def ha4u(msg):
-    words=msg.split()
-    if len(words) in [2,3]:
-        f=words.index("хачу")
-        if len(words)==2:
-            if (words[f-1]=='хачу' or words[f-1]=='хочу'):
-                return False
-            return words[f-1].upper()+' ХAЧУ'
-        return words[f-2].upper()+' '+words[f-1].upper()+' ХAЧУ'
-    return False
-
-
-
-
-def ho4u(msg):
-    words=msg.split()
-    if len(words) in [2,3]:
-        f=words.index("хочу")
-        if len(words)==2:
-            if (words[f-1]=='хачу' or words[f-1]=='хочу'):
-                return False
-            return words[f-1].upper()+' ХOЧУ'
-        return words[f-2].upper()+' '+words[f-1].upper()+' ХOЧУ'
+def ho4u(msg, par):
+    if par == 'а':
+        word = "хачу"
+    else:
+        word = "хочу"
+    words = msg.split()
+    words_len = len(words)
+    if words_len > 1:
+        f = words.index(word)
+        if words_len < 6:
+            ans = ''
+            if f == words_len - 1:
+                for i in range(words_len - 1):
+                    words[i] = re.sub('[%s]' % re.escape(my_ponct), '', words[i])
+                    if words[i] not in ho4u_words:
+                        ans = ans + ' ' + words[i]
+                if ans:
+                    return ans.upper() + ' '+ word.upper()
+            else:
+                for i in range(f, len(words)):
+                    words[i] = re.sub('[%s]' % re.escape(my_ponct), '', words[i])
+                    if words[i] not in ho4u_words:
+                        ans = ans + ' ' + words[i]
+                if ans:
+                    return ans.upper() + ' '+ word.upper()
     return False
 
 

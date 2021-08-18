@@ -93,6 +93,9 @@ with open('help.txt', 'r') as h, open('gen.txt', 'r') as g:
     text_gen=g.read()
 models = m.get_model()
 print("я прошел")
+
+ids = [str(x) for x in list(votekickdone.keys())]
+ids = ','.join(ids) 
 #send("Вас приветствует тестовый бот. Матвей -- пидор!",2000000001)
 for event in longpoll.listen():
     joke=False
@@ -120,10 +123,7 @@ for event in longpoll.listen():
                 send(str(mute_mode),event.object['message']['peer_id'])
         elif not mute_mode:
             if votekick:
-                ids = [str(x) for x in list(votekickdone.keys())]
-                ids = ','.join(ids)
                 ID=(requests.get("https://api.vk.com/method/users.get?user_ids="+ids+f"&fields=online&access_token={token}&v=5.87"))
-                #print('\n',ID,'\n')
                 resp = ID.json()['response']
                 online_now = sum(resp[i]['online'] for i in range(8))
                 if message_text=='!статус':
@@ -422,13 +422,13 @@ for event in longpoll.listen():
                     elif f.findWord(message_text,'хачу') and not comands["хочу"]:
                         try:
                             if (f.ha4u(message_text)):
-                                PHOTOS.append([f.ha4u(message_text),'photo-178950051_457239175' ])
+                                PHOTOS.append([f.ho4u(message_text,"а"),'photo-178950051_457239175' ])
                         except ValueError:
                             continue
                     if f.findWord(message_text,'хочу') and not comands["хочу"] and not f.findWord(message_text,'не хочу'):
                         try:
                             if (f.ho4u(message_text)):
-                                PHOTOS.append([f.ho4u(message_text),'photo-178950051_457239175' ])
+                                PHOTOS.append([f.ho4u(message_text,"о"),'photo-178950051_457239175' ])
                         except ValueError:
                             continue
                     if f.findIII(message_text) and not comands["ы"]:
