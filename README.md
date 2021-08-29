@@ -2,6 +2,7 @@
 [![GitHub commits](https://img.shields.io/github/commit-activity/m/deethereal/vk_bot?color=blueviolet)](https://GitHub.com/deethereal/vk_bot/commits/main)
 [![GitHub commits](https://img.shields.io/github/last-commit/deethereal/vk_bot?color=blue)](https://GitHub.com/deethereal/vk_bot/commit/)
 # Matvey_Bot
+Этот бот создан исключитльно ради интереса и развлечения. Бот висит на серверах Oracle. Работает только для одной беседы и настроен конкретно на 8 человек. Бот собирает статистику сообщений по беседе: наиболее часто используемые слова, статистика активности учатников по часам, самые "оживленные" дни в беседе. Бот умеет генрировать предложения различной длины, с заданным первым словом или без  а также анекдоты, при помощи [цепей маркова ](https://ru.wikipedia.org/wiki/Цепь_Маркова). В качестве данных для генерации выступают все сообщений беседы и сборник анекдотов, соответсвенно. Бот имеет права администатора, поэтому ему доступны почти все методы сообщений, описанные в [документации ВКонтакте](https://vk.com/dev/messages).
 ![](https://sun9-33.userapi.com/impf/Ph6h3y9xmTlgqTQ4vvNyBicTTzvEwdXrIrNzUg/CAQsBcvEzNQ.jpg?size=367x345&quality=96&proxy=1&sign=3d3b80db614a0cd1406bccbb645ae2a3&type=album)
 
 
