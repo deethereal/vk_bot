@@ -111,7 +111,7 @@ def show_result(df, names, hs, colors, Name=None):
         else:
             print("Я не нашел ни одного из данных имен")
 def create_pic(names, hs, colors, Names=None):
-    df = pd.read_csv('/home/ubuntu/bot/stat/dataframe.csv')
+    df = pd.read_csv('/home/ubuntu/bot/vk_bot/stat/dataframe.csv')
     df = df.set_index('hours')
     df = df.rename({'Cемен': 'Семен'}, axis=1)
     show_result(df, names,hs,colors,Names)
