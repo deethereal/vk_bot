@@ -1,6 +1,8 @@
 #files
 token.txt
 /telegram_bot/words.txt
+/scripts/users.json
+/scripts/config.yml
 
 #folders
 /telegram_bot/test.js
