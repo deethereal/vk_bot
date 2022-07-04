@@ -3,6 +3,8 @@ token.txt
 /telegram_bot/words.txt
 /scripts/users.json
 /scripts/config.yml
+/scripts/stat.png
+/scripts/dicks_sizes.csv
 
 #folders
 /telegram_bot/test.js
