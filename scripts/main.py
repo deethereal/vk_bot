@@ -1,8 +1,7 @@
 import json
 import random
-from email.mime import message
-from email.policy import default
-from os.path import exists
+import re
+from datetime import date
 
 import click
 import pandas as pd
@@ -28,7 +27,7 @@ def main(debug):
         chat_id = 4
     PEER_ID = 2000000000 + chat_id
     with open(config['user_ids_json'], 'r', encoding='utf-8') as fh:  
-        id_2_name = json.load(fh)     
+        dicts = json.load(fh)     
     if debug:
         send("Работаем")
     for event in longpoll.listen():
@@ -36,25 +35,43 @@ def main(debug):
             print(event)
             message_text = event.object['message']['text'].lower()
             if message_text == '/член':
-                calculate_dick_size(str(event.object['message']['from_id']), id_2_name)
-                
-                
-
+                calculate_dick_size(str(event.object['message']['from_id']), dicts['users'])
+            if findWord(message_text,"бот"):
+                words=message_text.split()
+                if len(words)==3 and words[1]=='позови':
+                    if (words[2]=='влада'):
+                        outcome_text = f'@freebadman({random.choice(dicts["Matvey_inc_dict"]["purple"][1])})'
+                    elif (words[2]=='семена') or (words[2]=='семёна') or (words[2]=='cёму') or (words[2]=='cему'):
+                        outcome_text = f'@voidrad({random.choice(dicts["Matvey_inc_dict"]["green"][1])})'
+                    elif (words[2]=='сашу'):
+                        outcome_text = f'@id_alejandr0({random.choice(dicts["Matvey_inc_dict"]["sasha"][1])})'
+                    elif (words[2]=='никиту'):
+                        outcome_text = f'@08kuy({random.choice(dicts["Matvey_inc_dict"]["orange"][1])})'
+                    elif (words[2]=='колю'):
+                        outcome_text = f'@k_o_l_y_a_24({random.choice(dicts["Matvey_inc_dict"]["yellow"][1])})'
+                    elif (words[2]=='мотю') or (words[2]=='матвея'):
+                        outcome_text = f'@whitewolf185({random.choice(dicts["Matvey_inc_dict"]["red"][1])})'
+                    elif (words[2]=='ирку') or (words[2]=='шлюху') or (words[2]=='иру') :
+                        outcome_text = f'@zhur__zhur({random.choice(dicts["Matvey_inc_dict"]["shluha"][1])})'
+                    elif (words[2]=='диню') or (words[2]=='дениса'):
+                        outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
+                    if outcome_text!=None:
+                        send(outcome_text)
+                        
+                        
 def calculate_dick_size(user_id, id_2_name):
-    if exists('dicks_sizes.csv'):
+    today = date.today.strftime("%d/%m/%Y")
+    try:
         dicks = pd.read_csv('dicks_sizes.csv')
-        print(dicks)
-        if user_id in dicks.columns:
+        if dicks['ymd']== today:
             length = int(dicks[user_id].values[0])
         else:
-            length = random_dick_size()
-            dicks[user_id] = length
-            dicks.to_csv('dicks_sizes.csv', index=True)
-    else:
+            raise Exception
+    except KeyError:
+        length = write_pisulku(dicks, today)
+    finally:
         dicks = pd.DataFrame(index=[0])
-        length = random_dick_size()
-        dicks[user_id] = length
-        dicks.to_csv('dicks_sizes.csv', index=True)
+        length = write_pisulku(dicks, today)
     if length<10:
         emoji = '😥'
     elif length<15:
@@ -75,7 +92,14 @@ def calculate_dick_size(user_id, id_2_name):
         "твоя писюлька целых", "твоя волшебная палочка", "с таким дрыном шутки плохи -- целых"]  
     message_outcome = id_2_name[user_id] + ', '+ random.choice(possible_text) + ' '+ str(length) + 'см ' + emoji
     send(message_outcome)
-
+    
+def write_pisulku(dicks, today):
+    length = random_dick_size()
+    dicks[user_id] = length
+    dicks['ymd'] = today
+    dicks.to_csv('dicks_sizes.csv', index=True)
+    return length
+    
 def random_dick_size():
     chance = random.randint(1,20)
     if chance<15:
@@ -87,6 +111,9 @@ def random_dick_size():
 def send(msg):
     return VK.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=PEER_ID)
 
-
+def findWord(msg,word):
+    raw='\\b'+word+',?\\b'
+    result = re.search(r''+raw, msg)
+    return result!=None
 if __name__ == '__main__':
     main()
