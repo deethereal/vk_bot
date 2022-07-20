@@ -184,14 +184,6 @@ def ho4u(msg, par):
 
 
 
-def findWord(msg,word):
-    raw='\\b'+word+',?\\b'
-    result = re.search(r''+raw, msg)
-    #print (result)
-    if result!= None:
-        return True
-    else:
-        return False
 
 
 def findIII(msg):

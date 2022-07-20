@@ -57,10 +57,25 @@ def main(debug):
                         outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
                     if outcome_text!=None:
                         send(outcome_text)
+            if message_text == '/го дота':
+                doters = dicts['doters']
+                outcome_message = go_dota(doters, str(event.object['message']['from_id']))
+                send(outcome_message)
                         
+def go_dota(doters, from_id):
+    if from_id in list(doters.keys()):
+        doter_2_kick = set([doters[from_id]])
+        doters_2_poke = list(set(list(doters.values()))-doter_2_kick)
+        mes = ''
+        words = ['го'," д","о","т","а"]
+        for i in range(len(doters_2_poke)):
+            mes += doters_2_poke[i]+'('+words[i]+')'
+        return mes
+    return 'Тебе не разрешено звать всех в доту, иди нахуй'
+
                         
 def calculate_dick_size(user_id, id_2_name):
-    today = date.today.strftime("%d/%m/%Y")
+    today = date.today().strftime("%d/%m/%Y")
     try:
         dicks = pd.read_csv('dicks_sizes.csv')
         if dicks['ymd']== today:
