@@ -10,3 +10,6 @@ token.txt
 /telegram_bot/test.js
 /.idea/
 /telegram_bot/node_modules/
+/botik
+/*/.venv/
+
