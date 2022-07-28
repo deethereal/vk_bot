@@ -35,6 +35,9 @@ def main(debug):
         if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
             print(event)
             message_text = event.object['message']['text'].lower()
+            bI_pos = findbI(message_text)
+            if bool(bI_pos):
+                send(bI_pos)
             if message_text == '/член':
                 calculate_dick_size(
                     str(event.object['message']['from_id']), dicts['users'])
@@ -76,6 +79,8 @@ def go_dota(doters, from_id):
             mes += doters_2_poke[i]+'('+words[i]+')'
         return mes
     return 'Тебе не разрешено звать всех в доту, иди нахуй'
+
+# TODO починить
 
 
 def calculate_dick_size(user_id, id_2_name):
@@ -134,6 +139,19 @@ def random_dick_size():
 
 def send(msg):
     return VK.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=PEER_ID)
+
+
+def findbI(msg):
+    result = re.search(r'\bы+\b', msg)
+    randi = random.randint(0, 7)
+    I = 'Ы'
+    I += "ы"*(randi-1)
+    if result != None:
+        if result.group(0) == 'ы':
+            return 'Ы'
+        else:
+            return I
+    return False
 
 
 def findWord(msg, word):
