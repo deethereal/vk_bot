@@ -125,7 +125,7 @@ def calculate_dick_size(user_id: int, id_2_name: Dict[int, str]) -> str:
     else:
         dicks = pd.DataFrame(index=[0])
         dicks["ymd"] = "1970-01-01"
-    if dicks["ymd"] == today and user_id in dicks.columns:
+    if dicks["ymd"].values[0] == today and user_id in dicks.columns:
         length = int(dicks[user_id].values[0])
     else:
         length = write_pisulku(dicks, user_id, today)
