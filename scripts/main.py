@@ -50,7 +50,7 @@ def main(debug):
             bI_pos = findbI(message_text)
             if bool(bI_pos):
                 send(bI_pos)
-            if message_text == "/член":
+            if message_text.rstrip() == "/член":
                 outcome_text = calculate_dick_size(str(event.object["message"]["from_id"]), dicts["users"])
                 send(outcome_text)
             if findWord(message_text, "бот"):
@@ -76,10 +76,10 @@ def main(debug):
                         outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
                     if outcome_text != None:
                         send(outcome_text)
-            if message_text == "/го дота":
+            if message_text.rstrip() == "/го дота":
                 doters = dicts["doters"]
                 outcome_message = go_dota(doters, str(event.object["message"]["from_id"]))
-                send(outcome_message)
+                send(outcome_message+'?')
 
 
 def go_dota(doters: Dict[int, str], from_id: str) -> str:
@@ -101,7 +101,7 @@ def go_dota(doters: Dict[int, str], from_id: str) -> str:
         possible_phrase = ["го дота", "го сосать", "погнали гействовать", "как насчет мужского секса"]
         splited_phrase = list(random.choice(possible_phrase))
         for item in enumerate(np.array_split(splited_phrase, amount_of_doters)):
-            mes += doters_2_poke[item[0]] + "(" + ' '.join(item[1]) + ")?"
+            mes += doters_2_poke[item[0]] + "(" + ' '.join(item[1]) + ")"
         return mes
     return "Тебе не разрешено звать всех в доту, иди нахуй"
 
