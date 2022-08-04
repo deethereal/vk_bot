@@ -101,7 +101,7 @@ def go_dota(doters: Dict[int, str], from_id: str) -> str:
         possible_phrase = ["го дота", "го сосать", "погнали гействовать", "как насчет мужского секса"]
         splited_phrase = list(random.choice(possible_phrase))
         for item in enumerate(np.array_split(splited_phrase, amount_of_doters)):
-            mes += doters_2_poke[item[0]] + "(" + ' '.join(item[1]) + ")"
+            mes += doters_2_poke[item[0]] + "(" + ''.join(item[1]) + ")"
         return mes
     return "Тебе не разрешено звать всех в доту, иди нахуй"
 
