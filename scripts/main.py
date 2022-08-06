@@ -1,3 +1,4 @@
+from email import message
 import json
 import random
 import re
@@ -52,6 +53,9 @@ def main(debug):
                 send(bI_pos)
             if message_text.rstrip() == "/член":
                 outcome_text = calculate_dick_size(str(event.object["message"]["from_id"]), dicts["users"])
+                send(outcome_text)
+            if message_text.rstrip() == "/члены":
+                outcome_text = show_pisulki(dicts["users"])
                 send(outcome_text)
             if findWord(message_text, "бот"):
                 words = message_text.split()
@@ -120,16 +124,17 @@ def calculate_dick_size(user_id: int, id_2_name: Dict[int, str]) -> str:
     today = date.today().strftime("%d/%m/%Y")
     path_to_file = "dicks_sizes.csv"
     file_exists = exists(path_to_file)
+    print(file_exists)
     if file_exists:
         dicks = pd.read_csv(path_to_file)
     else:
         dicks = pd.DataFrame(index=[0])
-        dicks["ymd"] = "1970-01-01"
+        dicks["ymd"] = pd.to_datetime("01/01/1970", format="%d/%m/%Y")
     if dicks["ymd"].values[0] == today and user_id in dicks.columns:
         length = int(dicks[user_id].values[0])
     else:
         length = write_pisulku(dicks, user_id, today)
-
+        
     if length < 10:
         emoji = "😥"
     elif length < 15:
@@ -173,9 +178,11 @@ def write_pisulku(dicks: pd.DataFrame, user_id: int, today: date) -> int:
         int: Dick size of user
     """
     length = random_dick_size()
+    if  dicks["ymd"].values[0]!=today:
+            dicks["ymd"] = today
+            dicks = pd.DataFrame(dicks['ymd'])
     dicks[user_id] = length
-    dicks["ymd"] = today
-    dicks.to_csv("dicks_sizes.csv", index=True)
+    dicks.to_csv("dicks_sizes.csv", index=False)
     return length
 
 
@@ -189,6 +196,30 @@ def random_dick_size():
         return random.randint(31, 35)
 
 
+def show_pisulki(dicts):
+    today = date.today().strftime("%d/%m/%Y")
+    path_to_file = "dicks_sizes.csv"
+    file_exists = exists(path_to_file)
+    print(file_exists)
+    if file_exists:
+        dicks = pd.read_csv(path_to_file)
+    else:
+        return 'Записей о хуях нет'
+    if dicks['ymd'].values[0]==today:
+        return print_dicks(dicks,dicts)
+    else:
+        return 'Сегодня хуями никто не мерился'
+    
+    
+def print_dicks(dicks,dicts):
+    dt = dicks['ymd'].values[0]
+    message = f'Ситуация на {dt}:\n'
+    tmp_df = dicks.drop(columns='ymd').T.sort_values(by=0, ascending=False)
+    for ind in tmp_df.index:
+        message+=f'{dicts[ind]} -- {tmp_df.loc[ind].values[0]} см\n'
+    return message
+    
+    
 def send(msg: str, attach: str = None):
     VK.messages.send(random_id=random.randint(0, 999999), message=msg, peer_id=PEER_ID, attachment=attach)
 
