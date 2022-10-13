@@ -5,6 +5,7 @@ token.txt
 /scripts/config.yml
 /scripts/stat.png
 /scripts/dicks_sizes.csv
+/scripts/ecosystem.config.js
 
 #folders
 /telegram_bot/test.js

@@ -2,15 +2,15 @@ import json
 import random
 import re
 from datetime import date
+from os.path import exists
+from typing import Dict
 
 import click
-import pandas as pd
 import numpy as np
+import pandas as pd
 import yaml
-from os.path import exists
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotEventType, VkBotLongPoll
-from typing import Dict
 
 CHANCE = 17
 y_words = [
@@ -110,7 +110,9 @@ def main(debug):
                     elif (words[2] == "диню") or (words[2] == "дениса"):
                         outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
                     if outcome_text is not None:
-                        send(outcome_text)
+                        attach = 'photo-178950051_457239218' if words[2] == "никиту" else None
+                        send(outcome_text, attach=attach)
+
             if message_text.rstrip() == "/го дота":
                 doters = dicts["doters"]
                 outcome_message = go_dota(
