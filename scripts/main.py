@@ -54,10 +54,7 @@ def main(debug):
             print(event)
             message_text = event.object["message"]["text"].lower()
             if findWordInList(message_text, y_words):
-                if (
-                    event.object["message"]["from_id"]
-                    != dicts["Matvey_inc_dict"]["purple"][0]
-                ):
+                if event.object["message"]["from_id"] != dicts["Matvey_inc_dict"]["purple"][0]:
                     send(
                         msg="Сам ты у е б а, пашел нахуй",
                         attach="photo-178950051_457239159",
@@ -74,9 +71,7 @@ def main(debug):
             if bool(bI_pos):
                 send(bI_pos)
             if message_text.rstrip() == "/член":
-                outcome_text = calculate_dick_size(
-                    str(event.object["message"]["from_id"]), dicts["users"]
-                )
+                outcome_text = calculate_dick_size(str(event.object["message"]["from_id"]), dicts["users"])
                 send(outcome_text)
             if message_text.rstrip() == "/члены":
                 outcome_text = show_pisulki(dicts["users"])
@@ -87,10 +82,7 @@ def main(debug):
                     if words[2] == "влада":
                         outcome_text = f'@freebadman({random.choice(dicts["Matvey_inc_dict"]["purple"][1])})'
                     elif (
-                        (words[2] == "семена")
-                        or (words[2] == "семёна")
-                        or (words[2] == "cёму")
-                        or (words[2] == "cему")
+                        (words[2] == "семена") or (words[2] == "семёна") or (words[2] == "cёму") or (words[2] == "cему")
                     ):
                         outcome_text = f'@voidrad({random.choice(dicts["Matvey_inc_dict"]["green"][1])})'
                     elif words[2] == "сашу":
@@ -101,24 +93,22 @@ def main(debug):
                         outcome_text = f'@k_o_l_y_a_24({random.choice(dicts["Matvey_inc_dict"]["yellow"][1])})'
                     elif (words[2] == "мотю") or (words[2] == "матвея"):
                         outcome_text = f'@whitewolf185({random.choice(dicts["Matvey_inc_dict"]["red"][1])})'
-                    elif (
-                        (words[2] == "ирку")
-                        or (words[2] == "шлюху")
-                        or (words[2] == "иру")
-                    ):
+                    elif (words[2] == "ирку") or (words[2] == "шлюху") or (words[2] == "иру"):
                         outcome_text = f'@zhur__zhur({random.choice(dicts["Matvey_inc_dict"]["shluha"][1])})'
                     elif (words[2] == "диню") or (words[2] == "дениса"):
                         outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
                     if outcome_text is not None:
-                        attach = 'photo-178950051_457239218' if words[2] == "никиту" else None
+                        attach = "photo-178950051_457239218" if words[2] == "никиту" else None
                         send(outcome_text, attach=attach)
 
-            if message_text.rstrip() == "/го дота":
+            if message_text.startswith("/го дота"):
+                residual_words = message_text.split(" ")[2:]
+                additon = ""
+                if residual_words[0] in ("через", "в", "вечером"):
+                    additon = " " + " ".join(residual_words)
                 doters = dicts["doters"]
-                outcome_message = go_dota(
-                    doters, str(event.object["message"]["from_id"])
-                )
-                send(outcome_message + "?")
+                outcome_message = go_dota(doters, str(event.object["message"]["from_id"]))
+                send(outcome_message + additon + "?")
 
 
 def go_dota(doters: Dict[int, str], from_id: str) -> str:
@@ -202,15 +192,7 @@ def calculate_dick_size(user_id: int, id_2_name: Dict[int, str]) -> str:
         "твоя волшебная палочка",
         "с таким дрыном шутки плохи -- целых",
     ]
-    message_outcome = (
-        id_2_name[user_id]
-        + ", "
-        + random.choice(possible_text)
-        + " "
-        + str(length)
-        + "см "
-        + emoji
-    )
+    message_outcome = id_2_name[user_id] + ", " + random.choice(possible_text) + " " + str(length) + "см " + emoji
     return message_outcome
 
 
