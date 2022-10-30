@@ -101,7 +101,7 @@ def main(debug):
                         attach = "photo-178950051_457239218" if words[2] == "никиту" else None
                         send(outcome_text, attach=attach)
 
-            if message_text.startswith("/го дота"):
+            if message_text.startswith("/го дота") or message_text == "/го дота":
                 residual_words = message_text.split(" ")[2:]
                 additon = ""
                 if residual_words[0] in ("через", "в", "вечером"):
