@@ -12,12 +12,10 @@ import yaml
 from loguru import logger
 from vkbottle.bot import Bot, Message
 from vkbottle.dispatch.rules import ABCRule
+from vkbottle.dispatch.rules.base import CommandRule
+from vkbottle.tools import VoiceMessageUploader
 
-
-class MyRule(ABCRule[Message]):
-    async def check(self, event: Message) -> bool:
-        return len(event.text) < 100
-
+from mubert import generate_music
 
 logger.remove()
 logger.add(sys.stderr, level="INFO")
@@ -60,6 +58,8 @@ class MatveyIncBot(Bot):
             dicts = json.load(fh)
         super().__init__(token=config["token"])
         self.doters = dicts["doters"]
+        self.vm_uploader = VoiceMessageUploader(self.api)  # see uploaders types in "Uploaders documentation" above
+
         self.CHANCE = 17
         self.y_words = [
             "уеба",
@@ -158,15 +158,7 @@ class MatveyIncBot(Bot):
             "твоя волшебная палочка",
             "с таким дрыном шутки плохи -- целых",
         ]
-        message_outcome = (
-            id_2_name[user_id]
-            + ", "
-            + random.choice(possible_text)
-            + " "
-            + str(length)
-            + "см "
-            + emoji
-        )
+        message_outcome = id_2_name[user_id] + ", " + random.choice(possible_text) + " " + str(length) + "см " + emoji
         return message_outcome
 
     def write_pisulku(self, dicks: pd.DataFrame, user_id: int, today: date) -> int:
@@ -219,10 +211,25 @@ class MatveyIncBot(Bot):
             message += f"{dicts[ind]} -- {tmp_df.loc[ind].values[0]} см\n"
         return message
 
+    def send_track(self, prompt):
+        # await generate_music(prompt)
+        generate_music(prompt)
+
 
 bot = MatveyIncBot()
 bot.labeler.custom_rules["in_message"] = TextInMessage
 bot.labeler.custom_rules["bI_in_message"] = bICount
+
+
+@bot.on.message(CommandRule("трек", args_count=1, sep=","))
+async def send_track(message: Message, args) -> str:
+    logger.info(f"Generating song with prompt {args[0]}")
+    bot.send_track(args[0])
+    if exists("tmp_track.wav"):
+        attachment = await bot.vm_uploader.upload(file_source="tmp_track.wav", title=args[0], peer_id=message.peer_id)
+        await message.answer(args[0], attachment=attachment)
+    else:
+        await message.answer(f"Не удалось сгенерировать {args[0]}. Попробуйте еще раз")
 
 
 @bot.on.message(command=("го дота", 0))

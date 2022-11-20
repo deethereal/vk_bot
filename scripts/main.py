@@ -4,6 +4,7 @@ import re
 from datetime import date
 from os.path import exists
 from typing import Dict
+import pickle
 
 import click
 import numpy as np
@@ -68,14 +69,19 @@ def main(debug):
                     send("Этого пидораса я кикнуть не могу, он слишком тяжелый:(")
 
             bI_pos = findbI(message_text)
+            command_text = message_text.rstrip()
             if bool(bI_pos):
                 send(bI_pos)
-            if message_text.rstrip() == "/член":
+            if command_text == "/член":
                 outcome_text = calculate_dick_size(str(event.object["message"]["from_id"]), dicts["users"])
                 send(outcome_text)
-            if message_text.rstrip() == "/члены":
+            if command_text == "/члены":
                 outcome_text = show_pisulki(dicts["users"])
                 send(outcome_text)
+            if command_text == "кринж":
+                send(oh_no_cringe(), attach="photo-178950051_457239221")
+            if command_text == "статус кринжа":
+                send(cringe_status())
             if findWord(message_text, "бот"):
                 words = message_text.split()
                 if len(words) == 3 and words[1] == "позови":
@@ -101,14 +107,12 @@ def main(debug):
                         attach = "photo-178950051_457239218" if words[2] == "никиту" else None
                         send(outcome_text, attach=attach)
 
-            if message_text.startswith("/го дота") or message_text.rstrip() == "/го дота":
+            if message_text.startswith("/го дота") or command_text == "/го дота":
                 residual_words = message_text.split(" ")[2:]
                 additon = ""
-                try:
+                if len(residual_words) > 0:
                     if residual_words[0] in ("через", "в", "вечером"):
                         additon = " " + " ".join(residual_words)
-                except IndexError:
-                    pass
                 doters = dicts["doters"]
                 outcome_message = go_dota(doters, str(event.object["message"]["from_id"]))
                 send(outcome_message + additon + "?")
@@ -273,6 +277,23 @@ def findbI(msg):
         else:
             return bI
     return False
+
+
+def cringe_status(file_name="last_cringe_day"):
+    # try:
+    with open(file_name, "rb") as f:
+        last_date = pickle.load(f)
+    days_without_cringe = (date.today() - last_date).days
+    return f"Дней без кринжа: {days_without_cringe}."
+    # except FileNotFoundError:
+    #    return "Кринжа не было уже 10 тысяч лет!"
+
+
+def oh_no_cringe(file_name="last_cringe_day"):
+    old_status = cringe_status(file_name)
+    with open(file_name, "wb") as f:
+        pickle.dump(date.today(), f)
+    return old_status + "\nСчётчик обнулен!"
 
 
 def findWordInList(msg, words):
