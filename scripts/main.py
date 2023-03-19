@@ -1,20 +1,19 @@
 import json
 import random
 import re
+from collections import defaultdict
 from datetime import date
 from os.path import exists
+from pickle import dump, load
 from typing import Dict
 
 import click
 import numpy as np
+import openai
 import pandas as pd
 import yaml
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotEventType, VkBotLongPoll
-from collections import defaultdict
-from pickle import load, dump
-import openai
-
 
 with open("token.txt") as f:
     openai.api_key = f.readline()

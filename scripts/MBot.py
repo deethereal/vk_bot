@@ -1,10 +1,19 @@
-import functions as f, mark as m, time, datetime, sys, random, vk_api, re
-from vk_api.bot_longpoll import VkBotEventType
-from vk_api import VkApi
-from vk_api.bot_longpoll import VkBotLongPoll
-from vk_api.upload import VkUpload
+import datetime
 import os
+import random
+import re
+import sys
+import time
+
 import requests
+import vk_api
+from vk_api import VkApi
+from vk_api.bot_longpoll import VkBotEventType, VkBotLongPoll
+from vk_api.upload import VkUpload
+
+import functions as f
+import mark as m
+
 with open ('/home/ubuntu/bot/token.txt' , 'r') as t:
     token = t.readline().rstrip()
 groupID = 178950051

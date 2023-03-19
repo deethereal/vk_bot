@@ -1,10 +1,13 @@
 
+import datetime
 import random
 import re
-import datetime
-import numpy as np, pandas as pd
 from datetime import datetime, timedelta
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
 my_ponct='!#&*,;\^_`{}()🌚'
 ho4u_words = ["хочу","хачу","я","ну","тоже", "а", "бля"]
 def counter_plus():

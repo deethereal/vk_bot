@@ -1,6 +1,7 @@
-import markovify
-import time
 import random
+import time
+
+import markovify
 
 lin_way='/home/ubuntu/bot/data/'
 mac_way='/Users/denis/Documents/vk_bot/data/'

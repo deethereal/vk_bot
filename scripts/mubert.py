@@ -1,7 +1,8 @@
 import json
+import os
 import urllib.request
 from asyncio.log import logger
-import os
+
 import httpx
 import numpy as np
 from sentence_transformers import SentenceTransformer
