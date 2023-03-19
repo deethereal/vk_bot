@@ -4,7 +4,6 @@ import re
 from datetime import date
 from os.path import exists
 from typing import Dict
-import pickle
 
 import click
 import numpy as np
@@ -12,6 +11,13 @@ import pandas as pd
 import yaml
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotEventType, VkBotLongPoll
+from collections import defaultdict
+from pickle import load, dump
+import openai
+
+
+with open("token.txt", "r") as f:
+    openai.api_key = f.readline()
 
 CHANCE = 17
 y_words = [
@@ -40,7 +46,7 @@ def main(debug):
     groupID = config["group_id"]  # id сообщества (не чата)
     vk_session = VkApi(token=token)  # авторизация
     longpoll = VkBotLongPoll(vk_session, groupID)
-    global VK, PEER_ID
+    global VK, PEER_ID, history
     VK = vk_session.get_api()
     chat_id = int(config["chat_id"])
     if debug:
@@ -50,6 +56,12 @@ def main(debug):
         dicts = json.load(fh)
     if debug:
         send("Работаем")
+    try:
+        with open("history.pkl", "rb") as f:
+            history = load(f)
+    except FileNotFoundError:
+        history = defaultdict(list)
+
     for event in longpoll.listen():
         if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
             print(event)
@@ -70,6 +82,10 @@ def main(debug):
 
             bI_pos = findbI(message_text)
             command_text = message_text.rstrip()
+            if message_text[:5] == "бля а":
+                send(generate_answer(event.object["message"]["text"][6:], event.object["message"]["from_id"]))
+                with open("history.pkl", "wb") as f:
+                    dump(history, f)
             if bool(bI_pos):
                 send(bI_pos)
             if command_text == "/член":
@@ -116,6 +132,27 @@ def main(debug):
                 doters = dicts["doters"]
                 outcome_message = go_dota(doters, str(event.object["message"]["from_id"]))
                 send(outcome_message + additon + "?")
+
+
+def generate_answer(prompt, from_id):
+    if prompt == "забудь все":
+        history[from_id].clear()
+        return "История очищена"
+    history[from_id].append({"role": "user", "content": prompt})
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=history[from_id],
+        max_tokens=500,
+        temperature=0.5,
+    )
+    answer_text = response.get("choices")[0]["message"]["content"]
+    answer = f"Prompt: {prompt}\n\nAnswer: {answer_text}"
+    if len(history[from_id]) < 2:
+        history[from_id].append({"role": "assistant", "content": answer_text})
+    else:
+        history[from_id].pop(0)
+
+    return answer
 
 
 def go_dota(doters: Dict[int, str], from_id: str) -> str:
@@ -282,7 +319,7 @@ def findbI(msg):
 def cringe_status(file_name="last_cringe_day"):
     # try:
     with open(file_name, "rb") as f:
-        last_date = pickle.load(f)
+        last_date = load(f)
     days_without_cringe = (date.today() - last_date).days
     return f"Дней без кринжа: {days_without_cringe}."
     # except FileNotFoundError:
@@ -292,7 +329,7 @@ def cringe_status(file_name="last_cringe_day"):
 def oh_no_cringe(file_name="last_cringe_day"):
     old_status = cringe_status(file_name)
     with open(file_name, "wb") as f:
-        pickle.dump(date.today(), f)
+        dump(date.today(), f)
     return old_status + "\nСчётчик обнулен!"
 
 
