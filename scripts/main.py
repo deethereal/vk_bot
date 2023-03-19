@@ -131,8 +131,12 @@ def main(debug):
                         additon = " " + " ".join(residual_words)
                 doters = dicts["doters"]
                 outcome_message = go_dota(doters, str(event.object["message"]["from_id"]))
-                send(outcome_message + additon + "?")
-
+                pic_chance = np.random.rand()
+                attach = None
+                if pic_chance < 0.17:
+                    attach = "photo-178950051_457239222"
+                send(outcome_message + additon + "?", attach=attach)
+                
 
 def generate_answer(prompt, from_id):
     if prompt == "забудь все":
