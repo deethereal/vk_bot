@@ -16,7 +16,7 @@ from pickle import load, dump
 import openai
 
 
-with open("token.txt", "r") as f:
+with open("token.txt") as f:
     openai.api_key = f.readline()
 
 CHANCE = 17
@@ -158,7 +158,6 @@ def generate_answer(prompt, from_id):
 
     return answer
 
-
 def go_dota(doters: Dict[int, str], from_id: str) -> str:
     """Send DotA invitation for all players except org
 
@@ -175,12 +174,7 @@ def go_dota(doters: Dict[int, str], from_id: str) -> str:
         doters_2_poke = list(set(list(doters.values())) - doter_2_kick)
         amount_of_doters = len(doters_2_poke)
         mes = ""
-        possible_phrase = [
-            "го дота",
-            "го сосать",
-            "погнали гействовать",
-            "как насчет мужского секса",
-        ]
+        possible_phrase = ["го дота", "го сосать", "погнали гействовать", "как насчет мужского секса", "го на мид"]
         splited_phrase = list(random.choice(possible_phrase))
         for item in enumerate(np.array_split(splited_phrase, amount_of_doters)):
             mes += doters_2_poke[item[0]] + "(" + "".join(item[1]) + ")"
