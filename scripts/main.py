@@ -135,27 +135,30 @@ def main(debug):
                 if pic_chance < 0.17:
                     attach = "photo-178950051_457239222"
                 send(outcome_message + additon + "?", attach=attach)
-                
+
 
 def generate_answer(prompt, from_id):
     if prompt == "забудь все":
         history[from_id].clear()
         return "История очищена"
-    history[from_id].append({"role": "user", "content": prompt})
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=history[from_id],
-        max_tokens=500,
-        temperature=0.5,
-    )
-    answer_text = response.get("choices")[0]["message"]["content"]
-    answer = f"Prompt: {prompt}\n\nAnswer: {answer_text}"
-    if len(history[from_id]) < 2:
-        history[from_id].append({"role": "assistant", "content": answer_text})
-    else:
-        history[from_id].pop(0)
+    try:
+        history[from_id].append({"role": "user", "content": prompt})
 
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=history[from_id],
+            max_tokens=500,
+            temperature=0.5,
+        )
+        answer_text = response.get("choices")[0]["message"]["content"]
+        answer = f"Prompt: {prompt}\n\nAnswer: {answer_text}"
+        if len(history[from_id]) > 2:
+            history[from_id].pop(0)
+        history[from_id].append({"role": "assistant", "content": answer_text})
+    except Exception as e:
+        answer = f"Иди нахуй. Ошибка {e}"
     return answer
+
 
 def go_dota(doters: Dict[int, str], from_id: str) -> str:
     """Send DotA invitation for all players except org
