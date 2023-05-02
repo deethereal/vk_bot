@@ -51,7 +51,7 @@ def main(config):
                 if action["type"] == "chat_invite_user" and action["member_id"] == dicts["Matvey_inc_dict"]["red"][0]:
                     use_cases.set_motya_comeback_title(vk_client)
             message_text = event.object["message"]["text"].lower()
-            if utils.findWordInList(message_text, utils.Y_WORDS):
+            if utils.find_word_in_list(message_text, utils.Y_WORDS):
                 if from_id != dicts["Matvey_inc_dict"]["purple"][0]:
                     vk_client.send(
                         msg="Сам ты у е б а, пашел нахуй",
@@ -68,7 +68,7 @@ def main(config):
                 else:
                     vk_client.send("Этого пидораса я кикнуть не могу, он слишком тяжелый:(")
 
-            bI_pos = utils.findbI(message_text)
+            bI_pos = utils.find_bI(message_text)
             print(bI_pos)
             command_text = message_text.rstrip()
             if message_text[:5] == "бля а":
@@ -87,7 +87,7 @@ def main(config):
                 vk_client.send(use_cases.oh_no_cringe(), attach=utils.IMAGE_2_ID["cringe"])
             if command_text == "статус кринжа":
                 vk_client.send(use_cases.cringe_status())
-            if utils.findWord(message_text, "бот"):
+            if utils.find_word(message_text, "бот"):
                 words = message_text.split()
                 if len(words) == 3 and words[1] == "позови":
                     if words[2] in ("влада", "владика", "владека"):
