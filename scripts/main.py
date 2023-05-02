@@ -64,6 +64,19 @@ def main(debug):
     for event in longpoll.listen():
         if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat:
             print(event)
+            if (
+                event.object["message"]["action"]["type"] == "chat_kick_user"
+                and event.object["message"]["action"]["member_id"] == 207227130
+            ):
+                VK.messages.editChat(chat_id=chat_id, title="Matvey Inc. 3.1 - Семья снова без Матвея")
+                send("На страже актуальности названия!")
+            if (
+                event.object["message"]["action"]["type"] == "chat_invite_user"
+                and event.object["message"]["action"]["member_id"] == 207227130
+            ):
+                VK.messages.editChat(chat_id=chat_id, title="Matvey Inc. 3.1 - Семья снова c Матвеем")
+                send("На страже актуальности названия!")
+
             message_text = event.object["message"]["text"].lower()
             if findWordInList(message_text, y_words):
                 if event.object["message"]["from_id"] != dicts["Matvey_inc_dict"]["purple"][0]:
@@ -147,12 +160,12 @@ def generate_answer(prompt, from_id):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=history[from_id],
-            max_tokens=500,
+            max_tokens=1000,
             temperature=0.5,
         )
         answer_text = response.get("choices")[0]["message"]["content"]
         answer = f"Prompt: {prompt}\n\nAnswer: {answer_text}"
-        if len(history[from_id]) > 2:
+        if len(history[from_id]) > 3:
             history[from_id].pop(0)
         history[from_id].append({"role": "assistant", "content": answer_text})
     except Exception as e:
