@@ -404,7 +404,7 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
             if rating[from_user_id].values[1] - rice >= 0:
                 rating[from_user_id].values[1] -= rice
                 rating[to_user_id].values[0] += rice 
-                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {rating[to_user_id].values[0]}"
+                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {int(rating[to_user_id].values[0])}"
             else:
                 message_outcome = "Не хватает риса для завершения транзакции"
         else:
@@ -414,7 +414,7 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
             if rating[from_user_id].values[2] - rice <= 0:
                 rating[from_user_id].values[2] -= rice
                 rating[to_user_id].values[0] += rice 
-                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {rating[to_user_id].values[0]}"
+                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {int(rating[to_user_id].values[0])}"
             else:
                 message_outcome = "Ты не сможешь столько съесть!"
         else:
