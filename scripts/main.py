@@ -136,7 +136,7 @@ def main(debug):
                         send(outcome_text, attach=attach)
             if message_text.startswith("/дать"):
                 words = message_text.split()
-                if len(words) == 3 and abs(int(words[2]))<31:
+                if len(words) == 3:
                     if (words[1] == "владу") or (words[1] == "владику") or (words[1] == "владиславу"):
                         outcome_text = calculate_social_rating(str(event.object["message"]["from_id"]), dicts["Matvey_inc_dict"]["purple"][0], int(words[2]), dicts)
                     elif (
@@ -155,7 +155,6 @@ def main(debug):
                         outcome_text = calculate_social_rating(str(event.object["message"]["from_id"]), dicts["Matvey_inc_dict"]["shluha"][0], int(words[2]), dicts)
                     elif (words[1] == "дине") or (words[1] == "денису"):
                         outcome_text = calculate_social_rating(str(event.object["message"]["from_id"]), dicts["Matvey_inc_dict"]["blue"][0], int(words[2]), dicts)
-                else: outcome_text = "Нет, не дам"
                 send(outcome_text)
             if command_text == "/рейтинг":
                 outcome_text = show_social_rating(dicts["users"])
@@ -236,7 +235,7 @@ def calculate_dick_size(user_id: int, id_2_name: Dict[int, str]) -> str:
         str: Message for all
     """
 
-    today = date.today().strftime("%d/%m/%Y")
+    today = to_integer(date.today())
     path_to_file = "dicks_sizes.csv"
     file_exists = exists(path_to_file)
     print(file_exists)
@@ -314,7 +313,7 @@ def random_dick_size():
 
 
 def show_pisulki(dicts):
-    today = date.today().strftime("%d/%m/%Y")
+    today = to_integer(date.today())
     path_to_file = "dicks_sizes.csv"
     file_exists = exists(path_to_file)
     print(file_exists)
@@ -336,6 +335,9 @@ def print_dicks(dicks, dicts):
         message += f"{dicts[ind]} -- {tmp_df.loc[ind].values[0]} см\n"
     return message
 
+def to_integer(dt_time):
+    return 10000*dt_time.year + 100*dt_time.month + dt_time.day
+
 def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts) -> str:
     """Updates and sends user's social rating
 
@@ -348,49 +350,36 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
         str: Message for all
     """
     id_2_name = dicts["users"]
-    today = date.today().strftime("%d/%m/%Y")
+    to_user_id = str(to_user_id)
+    today = to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     rating_file_exists = exists(path_to_rating_file)
     print(rating_file_exists)
     if rating_file_exists:
-        rating = pd.read_csv(rating_file_exists)
+        rating = pd.read_csv(path_to_rating_file)
     else:
-        rating = pd.DataFrame(index=[0])
-        for color in dicts["Matvey_inc_dict"]:
-            rating[color[0]].values[0]=100
-            rating[color[0]].values[1]=30
-            rating[color[0]].values[2]=30
-            rating[color[0]].values[3]=today
+        rating = pd.DataFrame()
+        for user in id_2_name:
+            rating[user]=[100., 30., -30., today]
     if rating[from_user_id].values[3] != today: # 0: rating, 1: rice left to give, 2: rice left to take(eat), 3: last time changed someone's rating
         if rating[from_user_id].values[0] >= 0:
             rating[from_user_id].values[1] = 30
-            rating[from_user_id].values[2] = 30
+            rating[from_user_id].values[2] = -30
         else:
             rating[from_user_id].values[1] = 0
             rating[from_user_id].values[2] = 0
         rating[from_user_id].values[3] = today
-    if (rice>0):
-        if rating[from_user_id].values[0] >= 0:
-            if rating[from_user_id].values[1] - rice >= 0:
-                rating[from_user_id].values[1] -= rice
-                rating[to_user_id].values[0] += rice 
-                message_outcome = id_2_name[to_user_id] + ", твой социальный рейтинг теперь "+rating[to_user_id].values[0]
-            else:
-                message_outcome = "Не хватает риса для завершения транзакции"
-        else:
-            message_outcome = "Гражданам с отрицательным социальным рейтингом запрещено раздавать рис!"
-    elif (rice<0):
-        if rating[from_user_id].values[0] >= 0:
-            if rating[from_user_id].values[2] - rice <= 0:
-                rating[from_user_id].values[2] += rice
-                rating[to_user_id].values[0] += rice 
-                message_outcome = id_2_name[to_user_id] + ", твой социальный рейтинг теперь "+rating[to_user_id].values[0]
-            else:
-                message_outcome = "Ты не сможешь столько съесть!"
-        else:
-            message_outcome = "Гражданам с отрицательным социальным рейтингом запрещено забирать рис у других!"
-    else:
+    
+    if (rice == 0 or from_user_id == to_user_id):
         length = random.randint(1,3)
+        path_to_file = "dicks_sizes.csv"
+        file_exists = exists(path_to_file)
+        print(file_exists)
+        if file_exists:
+            dicks = pd.read_csv(path_to_file)
+        else:
+            dicks = pd.DataFrame(index=[0])
+            dicks["ymd"] = pd.to_datetime("01/01/1970", format="%d/%m/%Y")
         if dicks["ymd"].values[0] != today:
             dicks["ymd"] = today
             dicks = pd.DataFrame(dicks["ymd"])
@@ -410,57 +399,85 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
         "с таким дрыном шутки плохи -- целых",
         ]
         message_outcome = "Пошутил, да? ну держи\n"+id_2_name[from_user_id] + ", " + random.choice(possible_text) + " " + str(length) + "см 🌚🌚🌚"
+    elif (rice>0):
+        if rating[from_user_id].values[0] >= 0:
+            if rating[from_user_id].values[1] - rice >= 0:
+                rating[from_user_id].values[1] -= rice
+                rating[to_user_id].values[0] += rice 
+                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {rating[to_user_id].values[0]}"
+            else:
+                message_outcome = "Не хватает риса для завершения транзакции"
+        else:
+            message_outcome = "Гражданам с отрицательным социальным рейтингом запрещено раздавать рис!"
+    elif (rice<0):
+        if rating[from_user_id].values[0] >= 0:
+            if rating[from_user_id].values[2] - rice <= 0:
+                rating[from_user_id].values[2] -= rice
+                rating[to_user_id].values[0] += rice 
+                message_outcome = f"{id_2_name[to_user_id]}, твой социальный рейтинг теперь {rating[to_user_id].values[0]}"
+            else:
+                message_outcome = "Ты не сможешь столько съесть!"
+        else:
+            message_outcome = "Гражданам с отрицательным социальным рейтингом запрещено забирать рис у других!"
     rating.to_csv("social_rating.csv", index=False)
     return message_outcome
 
 def show_rice(user_id: int, id_2_name: Dict[int, str]):
-    today = date.today().strftime("%d/%m/%Y")
+    today = to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     file_exists = exists(path_to_rating_file)
     print(file_exists)
     if file_exists:
         rating = pd.read_csv(path_to_rating_file)
     else:
-        return "Записей о рисе нет"
+        rating = pd.DataFrame()
+        for user in id_2_name:
+            rating[user]=[100., 30., -30., today]
+    print(rating.info())
     if rating[user_id].values[3] != today:
         if rating[user_id].values[0] >= 0:
             rating[user_id].values[1] = 30
-            rating[user_id].values[2] = 30
+            rating[user_id].values[2] = -30
         else:
             rating[user_id].values[1] = 0
             rating[user_id].values[2] = 0
         rating[user_id].values[3] = today
     if rating[user_id].values[0] >= 0:
-        message_outcome = id_2_name[user_id]+", риса доступно для раздачи: " + rating[user_id].values[1] + ", риса можно забрать: " + rating[user_id].values[2]
+        message_outcome = f'{id_2_name[user_id]}, риса доступно для раздачи: {int(rating[user_id].values[1])}, риса можно забрать: {abs(int(rating[user_id].values[2]))}'
     else:
-        message_outcome = id_2_name[user_id]+", ваш социальный рейтинг отрицателен, раздавать и забирать рис вам запрещено!"
+        message_outcome = f'{id_2_name[user_id]}, ваш социальный рейтинг отрицателен, раздавать и забирать рис вам запрещено!'
+    rating.to_csv("social_rating.csv", index=False)
     return message_outcome
 
 def show_social_rating(dicts):
+    today = to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     file_exists = exists(path_to_rating_file)
     print(file_exists)
     if file_exists:
         rating = pd.read_csv(path_to_rating_file)
     else:
-        return "Записей о рейтинге нет"
-    message = f"Таблица социального рейтинга на сегодня такова:"
+        rating = pd.DataFrame()
+        for user in dicts:
+            rating[user]=[100., 30., -30., today]
+    message = f"Таблица социального рейтинга на сегодня такова:\n"
     for column in rating.columns:
-        message += f"{dicts[column]}: "
+        message += f"{dicts[column]}: \n"
         rice = rating[column].values[0]
         if rice>=10000:
-            message += f"\n----{rice//10000} Гордость партии"
+            message += f"----{int(rice//10000)} Гордость партии\n"
             rice = rice % 10000
         if rice>=1000:
-            message += f"\n----{rice//1000} Кошка жена"
+            message += f"----{int(rice//1000)} Кошка жена\n"
             rice = rice % 1000
         if rice>=100:
-            message += f"\n----{rice//100} Миска рис"
+            message += f"----{int(rice//100)} Миска рис\n"
             rice = rice % 100
         if rice>0:
-            message += f"\n----{rice} рисинка"
-        if rice<=0:
-            message += f"Позорник, должен партии {abs(rice)} рисинок"
+            message += f"----{int(rice)} рисинка\n"
+        if rice<0:
+            message += f"Позорник, должен партии {abs(int(rice))} рисинок\n"
+    rating.to_csv("social_rating.csv", index=False)
     return message
     
 def send(msg: str, attach: str = None):
