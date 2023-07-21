@@ -235,7 +235,7 @@ def calculate_dick_size(user_id: int, id_2_name: Dict[int, str]) -> str:
         str: Message for all
     """
 
-    today = to_integer(date.today())
+    today = date(date.today())
     path_to_file = "dicks_sizes.csv"
     file_exists = exists(path_to_file)
     print(file_exists)
@@ -313,7 +313,7 @@ def random_dick_size():
 
 
 def show_pisulki(dicts):
-    today = to_integer(date.today())
+    today = date_to_integer(date.today())
     path_to_file = "dicks_sizes.csv"
     file_exists = exists(path_to_file)
     print(file_exists)
@@ -329,14 +329,21 @@ def show_pisulki(dicts):
 
 def print_dicks(dicks, dicts):
     dt = dicks["ymd"].values[0]
-    message = f"Ситуация на {dt}:\n"
+    message = f"Ситуация на {int_to_date(dt)}:\n"
     tmp_df = dicks.drop(columns="ymd").T.sort_values(by=0, ascending=False)
     for ind in tmp_df.index:
         message += f"{dicts[ind]} -- {tmp_df.loc[ind].values[0]} см\n"
     return message
 
-def to_integer(dt_time):
+def date_to_integer(dt_time):
     return 10000*dt_time.year + 100*dt_time.month + dt_time.day
+
+def int_to_date(dt):
+    year = int(dt / 10000)
+    month = int((dt % 10000) / 100)
+    day = int(dt % 100)
+
+    return date.strftime(date(year, month, day), "%d/%m/%y")
 
 def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts) -> str:
     """Updates and sends user's social rating
@@ -351,7 +358,7 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
     """
     id_2_name = dicts["users"]
     to_user_id = str(to_user_id)
-    today = to_integer(date.today())
+    today = date_to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     rating_file_exists = exists(path_to_rating_file)
     print(rating_file_exists)
@@ -423,7 +430,7 @@ def calculate_social_rating(from_user_id: int, to_user_id: int, rice: int, dicts
     return message_outcome
 
 def show_rice(user_id: int, id_2_name: Dict[int, str]):
-    today = to_integer(date.today())
+    today = date_to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     file_exists = exists(path_to_rating_file)
     print(file_exists)
@@ -450,7 +457,7 @@ def show_rice(user_id: int, id_2_name: Dict[int, str]):
     return message_outcome
 
 def show_social_rating(dicts):
-    today = to_integer(date.today())
+    today = date_to_integer(date.today())
     path_to_rating_file = "social_rating.csv"
     file_exists = exists(path_to_rating_file)
     print(file_exists)
