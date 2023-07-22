@@ -1,21 +1,16 @@
 #files
 token.txt
-/telegram_bot/words.txt
-/scripts/users.json
-/scripts/config.yml
-/scripts/stat.png
-token.txt
-/scripts/dicks_sizes.csv
-/scripts/ecosystem.config.js
+users.json
+config.yaml
+dick_sizes.csv
+social_rating.csv
+ecosystem.config.js
 last_cringe_day
 history.pkl
-/scripts/history.pkl
-/scripts/last_cringe_day
+
 
 #folders
-/telegram_bot/test.js
-/.idea/
-/telegram_bot/node_modules/
-/botik
-/*/.venv/
+.vscode
+test*
+__pycache__
 

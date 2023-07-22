@@ -10,12 +10,11 @@ import numpy as np
 import pandas as pd
 import yaml
 from loguru import logger
+from mubert import generate_music
 from vkbottle.bot import Bot, Message
 from vkbottle.dispatch.rules import ABCRule
 from vkbottle.dispatch.rules.base import CommandRule
 from vkbottle.tools import VoiceMessageUploader
-
-from mubert import generate_music
 
 logger.remove()
 logger.add(sys.stderr, level="INFO")
