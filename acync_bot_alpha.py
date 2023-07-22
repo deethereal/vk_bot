@@ -15,8 +15,6 @@ from vkbottle.dispatch.rules import ABCRule
 from vkbottle.dispatch.rules.base import CommandRule
 from vkbottle.tools import VoiceMessageUploader
 
-from mubert import generate_music
-
 logger.remove()
 logger.add(sys.stderr, level="INFO")
 
@@ -210,10 +208,6 @@ class MatveyIncBot(Bot):
         for ind in tmp_df.index:
             message += f"{dicts[ind]} -- {tmp_df.loc[ind].values[0]} см\n"
         return message
-
-    def send_track(self, prompt):
-        # await generate_music(prompt)
-        generate_music(prompt)
 
 
 bot = MatveyIncBot()

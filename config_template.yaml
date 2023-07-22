@@ -1,0 +1,26 @@
+debug: false
+
+defaults:
+  - _self_
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+vk_token:
+open_ai_token:
+group_id:
+chat_id:
+user_ids_json: "users.json"
+dicks_path: dick_sizes.csv
+pic_chance: 0.17
+
+social_rating_settings:
+  rating_file_path: social_rating.csv
+  dicks_file_path: ${dicks_path}
+  default_rice: 100.0
+  max_daily_reward: 30.0
+  max_daily_punish: -30.0
