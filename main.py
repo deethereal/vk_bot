@@ -115,7 +115,7 @@ def main(config):
                     color = None
                     if words[1] in ("владу", "владику", "владиславу"):
                         color = "purple"
-                    elif words[1] in ("семену", "семёну", "cёме", "cеме", "semen"):
+                    elif words[1] in ("семену", "семёну", "сёме", "семе", "semen"):
                         color = "green"
                     elif words[1] in ("саше", "александру"):
                         color = "sasha"

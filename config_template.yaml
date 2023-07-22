@@ -23,4 +23,4 @@ social_rating_settings:
   dicks_file_path: ${dicks_path}
   default_rice: 100.0
   max_daily_reward: 30.0
-  max_daily_punish: -30.0
+  max_daily_punish: 30.0
