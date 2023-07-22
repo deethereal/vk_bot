@@ -81,7 +81,6 @@ class RiceRatingCounter:
             rating = pd.read_csv(self._rating_file_path, index_col=0)
         else:
             rating = self._init_rating()
-        print(rating)
         if rating.loc["last_change", user_id] != self._today:
             rating = self._daily_left_rice_update(rating, user_id)
 

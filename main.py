@@ -35,7 +35,6 @@ def main(config):
     social_rating_counter = RiceRatingCounter(id_2_name=dicts["users"], **config.social_rating_settings)
 
     for event in vk_client.longpoll.listen():
-        print(event)
         if (
             event.type == VkBotEventType.MESSAGE_NEW
             and event.from_chat
