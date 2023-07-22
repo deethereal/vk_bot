@@ -12,7 +12,7 @@ class VkClient:
         self._chat_id = chat_id
         self.peer_id = 2000000000 + chat_id
 
-    def send(self, msg: str, attach: str = None):
+    def send(self, msg: str, attach: str = None) -> None:
         self._instance.messages.send(
             random_id=random.randint(0, 999999),
             message=msg,
@@ -20,8 +20,8 @@ class VkClient:
             attachment=attach,
         )
 
-    def kick(self, user_id):
+    def kick(self, user_id) -> None:
         self._instance.messages.removeChatUser(chat_id=self._chat_id, user_id=user_id)
 
-    def change_title(self, new_title):
+    def change_title(self, new_title) -> None:
         self._instance.messages.editChat(chat_id=self._chat_id, title=new_title)

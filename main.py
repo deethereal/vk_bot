@@ -8,7 +8,7 @@ import hydra
 import numpy as np
 from vk_api.bot_longpoll import VkBotEventType
 
-import src.usecases as usecases
+import src.use_cases as use_cases
 import src.utils as utils
 from src import DickSizer, RiceRatingCounter, VkClient
 
@@ -45,24 +45,24 @@ def main(config):
             print(event)
             if "action" in event.object["message"]:
                 action = event.object["message"]["action"]
-                if action["member_id"] == 207227130:
+                if action["member_id"] == dicts["Matvey_inc_dict"]["red"][0]:
                     if action["type"] == "chat_kick_user":
-                        usecases.set_motya_left_title(vk_client)
-                if action["type"] == "chat_invite_user" and action["member_id"] == 207227130:
-                    usecases.set_motya_comeback_title(vk_client)
+                        use_cases.set_motya_left_title(vk_client)
+                if action["type"] == "chat_invite_user" and action["member_id"] == dicts["Matvey_inc_dict"]["red"][0]:
+                    use_cases.set_motya_comeback_title(vk_client)
             message_text = event.object["message"]["text"].lower()
             if utils.findWordInList(message_text, config.y_words):
                 if from_id != dicts["Matvey_inc_dict"]["purple"][0]:
                     vk_client.send(
                         msg="Сам ты у е б а, пашел нахуй",
-                        attach="photo-178950051_457239159",
+                        attach=utils.IMAGE_2_ID["kick"],
                     )
                     vk_client.kick(
                         event.object["message"]["peer_id"],
                         from_id,
                     )
                     if from_id == dicts["Matvey_inc_dict"]["red"][0]:
-                        usecases.set_motya_left_title(vk_client)
+                        use_cases.set_motya_left_title(vk_client)
                     vk_client.send("Возвращайте этого пидора сами")
 
                 else:
@@ -84,9 +84,9 @@ def main(config):
                 outcome_text = dick_sizer.print_dicks()
                 vk_client.send(outcome_text)
             if command_text == "кринж":
-                vk_client.send(usecases.oh_no_cringe(), attach="photo-178950051_457239221")
+                vk_client.send(use_cases.oh_no_cringe(), attach=utils.IMAGE_2_ID["cringe"])
             if command_text == "статус кринжа":
-                vk_client.send(usecases.cringe_status())
+                vk_client.send(use_cases.cringe_status())
             if utils.findWord(message_text, "бот"):
                 words = message_text.split()
                 if len(words) == 3 and words[1] == "позови":
@@ -107,7 +107,7 @@ def main(config):
                     elif words[2] in ("диню", "дениса"):
                         outcome_text = f'@deeenizka({random.choice(dicts["Matvey_inc_dict"]["blue"][1])})'
                     if outcome_text is not None:
-                        attach = "photo-178950051_457239218" if words[2] == "никиту" else None
+                        attach = utils.IMAGE_2_ID["nikita"] if words[2] == "никиту" else None
                         vk_client.send(outcome_text, attach=attach)
             if message_text.startswith("/дать"):
                 words = message_text.split()
@@ -150,11 +150,11 @@ def main(config):
                     if residual_words[0] in ("через", "в", "вечером"):
                         additon = " " + " ".join(residual_words)
                 doters = dicts["doters"]
-                outcome_message = usecases.go_dota(doters, str(from_id))
+                outcome_message = use_cases.go_dota(doters, str(from_id))
                 pic_chance = np.random.rand()
                 attach = None
                 if pic_chance <= config.pic_chance:
-                    attach = "photo-178950051_457239222"
+                    attach = utils.IMAGE_2_ID["dota"]
                 vk_client.send(outcome_message + additon + "?", attach=attach)
 
 

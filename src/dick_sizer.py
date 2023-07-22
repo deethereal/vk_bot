@@ -27,7 +27,7 @@ class DickSizer:
         self._id_2_name = id_2_name
         self._today = None
 
-    def print_dicks(self):
+    def print_dicks(self) -> str:
         self._today = get_today()
         if exists(self._path_to_file):
             dicks = pd.read_csv(self._path_to_file)
@@ -101,7 +101,7 @@ class DickSizer:
         return length
 
     @staticmethod
-    def _random_dick_size():
+    def _random_dick_size() -> int:
         chance = random.randint(1, 20)
         if chance < 15:
             return random.randint(1, 24)
@@ -110,7 +110,7 @@ class DickSizer:
         else:
             return random.randint(31, 35)
 
-    def _get_actual_dicks(self, dicks):
+    def _get_actual_dicks(self, dicks) -> str:
         dt = dicks["ymd"].values[0]
         message = f"Ситуация на {int2date(dt)}:\n"
         tmp_df = dicks.drop(columns="ymd").T.sort_values(by=0, ascending=False)

@@ -3,25 +3,49 @@ import re
 from datetime import date
 
 import openai
+from typing import Tuple
 
 
-def date2int(dt_time):
+IMAGE_2_ID = {
+    "dota": "photo-178950051_457239222",
+    "nikita": "photo-178950051_457239218",
+    "kick": "photo-178950051_457239159",
+    "cringe": "photo-178950051_457239221",
+}
+
+Y_WORKS = [
+    "уеба",
+    "уёба",
+    "yеба",
+    "уебa",
+    "уeба",
+    "yeба",
+    "yебa",
+    "уeбa",
+    "yeба",
+    "yёба",
+    "уёбa",
+    "yёбa",
+    "yeбa",
+]
+
+
+def date2int(dt_time) -> int:
     return 10000 * dt_time.year + 100 * dt_time.month + dt_time.day
 
 
-def int2date(dt):
+def int2date(dt) -> str:
     year = int(dt / 10000)
     month = int((dt % 10000) / 100)
     day = int(dt % 100)
-
     return date.strftime(date(year, month, day), "%d/%m/%y")
 
 
-def get_today():
+def get_today() -> int:
     return date2int(date.today())
 
 
-def findbI(msg):
+def find_bI(msg) -> Tuple[str, bool]:
     result = re.search(r"\bы+\b", msg)
     randi = random.randint(0, 7)
     bI = "Ы"
@@ -34,27 +58,26 @@ def findbI(msg):
     return False
 
 
-def findWordInList(msg, words):
+def find_word_in_list(msg, words) -> bool:
     for word in words:
-        result = findWord(msg, word)
+        result = find_word(msg, word)
         if result:
             return True
     return False
 
 
-def findWord(msg, word):
+def find_word(msg, word) -> bool:
     raw = "\\b" + word + ",?\\b"
     result = re.search(r"" + raw, msg)
     return result is not None
 
 
-def generate_answer(prompt, from_id, history):
+def generate_answer(prompt, from_id, history) -> str:
     if prompt == "забудь все":
         history[from_id].clear()
         return "История очищена"
     try:
         history[from_id].append({"role": "user", "content": prompt})
-
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=history[from_id],

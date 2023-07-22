@@ -75,7 +75,7 @@ class RiceRatingCounter:
         )
         return message_outcome
 
-    def show_rice(self, user_id: str):
+    def show_rice(self, user_id: str) -> str:
         self._today = get_today()
         if exists(self._rating_file_path):
             rating = pd.read_csv(self._rating_file_path, index_col=0)
@@ -100,7 +100,7 @@ class RiceRatingCounter:
         )
         return message_outcome
 
-    def show_social_rating(self):
+    def show_social_rating(self) -> str:
         self._today = get_today()
         if exists(self._rating_file_path):
             rating = pd.read_csv(self._rating_file_path, index_col=0)
@@ -129,7 +129,7 @@ class RiceRatingCounter:
         )
         return message
 
-    def _init_rating(self):
+    def _init_rating(self) -> pd.DataFrame:
         rating = pd.DataFrame(index=["rating", "reward_left", "punish_left", "last_change"])
         for user in self._id_2_name:
             rating[user] = [self.default_rice, self.max_daily_reward, self.max_daily_punish, self._today]
