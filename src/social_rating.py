@@ -86,8 +86,9 @@ class RiceRatingCounter:
 
         if rating.loc["rating", user_id] >= 0:
             message_outcome = (
-                f"{self._id_2_name[user_id]}, риса доступно для раздачи: {int(rating.loc['reward_left',user_id])},"
-                f"риса можно забрать: {abs(int(rating.loc['punish_left',user_id]))}"
+                f"{self._id_2_name[user_id]}, сегодня тебе можно:\n"
+                f"- раздать рисинок: {int(rating.loc['reward_left',user_id])}\n"
+                f"- забрать рисинок:  {abs(int(rating.loc['punish_left',user_id]))}"
             )
         else:
             message_outcome = (
@@ -111,16 +112,16 @@ class RiceRatingCounter:
             message += f"{self._id_2_name[column]}: \n"
             rice = rating.loc["rating", column]
             if rice >= 10000:
-                message += f"----{int(rice//10000)} Гордость партии\n"
+                message += f"-- {int(rice//10000)} гордость партии\n"
                 rice = rice % 10000
             if rice >= 1000:
-                message += f"----{int(rice//1000)} Кошка жена\n"
+                message += f"-- {int(rice//1000)} кошка жена\n"
                 rice = rice % 1000
             if rice >= 100:
-                message += f"----{int(rice//100)} Миска рис\n"
+                message += f"-- {int(rice//100)} миска рис\n"
                 rice = rice % 100
             if rice > 0:
-                message += f"----{int(rice)} рисинка\n"
+                message += f"-- {int(rice)} рисинок\n"
             if rice < 0:
                 message += f"Позорник, должен партии {abs(int(rice))} рисинок\n"
         rating.to_csv(
