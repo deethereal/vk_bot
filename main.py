@@ -68,7 +68,6 @@ def main(config):
                     vk_client.send("Этого пидораса я кикнуть не могу, он слишком тяжелый:(")
 
             bI_pos = utils.find_bI(message_text)
-            print(bI_pos)
             command_text = message_text.rstrip()
             if message_text[:5] == "бля а":
                 vk_client.send(utils.generate_answer(event.object["message"]["text"][6:], from_id, history))
