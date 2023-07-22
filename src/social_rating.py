@@ -16,7 +16,7 @@ class RiceRatingCounter:
         dicks_file_path: str,
         default_rice: int = 100.0,
         max_daily_reward: int = 30.0,
-        max_daily_punish: int = -30.0,
+        max_daily_punish: int = 30.0,
     ) -> None:
         self._id_2_name = id_2_name
         self._rating_file_path = rating_file_path
@@ -48,12 +48,12 @@ class RiceRatingCounter:
             rating = self._init_rating()
         if rating.loc["last_change", from_user_id] != self._today:
             rating = self._daily_left_rice_update(rating, from_user_id)
-        print(rice)
         if rice == 0 or from_user_id == to_user_id:
             message_outcome = self._punish_joker(from_user_id)
         elif rating.loc["rating", from_user_id] >= 0:
-            if rating.loc["reward_left", from_user_id] - rice >= 0:
-                rating.loc["reward_left", from_user_id] -= rice
+            column_to_decrease = "reward_left" if rice > 0 else "punish_left"
+            if rating.loc[column_to_decrease, from_user_id] - abs(rice) >= 0:
+                rating.loc[column_to_decrease, from_user_id] -= abs(rice)
                 rating.loc["rating", to_user_id] += rice
                 message_outcome = (
                     f"{self._id_2_name[to_user_id]}, "
@@ -81,7 +81,6 @@ class RiceRatingCounter:
             rating = pd.read_csv(self._rating_file_path, index_col=0)
         else:
             rating = self._init_rating()
-        print(rating)
         if rating.loc["last_change", user_id] != self._today:
             rating = self._daily_left_rice_update(rating, user_id)
 

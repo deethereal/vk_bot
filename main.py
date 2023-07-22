@@ -35,7 +35,6 @@ def main(config):
     social_rating_counter = RiceRatingCounter(id_2_name=dicts["users"], **config.social_rating_settings)
 
     for event in vk_client.longpoll.listen():
-        print(event)
         if (
             event.type == VkBotEventType.MESSAGE_NEW
             and event.from_chat
@@ -69,7 +68,6 @@ def main(config):
                     vk_client.send("Этого пидораса я кикнуть не могу, он слишком тяжелый:(")
 
             bI_pos = utils.find_bI(message_text)
-            print(bI_pos)
             command_text = message_text.rstrip()
             if message_text[:5] == "бля а":
                 vk_client.send(utils.generate_answer(event.object["message"]["text"][6:], from_id, history))
@@ -115,7 +113,7 @@ def main(config):
                     color = None
                     if words[1] in ("владу", "владику", "владиславу"):
                         color = "purple"
-                    elif words[1] in ("семену", "семёну", "cёме", "cеме", "semen"):
+                    elif words[1] in ("семену", "семёну", "сёме", "семе", "semen"):
                         color = "green"
                     elif words[1] in ("саше", "александру"):
                         color = "sasha"
