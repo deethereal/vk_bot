@@ -167,5 +167,7 @@ class RiceRatingCounter:
             daily_value = self.max_daily_reward
         else:
             daily_value = 0
-        rating[from_user_id] = [daily_value, -daily_value, self._today]
+        rating.loc["reward_left", from_user_id] = daily_value
+        rating.loc["punish_left", from_user_id] = daily_value
+        rating.loc["last_change", from_user_id] = self._today
         return rating
