@@ -38,7 +38,7 @@ def int2date(dt) -> str:
     year = int(dt / 10000)
     month = int((dt % 10000) / 100)
     day = int(dt % 100)
-    return date.strftime(date(year, month, day), "%d/%m/%y")
+    return date.strftime(date(year, month, day), "%y/%m/%d")
 
 
 def get_today() -> int:
