@@ -56,10 +56,7 @@ def main(config):
                         msg="Сам ты у е б а, пашел нахуй",
                         attach=utils.IMAGE_2_ID["kick"],
                     )
-                    vk_client.kick(
-                        event.object["message"]["peer_id"],
-                        from_id,
-                    )
+                    vk_client.kick(from_id)
                     if from_id == dicts["Matvey_inc_dict"]["red"][0]:
                         use_cases.set_motya_left_title(vk_client)
                     vk_client.send("Возвращайте этого пидора сами")
