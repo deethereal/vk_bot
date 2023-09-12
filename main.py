@@ -40,6 +40,7 @@ def main(config):
             and event.from_chat
             and event.object["message"]["peer_id"] == vk_client.peer_id
         ):
+            outcome_text = None
             from_id = event.object["message"]["from_id"]
             print(event)
             if "action" in event.object["message"]:
@@ -87,7 +88,7 @@ def main(config):
                 if len(words) == 3 and words[1] == "позови":
                     if words[2] in ("влада", "владика", "владека"):
                         outcome_text = f'@freebadman({random.choice(dicts["Matvey_inc_dict"]["purple"][1])})'
-                    elif words[2] in ("семена", "семёна", "cёму", "cему"):
+                    elif words[2] in ("семена", "семёна", "сёму", "сему"):
                         outcome_text = f'@voidrad({random.choice(dicts["Matvey_inc_dict"]["green"][1])})'
                     elif words[2] == "сашу":
                         outcome_text = f'@id_alejandr0({random.choice(dicts["Matvey_inc_dict"]["sasha"][1])})'
