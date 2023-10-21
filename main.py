@@ -1,8 +1,6 @@
 import json
 import random
 import warnings
-from collections import defaultdict
-from pickle import dump, load
 
 import hydra
 import numpy as np
@@ -11,6 +9,10 @@ from vk_api.bot_longpoll import VkBotEventType
 import src.use_cases as use_cases
 import src.utils as utils
 from src import DickSizer, RiceRatingCounter, VkClient
+
+# from collections import defaultdict
+# from pickle import dump, load
+
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -25,11 +27,11 @@ def main(config):
         dicts = json.load(fh)
     if config.debug:
         vk_client.send("Работаем")
-    try:
-        with open("history.pkl", "rb") as f:
-            history = load(f)
-    except FileNotFoundError:
-        history = defaultdict(list)
+    # try:
+    #     with open("history.pkl", "rb") as f:
+    #         history = load(f)
+    # except FileNotFoundError:
+    #     history = defaultdict(list)
 
     dick_sizer = DickSizer(config.dicks_path, id_2_name=dicts["users"])
     social_rating_counter = RiceRatingCounter(id_2_name=dicts["users"], **config.social_rating_settings)
@@ -67,10 +69,10 @@ def main(config):
 
             bI_pos = utils.find_bI(message_text)
             command_text = message_text.rstrip()
-            if message_text[:5] == "бля а":
-                vk_client.send(utils.generate_answer(event.object["message"]["text"][6:], from_id, history))
-                with open("history.pkl", "wb") as f:
-                    dump(history, f)
+            # if message_text[:5] == "бля а":
+            #     vk_client.send(utils.generate_answer(event.object["message"]["text"][6:], from_id, history))
+            #     with open("history.pkl", "wb") as f:
+            #         dump(history, f)
             if bool(bI_pos):
                 vk_client.send(bI_pos)
             if command_text == "/член":
