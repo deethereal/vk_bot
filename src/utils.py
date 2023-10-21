@@ -1,10 +1,9 @@
 import random
 import re
 from datetime import date
-
-import openai
 from typing import Tuple
 
+import openai
 
 IMAGE_2_ID = {
     "dota": "photo-178950051_457239222",

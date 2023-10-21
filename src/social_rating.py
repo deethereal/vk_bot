@@ -132,7 +132,12 @@ class RiceRatingCounter:
     def _init_rating(self) -> pd.DataFrame:
         rating = pd.DataFrame(index=["rating", "reward_left", "punish_left", "last_change"])
         for user in self._id_2_name:
-            rating[user] = [self.default_rice, self.max_daily_reward, self.max_daily_punish, self._today]
+            rating[user] = [
+                self.default_rice,
+                self.max_daily_reward,
+                self.max_daily_punish,
+                self._today,
+            ]
         return rating
 
     def _punish_joker(self, joker_id: str) -> str:

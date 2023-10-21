@@ -5,8 +5,13 @@ from typing import Dict
 
 import numpy as np
 
-
-POSSIBLE_DOTA_PHRASES = ["го дота", "го сосать", "погнали гействовать", "как насчет мужского секса", "го на мид"]
+POSSIBLE_DOTA_PHRASES = [
+    "го дота",
+    "го сосать",
+    "погнали гействовать",
+    "как насчет мужского секса",
+    "го на мид",
+]
 
 
 def cringe_status(file_name="last_cringe_day") -> str:
