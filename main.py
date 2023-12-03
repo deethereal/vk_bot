@@ -153,7 +153,7 @@ def main(config):
                 attach = None
                 if pic_chance <= config.pic_chance:
                     attach = utils.IMAGE_2_ID["dota"]
-                vk_client.send(outcome_message + additon + "?", attach=attach)
+                vk_client.send(outcome_message + additon, attach=attach)
 
 
 if __name__ == "__main__":
